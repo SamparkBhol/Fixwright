@@ -302,7 +302,21 @@ export function mountConsole(root: HTMLElement, app: HostApp): void {
     themeSeg.append(h('button', { type: 'button', 'data-theme-choice': theme, onclick: () => app.setTheme(theme), text: label }));
   }
   panels.get('about')?.append(
-    h('h3', { class: 'section first', text: 'What is real' }),
+    h('h3', { class: 'section first', text: 'How to try it' }),
+    h(
+      'ol',
+      { class: 'guide-steps' },
+      ...[
+        'Ask "Why does the hallway lamp keep saying it\u2019s not responding?" Fixwright checks the hub, the signal and the maker\u2019s cloud, then asks you to look.',
+        'Say "Yes, it blinked." It finds the real fault, then say "Yes" twice to see the fix and apply it.',
+        'Ask "Why did every plug turn on at 3 a.m.?" and watch the house plan replay the power cut.',
+        'Ask "Give my house a checkup" or "Is anything broken?"',
+        'Ask Fixwright to turn off the living room power strip, and see it protect the aquarium filter.',
+        'Open Break my house to cause any fault, reset the house or jump to the next morning, then ask again.',
+      ].map((t) => h('li', { text: t })),
+    ),
+    h('p', { class: 'muted', text: 'The strip under the screen is your house. Amber means on, an empty circle means off, red means offline. Switch devices with the icons above the screen, and open the dashboard from the top bar for the whole house at a glance.' }),
+    h('h3', { class: 'section', text: 'What is real' }),
     h(
       'ul',
       { class: 'ticks' },

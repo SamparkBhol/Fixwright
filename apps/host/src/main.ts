@@ -21,13 +21,13 @@ if (config.testMode) root.dataset['test'] = '1';
 const bannerUrl = h('code', { class: 'banner-url', text: config.mcpUrl });
 const bannerProto = h('span', { class: 'banner-proto', text: 'MCP 2025-11-25, Streamable HTTP' });
 const status = h('span', { class: 'conn', 'data-status': 'connecting', text: 'Connecting' });
-const about = h('button', { type: 'button', class: 'about-link', 'aria-pressed': 'false', onclick: () => app.setTab(app.store.get().tab === 'about' ? 'conversation' : 'about'), text: 'About' });
+const about = h('button', { type: 'button', class: 'about-link', 'aria-pressed': 'false', onclick: () => app.setTab(app.store.get().tab === 'about' ? 'conversation' : 'about'), text: 'Guide' });
 const topbar = h(
   'header',
   { class: 'topbar' },
   h('span', { class: 'wordmark', text: 'Fixwright' }),
   h('p', { class: 'banner', id: 'honesty-banner' }, h('span', { text: 'Alexa+ host simulated. Live MCP server: ' }), bannerUrl, h('span', { text: ' (' }), bannerProto, h('span', { text: ').' })),
-  h('div', { class: 'top-actions' }, status, about),
+  h('div', { class: 'top-actions' }, status, h('a', { class: 'dash-link', href: '/dashboard.html', target: '_blank', rel: 'noopener', text: 'Dashboard' }), about),
 );
 
 const stage = h('main', { class: 'stage', id: 'stage' });

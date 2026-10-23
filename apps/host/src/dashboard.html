@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fixwright home dashboard</title>
+<style>
+@font-face { font-family: "Atkinson Hyperlegible Next"; src: url("/fonts/atkinson-hyperlegible-next-latin-400-normal.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Atkinson Hyperlegible Next"; src: url("/fonts/atkinson-hyperlegible-next-latin-700-normal.woff2") format("woff2"); font-weight: 700; }
+:root { --wall: #CBD5D3; --ink: #1C2228; --soft: #4A555D; --paper: #EEF2F1; --lamp: #FFB547; --fault: #C8463D; --sound: #3F8C6E; --rule: #B9C4C2; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Atkinson Hyperlegible Next", system-ui, sans-serif; font-size: 16px; line-height: 1.5; }
+header { background: var(--wall); padding: 20px 24px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px; }
+header h1 { margin: 0; font-size: 24px; }
+header .note { color: var(--soft); flex: 1 1 280px; }
+header a { color: var(--ink); text-underline-offset: 4px; }
+main { max-width: 1100px; margin: 0 auto; padding: 20px 24px 40px; }
+.summary { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+.stat { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 12px 16px; min-width: 150px; }
+.stat b { display: block; font-size: 22px; }
+.rooms { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.room { background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 14px 16px; }
+.room h2 { margin: 0 0 8px; font-size: 17px; }
+.dev { display: flex; justify-content: space-between; gap: 10px; padding: 5px 0; border-top: 1px solid #E3E9E8; }
+.dev:first-of-type { border-top: 0; }
+.chip { font-size: 14px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--soft); display: inline-block; }
+.on .dot { background: var(--lamp); border-color: var(--lamp); }
+.offline .dot { background: var(--fault); border-color: var(--fault); }
+.offline { color: var(--fault); }
+section.list { margin-top: 22px; background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: 14px 16px; }
+section.list h2 { margin: 0 0 8px; font-size: 17px; }
+section.list li { margin: 0 0 4px; }
+.muted { color: var(--soft); }
+button { font: inherit; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--ink); background: var(--ink); color: #fff; cursor: pointer; }
+footer { margin-top: 24px; color: var(--soft); font-size: 14px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Your home at a glance</h1>
+  <span class="note">A live view of your demo house. In a real home this reads the hub you link, like Home Assistant.</span>
+  <a href="/">Back to the demo</a>
+  <button id="refresh" type="button">Refresh</button>
+</header>
+<main>
+  <div class="summary" id="summary"></div>
+  <div class="rooms" id="rooms"></div>
+  <section class="list"><h2>Things Fixwright is watching</h2><ul id="issues"></ul></section>
+  <section class="list"><h2>Protected devices</h2><ul id="protected"></ul></section>
+  <section class="list"><h2>Recent repairs and messages</h2><ul id="recent"></ul></section>
+  <footer id="foot"></footer>
+</main>
+<script>
+(() => {
+  const ISSUE_TEXT = {
+    ghost_after_repair: 'An old copy of a re-paired lamp is still in the device list',
+    power_restore_default_on: 'Plugs and lights switch on by themselves after a power cut',
+    duplicate_spoken_name: 'Two lights answer to the same name',
+    wifi_flapping: 'A Wi-Fi plug keeps dropping off the network',
+    low_battery: 'A sensor battery is almost flat',
+    vendor_cloud_outage: 'A device maker’s cloud is down',
+    account_link_expired: 'A linked account needs to be signed in again',
+    hub_down: 'The Zigbee hub is not answering',
+    dead_trigger: 'An automation uses a device that no longer exists',
+    router_ssid_change: 'Wi-Fi plugs lost the network after a router change',
+  };
+  const ROOMS = ['hallway', 'living_room', 'kitchen', 'bedroom', 'office', 'garage'];
+  const SHOW = new Set(['light', 'switch', 'fan', 'climate', 'binary_sensor', 'sensor', 'cover', 'media_player']);
+  const el = (tag, text, cls) => { const n = document.createElement(tag); if (text !== undefined) n.textContent = text; if (cls) n.className = cls; return n; };
+  const title = (s) => s.replace(/_/g, ' ').replace(/^\w/, (c) => c.toUpperCase());
+  function token() {
+    try {
+      const raw = localStorage.getItem('fixwright.household.v2:' + location.origin);
+      const v = raw ? JSON.parse(raw) : null;
+      return v && typeof v.token === 'string' ? v.token : null;
+    } catch { return null; }
+  }
+  function chip(e) {
+    if (e.state === 'unavailable') return ['Offline', 'offline'];
+    if (e.physical && typeof e.physical.batteryPct === 'number' && e.physical.batteryPct < 15) return ['Battery ' + Math.round(e.physical.batteryPct) + '%', 'offline'];
+    if (e.state === 'on') return ['On', 'on'];
+    if (e.state === 'off') return ['Off', ''];
+    return [title(String(e.state)), ''];
+  }
+  async function load() {
+    const t = token();
+    const res = await fetch('/demo/state', { headers: t ? { authorization: 'Bearer ' + t } : {} });
+    if (!res.ok) { document.getElementById('foot').textContent = 'The house did not answer just now. Try Refresh in a moment.'; return; }
+    const d = await res.json();
+    const devices = (d.entities || []).filter((e) => SHOW.has(e.domain) && e.area);
+    const online = devices.filter((e) => e.state !== 'unavailable').length;
+    const on = devices.filter((e) => e.state === 'on').length;
+    const summary = document.getElementById('summary');
+    summary.replaceChildren(...[
+      [devices.length, 'devices'], [online, 'answering'], [devices.length - online, 'offline'], [on, 'switched on'], [(d.active_faults || []).length, 'things to look at'],
+    ].map(([n, label]) => { const s = el('div', undefined, 'stat'); s.append(el('b', String(n)), el('span', label, 'muted')); return s; }));
+    const rooms = document.getElementById('rooms');
+    rooms.replaceChildren(...ROOMS.map((r) => {
+      const box = el('div', undefined, 'room');
+      box.append(el('h2', title(r)));
+      const list = devices.filter((e) => e.area === r).sort((a, b) => a.name.localeCompare(b.name));
+      if (!list.length) box.append(el('p', 'No devices here.', 'muted'));
+      for (const e of list) {
+        const row = el('div', undefined, 'dev');
+        const [label, cls] = chip(e);
+        const c = el('span', undefined, 'chip ' + cls);
+        c.append(el('span', undefined, 'dot'), el('span', label));
+        row.append(el('span', e.name), c);
+        box.append(row);
+      }
+      return box;
+    }));
+    const issues = document.getElementById('issues');
+    const faults = d.active_faults || [];
+    issues.replaceChildren(...(faults.length ? faults.map((f) => el('li', ISSUE_TEXT[f] || title(f))) : [el('li', 'Nothing right now.', 'muted')]));
+    const prot = document.getElementById('protected');
+    const p = d.protected || [];
+    prot.replaceChildren(...(p.length ? p.map((x) => el('li', x.name + (x.reason ? '. ' + x.reason : ''))) : [el('li', 'None yet. Say “protect” and a device name in the demo.', 'muted')]));
+    const recent = document.getElementById('recent');
+    const items = [];
+    for (const r of (d.repairs || []).slice(-5)) items.push(el('li', 'Repair ' + (r.state || r.status || '') + (r.label ? ', ' + r.label : '')));
+    for (const m of (d.pushes || []).slice(-5)) items.push(el('li', m.message || m.text || m.title || 'Message sent'));
+    recent.replaceChildren(...(items.length ? items : [el('li', 'Nothing yet. Fix something in the demo and it shows up here.', 'muted')]));
+    const when = new Date(d.now);
+    document.getElementById('foot').textContent = 'Simulated house time ' + when.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', timeZone: d.tz || 'America/Los_Angeles' }) + '. ' + (t ? 'This is the same house as your demo tab.' : 'Open the demo first to get your own house; this is the shared demo house.');
+  }
+  document.getElementById('refresh').addEventListener('click', () => { load().catch(() => {}); });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) load().catch(() => {}); });
+  load().catch(() => { document.getElementById('foot').textContent = 'The house did not answer just now. Try Refresh in a moment.'; });
+})();
+</script>
+</body>
+</html>

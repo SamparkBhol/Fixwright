@@ -110,6 +110,10 @@ button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid 
 .conn[data-status='error']::before { background: var(--fault); border-color: var(--fault); }
 .about-link { padding: 8px 2px; border: 0; background: none; font-size: 16px; font-weight: 500; cursor: pointer; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 4px; }
 .about-link:hover { text-decoration-color: currentColor; }
+.dash-link { padding: 8px 2px; font-size: 16px; font-weight: 500; color: inherit; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 4px; }
+.dash-link:hover { text-decoration-color: currentColor; }
+.guide-steps { margin: 0 0 10px; padding-left: 20px; }
+.guide-steps li { margin: 0 0 6px; }
 
 .layout { display: grid; grid-template-columns: minmax(0, 1fr) clamp(440px, 31vw, 500px); height: calc(100vh - 56px); }
 p, li { text-wrap: pretty; }
