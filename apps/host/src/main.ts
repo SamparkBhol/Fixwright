@@ -27,7 +27,11 @@ const topbar = h(
   { class: 'topbar' },
   h('span', { class: 'wordmark', text: 'Fixwright' }),
   h('p', { class: 'banner', id: 'honesty-banner' }, h('span', { text: 'Alexa+ host simulated. Live MCP server: ' }), bannerUrl, h('span', { text: ' (' }), bannerProto, h('span', { text: ').' })),
-  h('div', { class: 'top-actions' }, status, h('a', { class: 'dash-link', href: '/dashboard.html', target: '_blank', rel: 'noopener', text: 'Dashboard' }), about),
+  h('div', { class: 'top-actions' }, status, h('a', { class: 'dash-link', href: '/dashboard.html', target: '_blank', rel: 'noopener', text: 'Dashboard' }), about, h('button', { type: 'button', class: 'about-link', text: 'About', onclick: () => {
+    app.setTab('about');
+    const heads = Array.from(document.querySelectorAll('[data-panel="about"] h3'));
+    heads.find((el) => el.textContent === 'What is real')?.scrollIntoView({ block: 'start' });
+  } })),
 );
 
 const stage = h('main', { class: 'stage', id: 'stage' });
