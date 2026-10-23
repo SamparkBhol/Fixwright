@@ -140,7 +140,6 @@ Fixwright never touches locks, garage doors or alarms, never switches off a prot
 | `apps/sandbox` | Sandbox Worker for the views' second origin |
 | `bench` | HomeTruth benchmark and the LLM baselines |
 | `skills` | Agent Skill |
-| `video` | The pipeline that records and narrates the demo video |
 | `e2e`, `scripts` | End to end tests and the local dev stack |
 
 Builder notes for the Alexa+ team are in `FRICTION_LOG.md` and `PRODUCT_FEEDBACK.md`.

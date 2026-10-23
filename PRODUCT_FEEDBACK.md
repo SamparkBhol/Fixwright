@@ -86,12 +86,12 @@ adapter. zod schemas become `inputSchema` and `outputSchema`. The client runs in
 tool call measured 7.2 to 18.3 ms at p50 in the browser.
 
 **What needs work.** The 2025 era leg answers only with SSE and returns 406 unless `Accept` lists both media
-types. Schemas are converted to JSON Schema on every request (p95 6.04 to 7.31 ms with the prototype's 12 tools in
+types. Schemas are converted to JSON Schema on every request (p95 6.04 to 7.31 ms with the spike's 12 tools in
 Node), a real risk on a 10 ms CPU budget until I cached them per isolate. The client opens a standalone GET
 that a stateless server must refuse with 405, which Chromium logs as an error on every connect. "Legacy" for
 the version Alexa+ documents is a naming trap.
 
-**Onboarding.** Fast. On day one, the first server prototype had a server on `wrangler dev` answering `initialize` at
+**Onboarding.** Fast. On day one, spike A had a server on `wrangler dev` answering `initialize` at
 2025-11-25 and `tools/list` with 12 tools, and the Node client calling them, all checked by a gate script
 that reruns in about 40 s.
 
@@ -114,7 +114,7 @@ tool's visibility, so a model only tool was callable from a view. zod triggers o
 load under the default CSP until jitless mode is set before zod loads. Each view is about 400 to 410 KB,
 almost all of it one inlined script, and Alexa+ view size limits are not documented.
 
-**Onboarding.** Good. The MCP Apps prototype rendered a view inside the nested sandbox on a third origin from
+**Onboarding.** Good. Spike C rendered a view inside the nested sandbox on a third origin from
 `structuredContent`, and a "Fix it" tap in the view made a tool call round trip in 8.3 ms, on day one
 (22 of 22 checks).
 
@@ -139,7 +139,7 @@ Global scope forbids the synthetic request I wanted for SDK warm up. `wrangler d
 and a Local Explorer that about doubled local CPU per request until I turned it off
 (`X_LOCAL_OBSERVABILITY=false`, `X_LOCAL_EXPLORER=false`).
 
-**Onboarding.** Smooth, because local dev needs no account. The first server prototype had a Durable Object writing rows and
+**Onboarding.** Smooth, because local dev needs no account. Spike A had a Durable Object writing rows and
 firing an alarm 2 to 4 ms late on day one. Deploying still waits on an account, so Cloudflare's own CPU
 accounting is not measured yet; locally, workerd used 9.091 ms of CPU per HTTP request on average over 50
 golden runs under a load average of 10.8 to 12.4.
@@ -167,7 +167,7 @@ are lower cased (a guard that compares ids as given can be bypassed), integratio
 regardless of the entity named, and template entities can carry a stale logbook context.
 
 **Onboarding.** Good once the path was found: installed without Docker through uv on CPython 3.14.7, the first
-HTTP answer came about 1 s after launch, and the Home Assistant prototype's whole gate (boot, onboard, test, stop) runs in 20 to
+HTTP answer came about 1 s after launch, and spike E's whole gate (boot, onboard, test, stop) runs in 20 to
 23 s. Two dependencies had no wheels for Python 3.14 and compiled from source.
 
 **Build with it again: Yes**, because it is the one open hub whose APIs expose enough to diagnose a fault and
@@ -239,6 +239,26 @@ next to the MCP server they describe.
 
 **Recommendation.** A way to check a skill against a recorded conversation, not only its frontmatter.
 
+## GitHub Actions
+
+**Used for.** `ci.yml` (every workspace's check and the golden path e2e), `ha-integration.yml` (the Home
+Assistant beat against the official container, pinned by digest) and `uptime.yml` (probes the deployed
+server every 3 hours and opens an issue when it fails).
+
+**What worked well.** Actions pinned by commit SHA. On 17 October, actionlint 1.7.12 with shellcheck found 0
+problems in all three workflows, and the probe script was tested locally against the dev stack.
+
+**What needs work.** Nothing I can rate yet from GitHub itself: the repo is not pushed, so the workflows have
+not run on GitHub. A container service with host networking, which the Home Assistant job uses, could not be
+rehearsed on this VM.
+
+**Onboarding.** Familiar.
+
+**Build with it again: Yes**, because free CI and a scheduled probe are what keep a demo endpoint honest
+through judging.
+
+**Recommendation.** A local runner for scheduled workflows in the official tooling, so they can be checked
+before the first push.
 
 ## zod 4.6.5
 
@@ -246,7 +266,7 @@ next to the MCP server they describe.
 validating the LLM's answers in the benchmark.
 
 **What worked well.** One schema gives the TypeScript type, the runtime check and the JSON Schema. Converting
-24 schemas with `z.toJSONSchema` took 0.605 ms at p50 in the first server prototype.
+24 schemas with `z.toJSONSchema` took 0.605 ms at p50 in spike A.
 
 **What needs work.** zod probes `new Function` when a schema is created, which raises a CSP violation in a
 view unless jitless is set before zod is first touched. Its classic entry re-exports every locale, about
@@ -279,6 +299,7 @@ template itself, with its own escapes for `</script` and `<!--`.
 
 ## vitest 5.0.2
 
+**Used for.** All 2,057 tests across the workspaces (`docs/integration/CHECK.txt`), the views' 247 visual
 tests in a second config, and tags that make the live Home Assistant tests opt in.
 
 **What worked well.** Tags made the integration tests opt in, and the same runner handles unit, browser
@@ -296,7 +317,7 @@ peer by hand.
 
 ## TypeScript 6.0.3 and Node 22 type stripping
 
-**Used for.** Every package, strict, ESM. Node 22 runs the `.ts` scripts directly (bench, video, scripts).
+**Used for.** Every package, strict, ESM. Node 22 runs the `.ts` scripts directly (bench, scripts).
 
 **What worked well.** One strict contract package (`@fixwright/protocol`) shared by every module, and
 running `.ts` with Node needs no build step.
@@ -314,13 +335,12 @@ tool's input and output.
 ## Playwright 1.63.0
 
 **Used for.** The golden path e2e on four device classes, the views' visual tests, the screenshots and the
-video capture.
+visual tests.
 
 **What worked well.** Headless Chromium drove the whole product end to end: a host page, a sandbox on a
 second origin, views in a nested iframe, the golden path on four device classes, 11 of 11 tests with zero
 console errors, plus 247 visual tests of the views. `page.clock` made the host's timers deterministic.
 
-**What needs work.** `recordVideo` is fixed at 25 fps, VP8 at 1 Mbit/s. `page.clock` does not cover CSS
 animations. A click inside a double sandboxed view resolves before the view's `postMessage` reaches the host,
 so a test has to wait for a host side marker before it checks the result.
 
@@ -328,40 +348,6 @@ so a test has to wait for a host side marker before it checks the result.
 
 **Build with it again: Yes**, because it drove a three origin app end to end, headless.
 
-**Recommendation.** Quality and frame rate options for `recordVideo`.
-
-## Kokoro (`kokoro-js` 1.2.1)
-
-**Used for.** The demo video's voices, generated rather than recorded, with voices that do not imitate Alexa.
-
-**What worked well.** Good quality speech on CPU with no account or key. In the video prototype two voices were clearly
-different and generated at about a fifth of real time.
-
-**What needs work.** Input over 512 tokens is truncated silently. There is no thread option, and ONNX Runtime
-prints affinity errors in containers. The q8 model is about 4 times slower than fp32 on x86.
-
-**Onboarding.** One npm package and a model download from Hugging Face; the first clip worked in the prototype.
-
-**Build with it again: Yes**, because it gives a free, local narrator, as long as the text goes in one
-sentence at a time.
-
-**Recommendation.** Throw on overlong input instead of truncating.
-
-## ffmpeg-static 5.3.0
-
-**Used for.** Composing the demo video: frames, narration and burned in captions.
-
-**What worked well.** A full ffmpeg from npm with no system install, which is how the video prototype composed
-its clip on a machine where I could not install system packages. libass subtitles work for burned in
-captions.
-
-**What needs work.** The `drawtext` filter is missing even though freetype is enabled.
-
-**Onboarding.** Immediate; the binary path comes from the package.
-
-**Build with it again: Yes**, because it makes video work reproducible from `npm ci` alone.
-
-**Recommendation.** Include `drawtext`, or list the enabled filters in the README.
 
 ## Atkinson Hyperlegible Next and Mono (via `@fontsource` 5.3.0)
 

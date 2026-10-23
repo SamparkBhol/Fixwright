@@ -23,7 +23,7 @@ several installs could run at once in one checkout, wrap each in `flock .tmp/npm
 | typescript | 6.0.3 | root dev |
 | vitest | 5.0.2 | root dev |
 | esbuild | 0.28.2 | root dev |
-| playwright | 1.63.0 | root dev, video |
+| playwright | 1.63.0 | root dev |
 | wrangler | 4.144.0 | root dev, server dev, sandbox dev |
 | @types/node | 22.20.4 | root dev |
 | zod | 4.6.5 (import from `zod/v4`) | protocol, server, views, host, bench |
@@ -33,8 +33,6 @@ several installs could run at once in one checkout, wrap each in `flock .tmp/npm
 | @modelcontextprotocol/ext-apps | 2.0.3 | server, views, host (protocol dev) |
 | @cloudflare/workers-types | 5.20260929.1 | server dev, sandbox dev |
 | @strands-agents/sdk | 1.19.0 | bench |
-| kokoro-js | 1.2.1 | video |
-| ffmpeg-static | 5.3.0 | video |
 
 ## Extra pins (newest release at least 14 days old on 15 Oct 2026, or the version an earlier prototype already tested)
 
@@ -44,7 +42,6 @@ several installs could run at once in one checkout, wrap each in `flock .tmp/npm
 | openai | 6.49.0 | 2026-07-23 | bench | Strands' OpenAI-compatible model provider (for local llama.cpp) needs `openai@^6.45.0`; 6.49.0 is the newest 6.x. |
 | @modelcontextprotocol/sdk | 1.31.0 | 2026-09-28 | bench | Required peer of @strands-agents/sdk 1.19.0 (`^1.25.2`). |
 | @opentelemetry/api | 1.9.1 | 2026-03-25 | bench | Required peer of @strands-agents/sdk 1.19.0 (`^1.9.0`). |
-| @huggingface/transformers | 3.8.1 | 2025-12-02 | video | `video/tts.ts` imports it directly to set ONNX thread counts; the same version kokoro-js 1.2.1 resolves. |
 
 ## Workspace packages used by other workspaces
 
@@ -72,6 +69,6 @@ resolve to a satisfying version.
 
 - `npm install` at the root: 287 packages added in 11.2 s.
 - `node_modules`: 1.2 GB (largest: onnxruntime-node 536 MB, @cloudflare 131 MB, onnxruntime-web 92 MB,
-  ffmpeg-static 77 MB).
+  
 - Playwright 1.63.0 uses the preinstalled Chromium 153.0.8010.12 (build 1243) in `PLAYWRIGHT_BROWSERS_PATH`;
   the browsers folder stayed at 658 MB with the same three entries, so nothing was downloaded.

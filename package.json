@@ -8,8 +8,7 @@
   "workspaces": [
     "packages/*",
     "apps/*",
-    "bench",
-    "video"
+    "bench"
   ],
   "engines": {
     "node": ">=22.18"
@@ -24,7 +23,7 @@
     "e2e": "bash scripts/e2e.sh golden",
     "e2e:ha": "bash scripts/e2e.sh ha",
     "e2e:latency": "node --no-warnings e2e/latency.ts",
-    "mcp:plain": "node --no-warnings video/src/plain-mcp.ts"
+    "mcp:plain": "node --no-warnings scripts/plain-mcp.ts"
   },
   "devDependencies": {
     "@types/node": "22.20.4",
