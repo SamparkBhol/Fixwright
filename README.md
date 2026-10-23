@@ -1,8 +1,8 @@
 # Fixwright: self hosted MCP server (MCP spec 2025-11-25, Streamable HTTP) for Alexa+
 **The home doctor for Alexa+. It finds the real fault, proves it, and fixes it, so nobody has to delete their smart home and start over.**
 
-- Live MCP endpoint: `not deployed yet (run it locally with npm run dev:up)`
-- Host simulator: `not deployed yet (run it locally with npm run dev:up)/`, health check: `not deployed yet (run it locally with npm run dev:up)/health`
+- Live MCP endpoint: `https://fixwright.sampark-bhol.workers.dev/mcp`
+- Host simulator: `https://fixwright.sampark-bhol.workers.dev/`, health check: `https://fixwright.sampark-bhol.workers.dev/health`
 - Demo video: https://youtu.be/wprZUWRlDCs
 - Test house: [homefault](https://github.com/SamparkBhol/Fixwright/tree/main/packages/homefault), a separate MIT project with its own repo, used here as a git
   submodule pinned to `v0.1.0`
@@ -16,8 +16,8 @@ split is [below](#what-is-real-and-what-is-simulated).
 
 The live demo needs no login, no token and no install.
 
-- Host simulator: not deployed yet (run it locally with npm run dev:up)
-- MCP endpoint: not deployed yet (run it locally with npm run dev:up) (MCP 2025-11-25, Streamable HTTP)
+- Host simulator: https://fixwright.sampark-bhol.workers.dev
+- MCP endpoint: https://fixwright.sampark-bhol.workers.dev/mcp (MCP 2025-11-25, Streamable HTTP)
 
 The host gives each browser its own demo house on first load. An MCP client that sends no token uses a
 shared demo house that starts over every hour.
@@ -50,8 +50,8 @@ The plain client, from a clone of this repo, with no MCP SDK (`initialize`, `too
 
 ```sh
 npm ci
-npm run mcp:plain -- not deployed yet (run it locally with npm run dev:up)
-curl not deployed yet (run it locally with npm run dev:up)/health
+npm run mcp:plain -- https://fixwright.sampark-bhol.workers.dev/mcp
+curl https://fixwright.sampark-bhol.workers.dev/health
 ```
 
 ## The problem
