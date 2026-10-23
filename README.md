@@ -3,7 +3,7 @@
 
 - Live MCP endpoint: `not deployed yet (run it locally with npm run dev:up)`
 - Host simulator: `not deployed yet (run it locally with npm run dev:up)/`, health check: `not deployed yet (run it locally with npm run dev:up)/health`
-- Demo video: the video linked on the Devpost page
+- Demo video: https://youtu.be/wprZUWRlDCs
 - Test house: [homefault](https://github.com/SamparkBhol/Fixwright/tree/main/packages/homefault), a separate MIT project with its own repo, used here as a git
   submodule pinned to `v0.1.0`
 - License: MIT
