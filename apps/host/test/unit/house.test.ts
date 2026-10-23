@@ -36,10 +36,11 @@ function stateBody(flashed: boolean): unknown {
 const roomsOf = (flashed: boolean): HouseRoom[] => readHouse(stateBody(flashed)).rooms ?? [];
 
 describe('house plan', () => {
-  it('draws six rooms with one dot per light, switch or fan, and skips sensors, unknown rooms and disabled entities', () => {
+  it('draws the known rooms plus any new area in the data, one dot per light, switch or fan, and skips sensors and disabled entities', () => {
     const { rooms, clock } = readHouse(stateBody(false));
-    expect(rooms?.map((r) => r.name)).toEqual(['Garage', 'Kitchen', 'Hallway', 'Living room', 'Office', 'Bedroom']);
-    expect(rooms?.flatMap((r) => r.dots).length).toBe(houseFx.entities.length);
+    expect(rooms?.map((r) => r.name)).toEqual(['Garage', 'Kitchen', 'Hallway', 'Living room', 'Office', 'Bedroom', 'Attic']);
+    expect(rooms?.flatMap((r) => r.dots).length).toBe(houseFx.entities.length + 1);
+    expect(rooms?.find((r) => r.id === 'attic')?.dots.map((d) => d.entityId)).toEqual(['light.attic']);
     const hallway = rooms?.find((r) => r.id === 'hallway')?.dots.map((d) => [d.entityId, d.state]);
     expect(hallway).toContainEqual(['light.hallway_lamp', 'unavailable']);
     expect(hallway?.some(([id]) => id === 'binary_sensor.hall_motion' || id === 'light.porch_old')).toBe(false);

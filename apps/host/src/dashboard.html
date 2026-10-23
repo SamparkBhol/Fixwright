@@ -95,8 +95,9 @@ footer { margin-top: 24px; color: var(--soft); font-size: 14px; }
     summary.replaceChildren(...[
       [devices.length, 'devices'], [online, 'answering'], [devices.length - online, 'offline'], [on, 'switched on'], [(d.active_faults || []).length, 'things to look at'],
     ].map(([n, label]) => { const s = el('div', undefined, 'stat'); s.append(el('b', String(n)), el('span', label, 'muted')); return s; }));
+    const areas = [...ROOMS.filter((r) => devices.some((e) => e.area === r)), ...[...new Set(devices.map((e) => e.area))].filter((r) => !ROOMS.includes(r)).sort()];
     const rooms = document.getElementById('rooms');
-    rooms.replaceChildren(...ROOMS.map((r) => {
+    rooms.replaceChildren(...areas.map((r) => {
       const box = el('div', undefined, 'room');
       box.append(el('h2', title(r)));
       const list = devices.filter((e) => e.area === r).sort((a, b) => a.name.localeCompare(b.name));

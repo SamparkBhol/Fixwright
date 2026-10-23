@@ -315,7 +315,7 @@ export function mountConsole(root: HTMLElement, app: HostApp): void {
         'Open Break my house to cause any fault, reset the house or jump to the next morning, then ask again.',
       ].map((t) => h('li', { text: t })),
     ),
-    h('p', { class: 'muted', text: 'The strip under the screen is your house. Amber means on, an empty circle means off, red means offline. Switch devices with the icons above the screen, and open the dashboard from the top bar for the whole house at a glance.' }),
+    h('p', { class: 'muted', text: 'The strip under the screen is your house, built from the house data. Amber means on, an empty circle means off, red means offline. Tap a device to switch it, or to diagnose it when it is offline. Tap a room name for a checkup of that room. Open the dashboard from the top bar for the whole house at a glance.' }),
     h('h3', { class: 'section', text: 'What is real' }),
     h(
       'ul',

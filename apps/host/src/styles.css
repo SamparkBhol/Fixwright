@@ -382,6 +382,10 @@ p, li { text-wrap: pretty; }
 .stage[data-wall-ready='true'] .room + .room::before { transition: background-color 1200ms ease; }
 .room-name { font-size: 13px; color: var(--on-wall-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .room[data-focus='true'] .room-name { color: var(--on-wall); font-weight: 700; }
+.room-name[role='button'], .dot[role='button'] { cursor: pointer; }
+.room-name[role='button']:hover { color: var(--on-wall); text-decoration: underline; text-underline-offset: 3px; }
+.dot[role='button']:hover { transform: scale(1.25); }
+.room-name[role='button']:focus-visible, .dot[role='button']:focus-visible { outline: 2px solid var(--on-wall); outline-offset: 2px; }
 .room-dots { display: flex; flex-wrap: wrap; gap: 6px 8px; }
 .dot {
   display: inline-block; flex: none; width: 13px; height: 13px; border-radius: 999px;

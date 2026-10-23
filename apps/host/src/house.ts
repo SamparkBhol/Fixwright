@@ -113,21 +113,32 @@ function switchTimes(physical: unknown): number[] {
     .sort((a, b) => a - b);
 }
 
+/** "dining_room" reads as "Dining room". */
+export function roomName(area: string): string {
+  const words = area.replace(/[_-]+/g, ' ').trim();
+  return words ? words[0]!.toUpperCase() + words.slice(1).toLowerCase() : area;
+}
+
 export function readHouse(body: unknown): HouseRead {
   const o = (body ?? {}) as Record<string, unknown>;
   const list = Array.isArray(o['entities']) ? (o['entities'] as unknown[]) : null;
   let rooms: HouseRoom[] | null = null;
   if (list) {
     const byArea = new Map<string, HouseDot[]>(ROOMS.map((r) => [r.id, []]));
+    const names = new Map<string, string>(ROOMS.map((r) => [r.id, r.name]));
     for (const raw of list) {
       const e = (raw ?? {}) as Record<string, unknown>;
       const id = str(e['entity_id']);
       const domain = str(e['domain']) ?? (id ? id.split('.')[0] : null);
       const area = str(e['area']);
       if (!id || !domain || !PLAN_DOMAINS.has(domain) || !area || e['disabled'] === true) continue;
+      if (!byArea.has(area)) {
+        byArea.set(area, []);
+        names.set(area, roomName(str(e['area_name']) ?? area));
+      }
       byArea.get(area)?.push({ entityId: id, name: str(e['name']) ?? id, state: dotState(str(e['state']) ?? ''), switched: switchTimes(e['physical']) });
     }
-    rooms = ROOMS.map((r) => ({ id: r.id, name: r.name, dots: byArea.get(r.id) ?? [] }));
+    rooms = [...byArea].map(([id, dots]) => ({ id, name: names.get(id) ?? roomName(id), dots }));
   }
   const c = o['clock'] as Record<string, unknown> | undefined;
   const clock: HouseClock | null =

@@ -85,6 +85,21 @@ export function mountHouse(root: HTMLElement, stage: HTMLElement, app: HostApp, 
     changedKey.hidden = [...changed].every((id) => answered.has(id) || !dots.has(id));
   }
 
+  // A tap on the plan says what a person would say, so it runs through the same router and tools as typing.
+  function tapTarget(el: HTMLElement, utterance: () => string): void {
+    const go = (): void => {
+      if (app.store.get().busy) return;
+      void app.say(utterance(), 'tap');
+    };
+    el.addEventListener('click', go);
+    el.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter' || ev.key === ' ') {
+        ev.preventDefault();
+        go();
+      }
+    });
+  }
+
   // Room widths follow the most dots a room has held, so retiring a device never moves the walls.
   const most = new Map<string, number>();
   function build(rooms: readonly HouseRoom[]): void {
@@ -92,13 +107,21 @@ export function mountHouse(root: HTMLElement, stage: HTMLElement, app: HostApp, 
     plan.replaceChildren(
       ...rooms.map((r) => {
         most.set(r.id, Math.max(most.get(r.id) ?? 0, r.dots.length));
-        const room = h('div', { class: 'room', 'data-room': r.id, style: `--weight:${(most.get(r.id) ?? 0) + 3}` }, h('span', { class: 'room-name', text: r.name }));
+        const label = h('span', { class: 'room-name', role: 'button', tabindex: '0', title: `Check up on the ${r.name.toLowerCase()}`, text: r.name });
+        tapTarget(label, () => `Run a checkup on the ${r.name.toLowerCase()}`);
+        const room = h('div', { class: 'room', 'data-room': r.id, style: `--weight:${(most.get(r.id) ?? 0) + 3}` }, label);
         room.append(
           h(
             'span',
             { class: 'room-dots' },
             ...r.dots.map((d) => {
-              const el = h('i', { class: 'dot', role: 'img', 'data-entity': d.entityId });
+              const el = h('i', { class: 'dot', role: 'button', tabindex: '0', 'data-entity': d.entityId });
+              tapTarget(el, () => {
+                const state = overrides.get(d.entityId) ?? dots.get(d.entityId)?.live ?? d.state;
+                const name = d.name.toLowerCase();
+                if (state === 'unavailable') return `Why is the ${name} not responding?`;
+                return state === 'on' ? `Turn off the ${name}` : `Turn on the ${name}`;
+              });
               dots.set(d.entityId, { el, room, live: d.state, name: d.name });
               return el;
             }),
