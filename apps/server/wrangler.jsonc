@@ -48,8 +48,8 @@
     // /demo/state label the clock as simulated.
     "DEMO_START": "15:00",
     // Per IP token buckets: requests per minute (burst = the same number).
-    "RATE_MCP_PER_MIN": "240",
-    "RATE_DEMO_PER_MIN": "30"
+    "RATE_MCP_PER_MIN": "600",
+    "RATE_DEMO_PER_MIN": "120"
   }
 
   // CONFIRM_SECRET is a secret (32+ characters; signs repair confirm tokens and household tokens):
