@@ -240,7 +240,7 @@ export function restoreMoment(sc: unknown, rooms: readonly HouseRoom[] | null, t
     ...relit.flatMap((x) => (x.on === undefined ? [] : [{ at: at(x.on), entityId: x.d.entityId, state: 'on' as DotState }])),
   ].sort((a, b) => a.at - b.at);
   const end = at(last) + RESTORE_HOLD_MS;
-  const line = `At ${clockWords(span.back, timeZone)} the power came back. ${lit.length} devices came on within ${seconds(last - span.back)} seconds.`;
+  const line = `At ${clockWords(span.back, timeZone)} the power came back and the house restarted.`;
   return {
     kind: 'restore',
     frames,

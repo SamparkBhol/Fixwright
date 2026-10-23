@@ -102,7 +102,7 @@ describe('the 3 a.m. restore', () => {
     expect(lit.map((f) => f.at - first)).toEqual(cameOn.map((id) => (restore[id]?.[0] ?? 0) - (restore[cameOn[0] as string]?.[0] ?? 0)));
     expect(m?.wall[0]).toEqual({ at: 0, wall: 'night' });
     expect(m?.wall.at(-1)?.wall).toBe('day');
-    expect(m?.line).toBe('At 3:12 AM the power came back. 14 devices came on within 3.4 seconds.');
+    expect(m?.line).toBe('At 3:12 AM the power came back and the house restarted.');
     expect(m?.played).toBe('Replayed in the order they were logged.');
     // While it plays, the stage label shows the time being replayed, not the house time of day.
     expect(m?.clockMs).toBe(powerBack);

@@ -491,7 +491,7 @@ describe('golden path in the host simulator', () => {
     const replay = s1.house.moment;
     expect(replay?.kind).toBe('restore');
     expect(replay?.devices.length).toBe(14);
-    expect(replay?.line).toBe('At 3:12 AM the power came back. 14 devices came on within 3.4 seconds.');
+    expect(replay?.line).toBe('At 3:12 AM the power came back and the house restarted.');
     const held = (await hook<HookSnapshot>('holdMoment', 4700)).house;
     expect(held.shown).toBe('night');
     // The night wall is the replayed 3:12 AM, and the label says so instead of the house time of day.

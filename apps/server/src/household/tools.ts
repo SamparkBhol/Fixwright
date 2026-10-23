@@ -412,6 +412,14 @@ const handlers: { [N in ToolName]: Handler<N> } = {
         });
       }
     }
+    if (entity.state === 'unavailable') {
+      return ok({
+        speech: speechSafe(`The ${lowerName(entity.name)} isn't answering right now. Ask me why it's not responding and I'll find out what's wrong.`),
+        status: 'refused',
+        ids: {},
+        source,
+      });
+    }
     const state = await switchAndRead(deps, entity, input.on);
     return ok({
       speech: speechSafe(`Done. The ${lowerName(entity.name)} is ${input.on ? 'on' : 'off'}.`),

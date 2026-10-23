@@ -57,6 +57,7 @@ export const isToolRoute = (r: Route): r is ToolRoute => 'tool' in r;
 
 export const REPLIES = {
   empty: "I didn't catch that. Tell me which device is acting up, or ask for a checkup.",
+  thanks: "You're welcome. Ask me any time something in the house acts up.",
   help: 'I find out why a device is acting up, explain something your home did, and give your house a checkup. Try: why is the hallway lamp not responding?',
   fallback:
     'I can find out why a device is acting up, explain something your home did, or give your house a checkup. Try: why is the hallway lamp not responding?',
@@ -249,6 +250,7 @@ const SWITCH_PATTERNS: ReadonlyArray<{ re: RegExp; device: number; state: number
   { re: /^(.+?) (band|off|on|chalu|chalao|jalao) (?:karo|kar do|kardo)$/, device: 1, state: 2 },
 ];
 
+const THANKS = /^(?:(?:ok|okay|great|cool|nice|perfect|awesome)\s+)?(?:thanks|thank you|thank u|thx|cheers|shukriya|dhanyavad)(?: (?:so much|a lot|alexa|fixwright))*$/;
 const HELP = /^(?:help|what can you do|how does this work|what do you do|who are you|hi|hello|hey|namaste|good (?:morning|evening|afternoon))\b/;
 
 const ORDINALS: ReadonlyArray<[RegExp, number]> = [
@@ -424,8 +426,11 @@ function protectRoute(norm: string, state: ConversationState): Route | null {
   return null;
 }
 
+// "is anything broken?", "is everything ok?": a whole house question even without the word house.
+const CHECKUP_ANY = /\b(?:anything|something|everything) (?:broken|wrong|not working|acting up|off|ok|okay|alright|all right|fine|working)\b(?! (?:with|in|on) )|\bwhat(?:s| is) broken\b/;
+
 function checkupRoute(norm: string): ToolRoute | null {
-  if (!CHECKUP.test(norm)) return null;
+  if (!CHECKUP.test(norm) && !CHECKUP_ANY.test(norm)) return null;
   if (/\bbatteries\b/.test(norm) && !/\bcheck ?up\b/.test(norm)) return tool('home_checkup', { focus: 'batteries' }, 'checkup');
   const focus = CHECKUP_FOCUS.exec(norm)?.[1]?.trim();
   if (focus && !/^(?:(?:my |the |our |whole )*(?:house|home|place|devices|smart home))$/.test(focus)) {
@@ -708,6 +713,7 @@ export function routeUtterance(utterance: string, state: ConversationState = ini
 
   // "apply the fix" with nothing planned is "fix that" ("do it" alone stays a stray yes).
   if (FIX_THAT.test(norm) || (/\bapply\b/.test(norm) && APPLY_IT.test(norm))) return fixThatRoute(state);
+  if (THANKS.test(norm)) return reply(REPLIES.thanks, 'help');
   if (HELP.test(norm)) return reply(REPLIES.help, 'help');
   // Something waits for a yes or no: say what it is instead of the generic hint.
   if (state.pendingPlan) return planReminder(norm, state.pendingPlan);

@@ -219,7 +219,7 @@ describe('the golden path on the real stack', () => {
     const cameOn = (id: string): number => Math.min(...(house.entities.find((e) => e.entity_id === id)?.physical?.recentActuations ?? []).map((t) => Date.parse(t)).filter((t) => t >= back && t <= lastOn));
     const order = replay?.devices.map(cameOn) ?? [];
     expect(order).toEqual([...order].sort((a, b) => a - b));
-    expect(replay?.line).toBe(`At 3:12 AM the power came back. 14 devices came on within ${Math.round((lastOn - back) / 100) / 10} seconds.`);
+    expect(replay?.line).toBe('At 3:12 AM the power came back and the house restarted.');
     expect((await s.hook<HookSnapshot>('holdMoment', 4900)).house.shown).toBe('night');
     expect(await s.page.locator('.house-time').textContent()).toBe('Replaying 3:12 AM');
     await s.shot('06b-restore-replay-large');
