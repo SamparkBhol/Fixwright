@@ -76,8 +76,7 @@ hostContext reference, and give add-ons a device health signal plus a push chann
 Entries 1.1 to 1.14 are about Alexa+ and Amazon. Entries 2.1 to 2.16 are about the stack an Alexa+ MCP
 add-on is built on. Every entry gives the six fields the hackathon rules ask for: the task attempted, the
 steps taken, expected against actual, a severity rating (High, Medium or Low), the workaround used and an
-actionable suggestion. There is no screen recording, so each Timestamp gives the date (UTC) and the work
-phase, and the Appendix maps each entry to the file that holds its evidence.
+actionable suggestion. The Appendix maps each entry to the file that holds its evidence.
 
 ### 1.1 The Alexa+ CLI and Local Inspector cannot be installed
 
