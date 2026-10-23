@@ -100,6 +100,33 @@ export function mountHouse(root: HTMLElement, stage: HTMLElement, app: HostApp, 
     });
   }
 
+  // A tapped device offers the things a person can say about it; each choice goes through the router like typing.
+  const menu = h('div', { class: 'dot-menu', role: 'menu', hidden: true });
+  root.append(menu);
+  const closeMenu = (): void => { menu.hidden = true; menu.replaceChildren(); };
+  document.addEventListener('click', (ev) => { if (!menu.contains(ev.target as Node)) closeMenu(); });
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') closeMenu(); });
+  function menuTarget(el: HTMLElement, choices: () => Array<[string, string]>, name: string): void {
+    const open = (ev: Event): void => {
+      ev.stopPropagation();
+      if (app.store.get().busy) return;
+      if (!menu.hidden && menu.dataset['for'] === name) return closeMenu();
+      menu.replaceChildren(
+        h('div', { class: 'dot-menu-name', text: name }),
+        ...choices().map(([label, utterance]) => h('button', { type: 'button', role: 'menuitem', text: label, onclick: () => { closeMenu(); void app.say(utterance, 'tap'); } })),
+      );
+      menu.dataset['for'] = name;
+      const r = el.getBoundingClientRect();
+      const base = root.getBoundingClientRect();
+      menu.style.left = `${Math.max(8, Math.min(r.left - base.left, base.width - 220))}px`;
+      menu.style.top = `${r.bottom - base.top + 8}px`;
+      menu.hidden = false;
+      (menu.querySelector('button') as HTMLButtonElement | null)?.focus();
+    };
+    el.addEventListener('click', open);
+    el.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); open(ev); } });
+  }
+
   // Room widths follow the most dots a room has held, so retiring a device never moves the walls.
   const most = new Map<string, number>();
   function build(rooms: readonly HouseRoom[]): void {
@@ -116,12 +143,15 @@ export function mountHouse(root: HTMLElement, stage: HTMLElement, app: HostApp, 
             { class: 'room-dots' },
             ...r.dots.map((d) => {
               const el = h('i', { class: 'dot', role: 'button', tabindex: '0', 'data-entity': d.entityId });
-              tapTarget(el, () => {
+              menuTarget(el, () => {
                 const state = overrides.get(d.entityId) ?? dots.get(d.entityId)?.live ?? d.state;
                 const name = d.name.toLowerCase();
-                if (state === 'unavailable') return `Why is the ${name} not responding?`;
-                return state === 'on' ? `Turn off the ${name}` : `Turn on the ${name}`;
-              });
+                return [
+                  [state === 'on' ? 'Turn off' : 'Turn on', state === 'on' ? `Turn off the ${name}` : `Turn on the ${name}`],
+                  ['Why is it not responding?', `Why is the ${name} not responding?`],
+                  ['Protect it', `Protect the ${name}`],
+                ];
+              }, d.name);
               dots.set(d.entityId, { el, room, live: d.state, name: d.name });
               return el;
             }),

@@ -373,7 +373,7 @@ p, li { text-wrap: pretty; }
 /* Under the shelf: the house, the captions and the composer */
 .floor { flex: none; display: flex; flex-direction: column; gap: 12px; width: 100%; }
 
-.house { width: 100%; }
+.house { width: 100%; position: relative; }
 .plan { display: flex; min-height: 68px; border: 2px solid var(--wall-line); }
 .room { position: relative; flex: var(--weight, 1) 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 6px; padding: 6px 12px 9px; border-left: 1.5px solid var(--wall-line); }
 .room:first-child { border-left: 0; }
@@ -383,6 +383,10 @@ p, li { text-wrap: pretty; }
 .room-name { font-size: 13px; color: var(--on-wall-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .room[data-focus='true'] .room-name { color: var(--on-wall); font-weight: 700; }
 .room-name[role='button'], .dot[role='button'] { cursor: pointer; }
+.dot-menu { position: absolute; z-index: 30; min-width: 200px; padding: 8px; border-radius: 12px; background: var(--paper, #EEF2F1); color: var(--ink, #1C2228); border: 1px solid var(--rule); box-shadow: 0 10px 30px rgba(0,0,0,0.18); display: flex; flex-direction: column; gap: 4px; }
+.dot-menu-name { font-size: 13px; padding: 2px 8px 6px; color: var(--text-3, #4A555D); }
+.dot-menu button { font: inherit; font-size: 15px; text-align: left; padding: 9px 10px; border-radius: 8px; border: 0; background: transparent; color: inherit; cursor: pointer; }
+.dot-menu button:hover, .dot-menu button:focus-visible { background: rgba(0,0,0,0.08); outline: none; }
 .room-name[role='button']:hover { color: var(--on-wall); text-decoration: underline; text-underline-offset: 3px; }
 .dot[role='button']:hover { transform: scale(1.25); }
 .room-name[role='button']:focus-visible, .dot[role='button']:focus-visible { outline: 2px solid var(--on-wall); outline-offset: 2px; }
