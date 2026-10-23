@@ -121,6 +121,10 @@ The LLM baselines in HomeTruth run on the Strands Agents SDK for TypeScript. `be
 
 `skills/fixwright-home-triage/SKILL.md` teaches any agent the checkup, diagnose, plan, yes, apply and status flow, how to ask for consent, the protected load rule, and how to phrase replies for a voice only speaker.
 
+## Security
+
+Fixwright never touches locks, garage doors or alarms, never switches off a protected device, and changes nothing without an explicit yes. Repairs use signed single use confirm tokens and run each step at most once with read back and rollback. Every household is isolated in its own Durable Object, linked hub tokens are encrypted with AES-GCM, and the server checks origins, rate limits requests and sends strict security headers. Details are in `SECURITY.md`.
+
 ## Repository map
 
 | Path | What it is |

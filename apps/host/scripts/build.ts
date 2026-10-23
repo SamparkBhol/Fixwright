@@ -45,6 +45,7 @@ await build({
 });
 await copyFile(join(root, 'src', 'index.html'), join(dist, 'index.html'));
 await copyFile(join(root, 'src', 'dashboard.html'), join(dist, 'dashboard.html'));
+await copyFile(join(root, 'src', '_headers'), join(dist, '_headers'));
 await mkdir(join(dist, 'fonts'), { recursive: true });
 for (const f of await readdir(join(root, 'src', 'fonts'))) {
   if (f.endsWith('.txt')) await copyFile(join(root, 'src', 'fonts', f), join(dist, 'fonts', f));

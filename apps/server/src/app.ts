@@ -16,6 +16,19 @@ import { issueHouseholdToken, PUBLIC_HOUSEHOLD, verifyHouseholdToken } from './l
 import { makeMcpHandler, type ToolPort } from './mcp/server.ts';
 import { PROTOCOL_VERSION, VERSION } from './version.ts';
 
+// The sandbox proxy reads document.referrer to check who embeds it, so the referrer policy must keep sending the origin.
+const API_SECURITY_HEADERS: Record<string, string> = {
+  'x-content-type-options': 'nosniff',
+  'strict-transport-security': 'max-age=31536000',
+};
+const PAGE_SECURITY_HEADERS: Record<string, string> = {
+  ...API_SECURITY_HEADERS,
+  'referrer-policy': 'strict-origin-when-cross-origin',
+  'x-frame-options': 'DENY',
+  'permissions-policy': 'microphone=(self), camera=(), geolocation=(), payment=(), usb=()',
+  'cross-origin-opener-policy': 'same-origin',
+};
+
 const MCP_PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Fixwright MCP server</title><style>body{font-family:system-ui,sans-serif;max-width:640px;margin:12vh auto;padding:0 20px;color:#1C2228;background:#EEF2F1;line-height:1.5}a{color:#1C2228}code{background:#fff;padding:2px 6px;border-radius:6px}</style></head><body><h1>Fixwright MCP server</h1><p>This address is the live MCP endpoint (spec 2025-11-25, Streamable HTTP). Alexa+ and other MCP clients talk to it with POST requests, so there is nothing to see here in a browser.</p><p>To try Fixwright, open the <a href="/">live demo</a>.</p><p>To call it from code, point any MCP client at <code>/mcp</code> on this host.</p></body></html>`;
 
 export interface Platform {
@@ -44,11 +57,11 @@ export function createApp(platform: Platform, cfgOf: () => Config): (request: Re
   return async function handle(request: Request): Promise<Response> {
     const cfg = cfgOf();
     const url = new URL(request.url);
-    if (!API.test(url.pathname)) return platform.assets(request);
+    if (!API.test(url.pathname)) return withHeaders(await platform.assets(request), PAGE_SECURITY_HEADERS);
 
     const decision = decideOrigin(request.headers.get('origin'), url.origin, cfg.allowedOrigins);
     const cors = corsHeaders(decision);
-    const done = (r: Response): Response => withHeaders(r, cors);
+    const done = (r: Response): Response => withHeaders(r, { ...API_SECURITY_HEADERS, ...cors });
 
     if (!hostAllowed(request.headers.get('host'), cfg.hostPatterns)) return done(rpcError(403, 'Host not allowed.'));
     if (decision.kind === 'rejected') return done(rpcError(403, 'Origin not allowed.'));
