@@ -4,7 +4,7 @@
 import type { CallToolResult, Tool } from '@modelcontextprotocol/client';
 import type { McpUiHostContext } from '@modelcontextprotocol/ext-apps/app-bridge';
 import type { ToolName } from '@fixwright/protocol';
-import { applyResult, consentOf, initialState, isToolRoute, REPLIES, repairForText, routeUtterance, type Intent, type Route, type ToolRoute } from '@fixwright/router';
+import { applyResult, consentOf, initialState, isToolRoute, REPLIES, repairForText, routeUtterance, type ConversationState, type Intent, type Route, type ToolRoute } from '@fixwright/router';
 import { approvalFor, tapWords } from './approval.ts';
 import { createClock, type HostClock } from './clock.ts';
 import type { HostConfig } from './config.ts';
@@ -60,6 +60,8 @@ export interface HostApp {
   readonly listener: Listener;
   ready(): Promise<void>;
   say(text: string, via?: TranscriptEntry['via']): Promise<void>;
+  /** Forget the saved conversation and start the transcript fresh. */
+  clearHistory(): void;
   setDevice(device: DeviceClass): Promise<void>;
   setTheme(theme: Theme): void;
   setTab(tab: TabId): void;
@@ -108,6 +110,31 @@ export function createHostApp(config: HostConfig): HostApp {
   const spoken: string[] = [];
   let session: McpSession | null = null;
   let entryId = 0;
+  // The conversation outlives a reload, like any chat, so the person can come back to a diagnosis in progress.
+  const historyKey = `fixwright.history.v1:${new URL(config.serverUrl, location.href).origin}`;
+  type SavedHistory = { transcript: TranscriptEntry[]; conversation: ConversationState | null };
+  function loadHistory(): SavedHistory {
+    const none: SavedHistory = { transcript: [], conversation: null };
+    if (config.testMode) return none;
+    try {
+      const raw = browserStorage()?.getItem(historyKey);
+      const v = raw ? (JSON.parse(raw) as Partial<SavedHistory>) : null;
+      if (!v || !Array.isArray(v.transcript)) return none;
+      entryId = v.transcript.reduce((m, e) => Math.max(m, Number(e.id) || 0), 0);
+      return { transcript: v.transcript.slice(-200), conversation: v.conversation && typeof v.conversation === 'object' ? v.conversation : null };
+    } catch {
+      return none;
+    }
+  }
+  const saved = loadHistory();
+  function saveHistory(s: AppState): void {
+    if (config.testMode) return;
+    try {
+      browserStorage()?.setItem(historyKey, JSON.stringify({ transcript: s.transcript.slice(-200), conversation: s.conversation }));
+    } catch {
+      // storage unavailable: the conversation lives for this page only
+    }
+  }
   let logId = 0;
   let inflight = 0;
   let idleWaiters: Array<() => void> = [];
@@ -140,7 +167,7 @@ export function createHostApp(config: HostConfig): HostApp {
     theme: config.theme,
     tab: 'conversation',
     connection: { status: 'connecting', tools: 0 },
-    transcript: [],
+    transcript: saved.transcript,
     busy: null,
     speaking: null,
     listening: false,
@@ -154,7 +181,7 @@ export function createHostApp(config: HostConfig): HostApp {
     toast: null,
     toastAfter: 0,
     activeFaults: null,
-    conversation: initialState(),
+    conversation: saved.conversation ?? initialState(),
     house: null,
     moment: null,
     momentAt: null,
@@ -184,6 +211,10 @@ export function createHostApp(config: HostConfig): HostApp {
     onError: (message) => addEntry({ role: 'assistant', text: message }),
   });
   store.set({ micSupported: listener.supported });
+
+  store.subscribe((s, prev) => {
+    if (s.transcript !== prev.transcript || s.conversation !== prev.conversation) saveHistory(s);
+  });
 
   function addEntry(e: Omit<TranscriptEntry, 'id' | 'at'>): TranscriptEntry {
     const entry: TranscriptEntry = { ...e, id: ++entryId, at: clock.nowMs() };
@@ -738,6 +769,14 @@ export function createHostApp(config: HostConfig): HostApp {
     listener,
     ready,
     say,
+    clearHistory() {
+      store.set({ transcript: [], conversation: initialState() });
+      try {
+        browserStorage()?.removeItem(historyKey);
+      } catch {
+        // nothing stored
+      }
+    },
     setDevice: (d) => track(setDevice(d)),
     setTheme(theme) {
       store.set({ theme });

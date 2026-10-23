@@ -84,14 +84,17 @@ export function mountConsole(root: HTMLElement, app: HostApp): void {
 
   const convList = h('ol', { class: 'conv' });
   const convEmpty = h('p', { class: 'empty', text: 'Say something to start. Every turn shows the tool the router picked and how long the server took.' });
-  panels.get('conversation')?.append(convEmpty, convList);
+  const convClear = h('button', { type: 'button', class: 'conv-clear', text: 'Clear history', onclick: () => app.clearHistory() });
+  panels.get('conversation')?.append(convEmpty, convList, convClear);
   function renderConversation(s: AppState): void {
     convEmpty.hidden = s.transcript.length > 0;
+    convClear.hidden = s.transcript.length === 0;
     convList.replaceChildren(
       ...s.transcript.map((e) => {
         const li = h('li', { class: `turn ${e.role}`, 'data-role': e.role });
         const who = e.role === 'assistant' ? 'Fixwright' : e.via === 'view' ? 'Sent by the view' : e.via === 'tap' ? 'You, on the screen' : 'You';
-        li.append(h('div', { class: 'turn-who', text: who }));
+        const when = new Date(e.at).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+        li.append(h('div', { class: 'turn-who', text: `${who}, ${when}` }));
         if (e.via === 'tap' || e.via === 'view') li.dataset['via'] = e.via;
         li.append(h('p', { class: 'turn-text', text: e.text }));
         if (e.role === 'user' && e.intent) li.append(h('div', { class: 'turn-meta', text: `Routed as ${e.intent}` }));
