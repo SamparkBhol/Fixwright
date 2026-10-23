@@ -1,0 +1,53 @@
+{
+  "name": "homefault",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Prove a smart home agent's diagnosis: a SimHome digital twin, ten dated real world faults, a scenario format, an event level generator, 20 reconstructed incidents, a benchmark runner and Home Assistant fixtures. MIT, no runtime dependencies.",
+  "license": "MIT",
+  "keywords": [
+    "smart-home",
+    "home-assistant",
+    "digital-twin",
+    "fault-injection",
+    "benchmark",
+    "agents",
+    "mcp"
+  ],
+  "engines": {
+    "node": ">=22.18"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./incidents": "./src/incidents.ts",
+    "./schema/scenario.schema.json": "./schema/scenario.schema.json",
+    "./incidents/*.json": "./incidents/*.json"
+  },
+  "files": [
+    "src",
+    "schema",
+    "incidents",
+    "fixtures",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.src.json && tsc -p tsconfig.json",
+    "test": "vitest run",
+    "check": "tsc -p tsconfig.src.json && tsc -p tsconfig.json && vitest run",
+    "incidents": "node scripts/build-incidents.ts",
+    "demo": "node scripts/demo.ts",
+    "stats": "node scripts/stats.ts",
+    "ha:onboard": "node fixtures/home-assistant/onboard.ts",
+    "ha:inject": "node fixtures/home-assistant/inject.ts"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.4",
+    "ajv": "8.20.0",
+    "esbuild": "0.28.2",
+    "typescript": "6.0.3",
+    "vite": "8.3.1",
+    "vitest": "5.0.2"
+  }
+}

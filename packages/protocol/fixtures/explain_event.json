@@ -1,0 +1,127 @@
+{
+  "speech": "Power came back at 3:12. Fourteen devices restarted within four seconds. None of your automations fired. I can make them remember whether they were on or off. Do it?",
+  "status": "ok",
+  "view": "stepper",
+  "ids": {
+    "explanation_id": "exp_01m52g8k205e3py55a",
+    "issue_id": "iss_01m52g8k20yka0razf"
+  },
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "explanation_id": "exp_01m52g8k205e3py55a",
+  "verdict": {
+    "level": "confirmed",
+    "cause_id": "power_restore",
+    "label": "Power came back on",
+    "confidence": 0.95,
+    "claims": [
+      {
+        "text": "Power came back at 3:12.",
+        "evidence": [
+          1302
+        ]
+      },
+      {
+        "text": "Fourteen devices restarted within four seconds.",
+        "evidence": [
+          1303,
+          1304,
+          1305,
+          1306,
+          1307,
+          1308,
+          1309,
+          1310,
+          1311,
+          1312,
+          1313,
+          1314,
+          1315,
+          1316
+        ]
+      },
+      {
+        "text": "None of your automations fired.",
+        "evidence": [
+          1317,
+          1318,
+          1319,
+          1320,
+          1321,
+          1322,
+          1323,
+          1324,
+          1325,
+          1326,
+          1327,
+          1328,
+          1329,
+          1330
+        ]
+      }
+    ],
+    "fix_available": true
+  },
+  "timeline": [
+    {
+      "ts": "2026-10-16T10:11:58.000Z",
+      "label": "Power went out",
+      "evidence": [
+        1301
+      ]
+    },
+    {
+      "ts": "2026-10-16T10:12:00.000Z",
+      "label": "Power came back",
+      "evidence": [
+        1302
+      ]
+    },
+    {
+      "ts": "2026-10-16T10:12:00.400Z",
+      "label": "Fourteen devices restarted within four seconds",
+      "evidence": [
+        1303,
+        1304,
+        1305,
+        1306,
+        1307,
+        1308,
+        1309,
+        1310,
+        1311,
+        1312,
+        1313,
+        1314,
+        1315,
+        1316
+      ]
+    },
+    {
+      "ts": "2026-10-16T10:12:04.000Z",
+      "label": "They came back on with no automation or app command",
+      "evidence": [
+        1317,
+        1318,
+        1319,
+        1320,
+        1321,
+        1322,
+        1323,
+        1324,
+        1325,
+        1326,
+        1327,
+        1328,
+        1329,
+        1330
+      ]
+    }
+  ],
+  "suggested_fix": {
+    "issue_id": "iss_01m52g8k20yka0razf",
+    "label": "Make them remember whether they were on or off"
+  }
+}

@@ -1,0 +1,487 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--card);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: var(--text-body1);
+  line-height: 1.35;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow: hidden;
+}
+
+/* If a host makes the frame shorter than it said, the page itself still scrolls (CX testing: "Results
+   that aren't scrollable"). */
+html.h-flex,
+html.h-flex body {
+  height: auto;
+}
+
+html.h-flex {
+  overflow-y: auto;
+}
+
+/* The runtime sets zoom, width and height (Visual foundations: zoom 1.667 on Echo Show 8 and 15). */
+.stage {
+  width: 100%;
+  height: 100%;
+}
+
+/* Positioned, so .sr-only text stays inside the scroll box instead of stretching the page. Overscroll is
+   contained, so a swipe past the end never drags the host page (the apps/host phone caps the frame at 480 px). */
+.card {
+  position: relative;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  width: 100%;
+  height: 100%;
+  padding: var(--space-xl);
+  padding-top: calc(var(--space-xl) + var(--inset-top, 0px));
+  padding-bottom: calc(var(--space-xl) + var(--inset-bottom, 0px));
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+html.h-flex .card {
+  height: auto;
+  max-height: var(--max-h, none);
+}
+
+html.dc-phone .card {
+  padding: var(--space-m);
+  padding-top: calc(var(--space-m) + var(--inset-top, 0px));
+  padding-bottom: calc(var(--space-m) + var(--inset-bottom, 0px));
+  gap: var(--space-m);
+}
+
+p {
+  margin: 0;
+}
+
+/* Author display rules must never resurrect something the view hid. */
+[hidden] {
+  display: none !important;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hd {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-m);
+}
+
+.hd-text {
+  min-width: 0;
+}
+
+.hd-side {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  flex-shrink: 0;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-2xs);
+  font-size: var(--text-body1);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.tag {
+  white-space: nowrap;
+  padding: var(--space-4xs) var(--space-xs);
+  border-radius: var(--radius-circle);
+  border: 1px solid var(--line);
+  font-size: var(--text-body2);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+/* A real hub (Home Assistant): the same quiet tag, in the pass tone, so a live house reads at a glance. */
+.tag-live {
+  border-color: color-mix(in srgb, var(--pass) 55%, transparent);
+  color: var(--pass);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-display3);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+
+.title:focus {
+  outline: none;
+}
+
+html.dc-phone .title {
+  font-size: var(--text-display4);
+}
+
+/* Tone color plus an icon shape plus text, never color alone. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  height: 44px;
+  padding: 0 var(--space-l) 0 var(--space-s);
+  border-radius: var(--radius-circle);
+  background: color-mix(in srgb, var(--tone) var(--tint), var(--card));
+  color: var(--tone);
+  font-size: var(--text-headline1);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.chip .icon {
+  width: var(--icon-l);
+  height: var(--icon-l);
+  stroke-width: 2.75;
+}
+
+html.dc-phone .chip-hero {
+  height: 40px;
+  font-size: var(--text-headline2);
+}
+
+.btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-width: var(--target);
+  min-height: var(--control-h);
+  padding: 0 var(--space-xl);
+  border: 2px solid transparent;
+  border-radius: var(--radius-l);
+  font: inherit;
+  font-size: var(--text-headline1);
+  font-weight: 700;
+  line-height: 1.15;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--dur-press) ease,
+    transform var(--dur-press) ease;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-secondary,
+.btn-icon {
+  background: var(--secondary);
+  color: var(--on-secondary);
+  border-color: var(--secondary-line);
+}
+
+.btn-secondary:hover,
+.btn-icon:hover {
+  background: var(--secondary-hover);
+}
+
+.btn:active:not([aria-disabled="true"]) {
+  transform: scale(0.97);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.btn[aria-disabled="true"] {
+  cursor: default;
+}
+
+/* Blocked while another action runs: still readable (4.5:1), clearly inactive. */
+.btn[aria-disabled="true"]:not(.is-pending) {
+  background: var(--raised);
+  color: var(--text-2);
+  border-color: transparent;
+}
+
+.btn-icon {
+  width: var(--target);
+  height: var(--target);
+  min-height: var(--target);
+  padding: 0;
+  border-radius: var(--radius-m);
+}
+
+.btn-icon .icon {
+  width: var(--icon-l);
+  height: var(--icon-l);
+}
+
+/* A faint full ring with one bright arc, so it reads as progress even in a still frame, not as a glyph. */
+.spinner {
+  width: var(--icon-m);
+  height: var(--icon-m);
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 3px solid color-mix(in srgb, currentColor 28%, transparent);
+  border-top-color: currentColor;
+  animation: spin 900ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-s);
+  border-radius: var(--radius-m);
+  background: color-mix(in srgb, var(--fail) var(--tint), var(--inner));
+  color: var(--text);
+  font-size: var(--text-body1);
+  font-weight: 600;
+}
+
+.error-icon {
+  width: var(--icon-m);
+  height: var(--icon-m);
+  margin-top: 1px;
+  color: var(--fail);
+}
+
+/* Never red: errors are for failures, not for the person's own choice (guide, Content). */
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-s);
+  border-radius: var(--radius-m);
+  background: color-mix(in srgb, var(--info) var(--tint), var(--inner));
+  color: var(--text);
+  font-size: var(--text-body1);
+  font-weight: 600;
+}
+
+/* Short messages wrap into even lines ("Not approved. / Nothing changed."), never one word alone. */
+.error > span,
+.notice > span {
+  text-wrap: balance;
+}
+
+.notice-icon {
+  width: var(--icon-m);
+  height: var(--icon-m);
+  margin-top: 1px;
+  color: var(--info);
+}
+
+.waiting-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  font-size: var(--text-headline1);
+  color: var(--text-2);
+}
+
+.pulse {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--info);
+  animation: pulse 1600ms ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+}
+
+.skeleton {
+  display: flex;
+  gap: var(--space-m);
+  flex: 1;
+  min-height: 0;
+  animation: breathe 1800ms ease-in-out infinite;
+}
+
+.skeleton-panel {
+  flex-direction: column;
+}
+
+.bone {
+  border-radius: var(--radius-circle);
+  background: var(--raised);
+}
+
+.bone-strip {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.bone-pill {
+  width: 132px;
+  height: 40px;
+}
+
+.bone-body {
+  display: flex;
+  gap: var(--space-m);
+  flex: 1;
+  min-height: 0;
+}
+
+.bone-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  flex: 1.35 1 0;
+  padding-top: var(--space-s);
+}
+
+.bone-line {
+  width: 55%;
+  height: 16px;
+}
+
+.bone-line.is-wide {
+  width: 80%;
+  height: 20px;
+}
+
+.bone-bar {
+  height: 10px;
+  margin-bottom: var(--space-s);
+}
+
+.bone-bar.is-lead {
+  height: 16px;
+}
+
+.bone-card {
+  flex: 1 1 0;
+  border-radius: var(--radius-xl);
+  background: var(--inner);
+  border: 1px solid var(--line);
+}
+
+html.orient-portrait .bone-body,
+html.orient-portrait .skeleton-carousel {
+  flex-direction: column;
+}
+
+html.orient-portrait .bone-card {
+  min-height: 160px;
+}
+
+@keyframes breathe {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.message {
+  display: grid;
+  align-content: start;
+  gap: var(--space-s);
+  flex: 1;
+  padding-top: var(--space-xs);
+}
+
+.message-text {
+  font-size: var(--text-display5);
+  font-weight: 600;
+  line-height: 1.3;
+  max-width: 34em;
+}
+
+.caption {
+  font-family: var(--font-display);
+  font-size: var(--text-display4);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Once per new result, never on relayout or with reduced motion. */
+.enter .rise {
+  animation: rise var(--dur-in) var(--ease) both;
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(10px);
+    opacity: 0.35;
+  }
+}
+
+/* Motion safety: no flashing anywhere; honor the person's reduced motion setting. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Still ring: the button label ("Checking", "Fixing") says what is happening. */
+  .spinner {
+    border-top-color: color-mix(in srgb, currentColor 28%, transparent);
+    border-left-color: currentColor;
+  }
+}

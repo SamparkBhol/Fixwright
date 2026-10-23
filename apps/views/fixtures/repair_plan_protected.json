@@ -1,0 +1,181 @@
+{
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "speech": "Here's the fix. Fourteen devices will remember whether they were on or off when power comes back. Shall I go ahead?",
+  "status": "needs_confirmation",
+  "view": "stepper",
+  "ids": {
+    "explanation_id": "exp_01m52g8k205e3py55a",
+    "issue_id": "iss_01m52g8k20yka0razf",
+    "plan_id": "pln_01m509w110pw3f0jgs"
+  },
+  "plan_id": "pln_01m509w110pw3f0jgs",
+  "confirm_token": "f1xq6bqhp6986zfjtywd229t6yq5xeg6",
+  "expires_at": "2026-10-15T17:35:00.000Z",
+  "diff": [
+    {
+      "entity_id": "select.kitchen_ceiling_power_on_behavior",
+      "field": "power on behavior",
+      "from": "on",
+      "to": "previous"
+    },
+    {
+      "entity_id": "select.bedroom_lamp_power_on_behavior",
+      "field": "power on behavior",
+      "from": "on",
+      "to": "previous"
+    },
+    {
+      "entity_id": "select.office_lamp_power_on_behavior",
+      "field": "power on behavior",
+      "from": "on",
+      "to": "previous"
+    },
+    {
+      "entity_id": "select.porch_light_power_on_behavior",
+      "field": "power on behavior",
+      "from": "on",
+      "to": "previous"
+    },
+    {
+      "entity_id": "select.office_heater_plug_power_on_behavior",
+      "field": "power on behavior",
+      "from": "on",
+      "to": "previous"
+    },
+    {
+      "entity_id": "select.dining_pendant_power_on_behavior",
+      "field": "power on behavior",
+      "from": "on",
+      "to": "previous"
+    },
+    {
+      "entity_id": "select.tv_plug_power_on_behavior",
+      "field": "power on behavior",
+      "from": "on",
+      "to": "previous"
+    },
+    {
+      "entity_id": "select.coffee_maker_power_on_behavior",
+      "field": "power on behavior",
+      "from": "on",
+      "to": "previous"
+    },
+    {
+      "entity_id": "select.bedroom_fan_plug_power_on_behavior",
+      "field": "power on behavior",
+      "from": "on",
+      "to": "previous"
+    },
+    {
+      "entity_id": "select.garden_lights_power_on_behavior",
+      "field": "power on behavior",
+      "from": "on",
+      "to": "previous"
+    },
+    {
+      "entity_id": "select.desk_plug_power_on_behavior",
+      "field": "power on behavior",
+      "from": "on",
+      "to": "previous"
+    },
+    {
+      "entity_id": "select.nursery_lamp_power_on_behavior",
+      "field": "power on behavior",
+      "from": "on",
+      "to": "previous"
+    },
+    {
+      "entity_id": "select.patio_heater_plug_power_on_behavior",
+      "field": "power on behavior",
+      "from": "on",
+      "to": "previous"
+    },
+    {
+      "entity_id": "select.stairs_light_power_on_behavior",
+      "field": "power on behavior",
+      "from": "on",
+      "to": "previous"
+    }
+  ],
+  "diff_lines": [
+    "Fourteen devices will remember whether they were on or off when power comes back."
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "label": "Set Kitchen Ceiling to remember its last state",
+      "status": "pending"
+    },
+    {
+      "step": 2,
+      "label": "Set Bedroom Lamp to remember its last state",
+      "status": "pending"
+    },
+    {
+      "step": 3,
+      "label": "Set Office Lamp to remember its last state",
+      "status": "pending"
+    },
+    {
+      "step": 4,
+      "label": "Set Porch Light to remember its last state",
+      "status": "pending"
+    },
+    {
+      "step": 5,
+      "label": "Set Office Heater Plug to remember its last state",
+      "status": "pending"
+    },
+    {
+      "step": 6,
+      "label": "Set Dining Pendant to remember its last state",
+      "status": "pending"
+    },
+    {
+      "step": 7,
+      "label": "Set TV Plug to remember its last state",
+      "status": "pending"
+    },
+    {
+      "step": 8,
+      "label": "Set Coffee Maker to remember its last state",
+      "status": "pending"
+    },
+    {
+      "step": 9,
+      "label": "Set Bedroom Fan Plug to remember its last state",
+      "status": "pending"
+    },
+    {
+      "step": 10,
+      "label": "Set Garden Lights to remember its last state",
+      "status": "pending"
+    },
+    {
+      "step": 11,
+      "label": "Set Desk Plug to remember its last state",
+      "status": "pending"
+    },
+    {
+      "step": 12,
+      "label": "Set Nursery Lamp to remember its last state",
+      "status": "pending"
+    },
+    {
+      "step": 13,
+      "label": "Set Patio Heater Plug to remember its last state",
+      "status": "pending"
+    },
+    {
+      "step": 14,
+      "label": "Set Stairs Light to remember its last state",
+      "status": "pending"
+    }
+  ],
+  "protected_conflicts": [
+    "Aquarium Filter is protected, so I will leave it as it is."
+  ]
+}

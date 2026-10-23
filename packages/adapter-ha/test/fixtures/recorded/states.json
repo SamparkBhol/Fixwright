@@ -1,0 +1,562 @@
+{
+  "recorded_with": "Home Assistant 2026.9.4",
+  "states": [
+    {
+      "entity_id": "light.hallway_lights",
+      "state": "on",
+      "attributes": {
+        "supported_color_modes": [
+          "onoff"
+        ],
+        "color_mode": "onoff",
+        "entity_id": [
+          "light.hallway_lamp",
+          "light.porch_light",
+          "light.landing_light",
+          "light.stair_light",
+          "light.entry_light"
+        ],
+        "friendly_name": "Hallway Lights",
+        "supported_features": 0
+      },
+      "last_changed": "2026-10-15T12:41:27.363902+00:00",
+      "last_reported": "2026-10-15T12:41:27.364683+00:00",
+      "last_updated": "2026-10-15T12:41:27.363902+00:00",
+      "context": {
+        "id": "01M4ZS9SKHGDK1Y95ZXTVW0PCK",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "input_datetime.hallway_last_power_restore",
+      "state": "2026-10-15 12:41:27",
+      "attributes": {
+        "has_date": true,
+        "has_time": true,
+        "editable": false,
+        "year": 2026,
+        "month": 10,
+        "day": 15,
+        "hour": 12,
+        "minute": 41,
+        "second": 27,
+        "timestamp": 1792068087.362381,
+        "friendly_name": "Hallway last power restore"
+      },
+      "last_changed": "2026-10-15T12:41:27.363237+00:00",
+      "last_reported": "2026-10-15T12:41:27.363237+00:00",
+      "last_updated": "2026-10-15T12:41:27.363237+00:00",
+      "context": {
+        "id": "01M4ZS9VJ2BKDYAG607PBXSKXK",
+        "parent_id": "01M4ZS9VJ1PWB13VS73PQD1XTH",
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "input_boolean.hallway_mains",
+      "state": "on",
+      "attributes": {
+        "editable": false,
+        "icon": "mdi:transmission-tower",
+        "friendly_name": "Hallway circuit breaker"
+      },
+      "last_changed": "2026-10-15T12:41:26.870200+00:00",
+      "last_reported": "2026-10-15T12:41:26.870200+00:00",
+      "last_updated": "2026-10-15T12:41:26.870200+00:00",
+      "context": {
+        "id": "01M4ZS9V2PJ2QAP3DE19Z6R8X7",
+        "parent_id": null,
+        "user_id": "ffb4c079dd0e4278b74bc3904e406927"
+      }
+    },
+    {
+      "entity_id": "binary_sensor.hall_motion",
+      "state": "off",
+      "attributes": {
+        "linkquality": 96,
+        "device_class": "motion",
+        "friendly_name": "Hall Motion"
+      },
+      "last_changed": "2026-10-15T12:41:19.517395+00:00",
+      "last_reported": "2026-10-15T12:41:19.533171+00:00",
+      "last_updated": "2026-10-15T12:41:19.517395+00:00",
+      "context": {
+        "id": "01M4ZS9KWX5BJA3TC2ZA18SWNC",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "sensor.hall_motion_battery",
+      "state": "64",
+      "attributes": {
+        "state_class": "measurement",
+        "unit_of_measurement": "%",
+        "device_class": "battery",
+        "friendly_name": "Hall Motion Battery"
+      },
+      "last_changed": "2026-10-15T12:41:19.517574+00:00",
+      "last_reported": "2026-10-15T12:41:19.533204+00:00",
+      "last_updated": "2026-10-15T12:41:19.517574+00:00",
+      "context": {
+        "id": "01M4ZS9KWX968FHWD5EMRP48MX",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "light.hallway_lamp",
+      "state": "on",
+      "attributes": {
+        "supported_color_modes": [
+          "onoff"
+        ],
+        "color_mode": "onoff",
+        "linkquality": 148,
+        "friendly_name": "Hallway Lamp",
+        "supported_features": 0
+      },
+      "last_changed": "2026-10-15T12:41:27.361344+00:00",
+      "last_reported": "2026-10-15T12:41:27.361344+00:00",
+      "last_updated": "2026-10-15T12:41:27.361344+00:00",
+      "context": {
+        "id": "01M4ZS9SKHGDK1Y95ZXTVW0PCK",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "light.porch_light",
+      "state": "on",
+      "attributes": {
+        "supported_color_modes": [
+          "onoff"
+        ],
+        "color_mode": "onoff",
+        "linkquality": 38,
+        "friendly_name": "Porch Light",
+        "supported_features": 0
+      },
+      "last_changed": "2026-10-15T12:41:27.363483+00:00",
+      "last_reported": "2026-10-15T12:41:27.363483+00:00",
+      "last_updated": "2026-10-15T12:41:27.363483+00:00",
+      "context": {
+        "id": "01M4ZS9SKHGDK1Y95ZXTVW0PCK",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "light.landing_light",
+      "state": "on",
+      "attributes": {
+        "supported_color_modes": [
+          "onoff"
+        ],
+        "color_mode": "onoff",
+        "linkquality": 132,
+        "friendly_name": "Landing Light",
+        "supported_features": 0
+      },
+      "last_changed": "2026-10-15T12:41:27.361531+00:00",
+      "last_reported": "2026-10-15T12:41:27.361531+00:00",
+      "last_updated": "2026-10-15T12:41:27.361531+00:00",
+      "context": {
+        "id": "01M4ZS9SKHGDK1Y95ZXTVW0PCK",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "light.stair_light",
+      "state": "on",
+      "attributes": {
+        "supported_color_modes": [
+          "onoff"
+        ],
+        "color_mode": "onoff",
+        "linkquality": 117,
+        "friendly_name": "Stair Light",
+        "supported_features": 0
+      },
+      "last_changed": "2026-10-15T12:41:27.361692+00:00",
+      "last_reported": "2026-10-15T12:41:27.361692+00:00",
+      "last_updated": "2026-10-15T12:41:27.361692+00:00",
+      "context": {
+        "id": "01M4ZS9SKHGDK1Y95ZXTVW0PCK",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "light.entry_light",
+      "state": "on",
+      "attributes": {
+        "supported_color_modes": [
+          "onoff"
+        ],
+        "color_mode": "onoff",
+        "linkquality": 140,
+        "friendly_name": "Entry Light",
+        "supported_features": 0
+      },
+      "last_changed": "2026-10-15T12:41:27.361842+00:00",
+      "last_reported": "2026-10-15T12:41:27.361842+00:00",
+      "last_updated": "2026-10-15T12:41:27.361842+00:00",
+      "context": {
+        "id": "01M4ZS9SKHGDK1Y95ZXTVW0PCK",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "switch.hallway_smart_plug",
+      "state": "on",
+      "attributes": {
+        "rssi": -61,
+        "friendly_name": "Hallway Smart Plug"
+      },
+      "last_changed": "2026-10-15T12:41:27.361989+00:00",
+      "last_reported": "2026-10-15T12:41:27.361989+00:00",
+      "last_updated": "2026-10-15T12:41:27.361989+00:00",
+      "context": {
+        "id": "01M4ZS9SKHGDK1Y95ZXTVW0PCK",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "sensor.hallway_plug_power",
+      "state": "7.5",
+      "attributes": {
+        "state_class": "measurement",
+        "unit_of_measurement": "W",
+        "device_class": "power",
+        "friendly_name": "Hallway Plug Power"
+      },
+      "last_changed": "2026-10-15T12:41:27.362089+00:00",
+      "last_reported": "2026-10-15T12:41:27.362089+00:00",
+      "last_updated": "2026-10-15T12:41:27.362089+00:00",
+      "context": {
+        "id": "01M4ZS9SKHGDK1Y95ZXTVW0PCK",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "select.hallway_lamp_power_on_behavior",
+      "state": "on",
+      "attributes": {
+        "options": [
+          "off",
+          "on",
+          "toggle",
+          "previous"
+        ],
+        "friendly_name": "Hallway Lamp Power On Behavior"
+      },
+      "last_changed": "2026-10-15T12:41:19.524450+00:00",
+      "last_reported": "2026-10-15T12:41:21.284338+00:00",
+      "last_updated": "2026-10-15T12:41:19.524450+00:00",
+      "context": {
+        "id": "01M4ZS9KX4J8W2H50C3275G1HT",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "light.hallway_lamp_old_pairing",
+      "state": "unavailable",
+      "attributes": {
+        "supported_color_modes": [
+          "onoff"
+        ],
+        "friendly_name": "Hallway Lamp",
+        "supported_features": 0
+      },
+      "last_changed": "2026-10-15T12:41:19.525441+00:00",
+      "last_reported": "2026-10-15T12:41:21.282614+00:00",
+      "last_updated": "2026-10-15T12:41:19.525441+00:00",
+      "context": {
+        "id": "01M4ZS9KX58HJWHCRQZHFJ27H1",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "binary_sensor.hallway_mains_power",
+      "state": "on",
+      "attributes": {
+        "on_since": 1792068086.8702,
+        "device_class": "power",
+        "friendly_name": "Hallway Mains Power"
+      },
+      "last_changed": "2026-10-15T12:41:27.361006+00:00",
+      "last_reported": "2026-10-15T12:41:27.361006+00:00",
+      "last_updated": "2026-10-15T12:41:27.361006+00:00",
+      "context": {
+        "id": "01M4ZS9VJ1PWB13VS73PQD1XTH",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "sensor.hallway_smart_plug_uptime",
+      "state": "1",
+      "attributes": {
+        "state_class": "measurement",
+        "unit_of_measurement": "s",
+        "device_class": "duration",
+        "friendly_name": "Hallway Smart Plug Uptime"
+      },
+      "last_changed": "2026-10-15T12:41:28.265587+00:00",
+      "last_reported": "2026-10-15T12:41:28.265587+00:00",
+      "last_updated": "2026-10-15T12:41:28.265587+00:00",
+      "context": {
+        "id": "01M4ZS9WE9N6FQ6PS6V9X516CY",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "light.bridge_lamp",
+      "state": "off",
+      "attributes": {
+        "supported_color_modes": [
+          "onoff"
+        ],
+        "color_mode": null,
+        "linkquality": 121,
+        "friendly_name": "Bridge Lamp",
+        "supported_features": 0
+      },
+      "last_changed": "2026-10-15T12:41:19.462104+00:00",
+      "last_reported": "2026-10-15T12:41:19.533469+00:00",
+      "last_updated": "2026-10-15T12:41:19.462104+00:00",
+      "context": {
+        "id": "01M4ZS9KV6WJ3995552ZJWJVKM",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "light.bridge_spot",
+      "state": "off",
+      "attributes": {
+        "supported_color_modes": [
+          "onoff"
+        ],
+        "color_mode": null,
+        "linkquality": 87,
+        "friendly_name": "Bridge Spot",
+        "supported_features": 0
+      },
+      "last_changed": "2026-10-15T12:41:19.462306+00:00",
+      "last_reported": "2026-10-15T12:41:19.533491+00:00",
+      "last_updated": "2026-10-15T12:41:19.462306+00:00",
+      "context": {
+        "id": "01M4ZS9KV6TJAH8MS8PCZ3K1WE",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "sensor.hallway_bridge_signal",
+      "state": "200",
+      "attributes": {
+        "friendly_name": "Hallway Bridge Signal"
+      },
+      "last_changed": "2026-10-15T12:41:19.462582+00:00",
+      "last_reported": "2026-10-15T12:41:19.533515+00:00",
+      "last_updated": "2026-10-15T12:41:19.462582+00:00",
+      "context": {
+        "id": "01M4ZS9KV6YQRFGBPTCFS169RP",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "sensor.hallway_bridge_firmware_version",
+      "state": "1.4.2 (simulated)",
+      "attributes": {
+        "friendly_name": "Hallway Bridge Firmware version"
+      },
+      "last_changed": "2026-10-15T12:41:19.462718+00:00",
+      "last_reported": "2026-10-15T12:41:19.533533+00:00",
+      "last_updated": "2026-10-15T12:41:19.462718+00:00",
+      "context": {
+        "id": "01M4ZS9KV6M5MXXJ8CBGPS6FSM",
+        "parent_id": null,
+        "user_id": null
+      }
+    },
+    {
+      "entity_id": "light.bed_light",
+      "state": "off",
+      "attributes": {
+        "min_color_temp_kelvin": 2000,
+        "max_color_temp_kelvin": 6535,
+        "effect_list": [
+          "rainbow",
+          "off"
+        ],
+        "supported_color_modes": [
+          "color_temp",
+          "hs"
+        ],
+        "effect": null,
+        "color_mode": null,
+        "brightness": null,
+        "color_temp_kelvin": null,
+        "hs_color": null,
+        "rgb_color": null,
+        "xy_color": null,
+        "friendly_name": "Bed Light",
+        "supported_features": 4
+      },
+      "last_changed": "2026-10-15T12:41:19.498230+00:00",
+      "last_reported": "2026-10-15T12:41:19.534212+00:00",
+      "last_updated": "2026-10-15T12:41:19.498230+00:00",
+      "context": {
+        "id": "01M4ZS9KWAFRB4YHHNKGDKP3AQ",
+        "parent_id": null,
+        "user_id": null
+      }
+    }
+  ],
+  "config_entries": [
+    {
+      "created_at": 1792068079.425302,
+      "entry_id": "01M4ZS9KT1SFHGGTXMVR0SEGCQ",
+      "domain": "fixwright_bridge",
+      "modified_at": 1792068079.425305,
+      "title": "Hallway bridge (simulated)",
+      "source": "import",
+      "state": "loaded",
+      "supports_options": false,
+      "supports_remove_device": false,
+      "supports_unload": true,
+      "supports_reconfigure": false,
+      "supported_subentry_types": {},
+      "pref_disable_new_entities": false,
+      "pref_disable_polling": false,
+      "disabled_by": null,
+      "reason": null,
+      "error_reason_translation_domain": null,
+      "error_reason_translation_key": null,
+      "error_reason_translation_placeholders": null,
+      "num_subentries": 0
+    },
+    {
+      "created_at": 1792068079.441557,
+      "entry_id": "01M4ZS9KTHJXJ7AXXEQ3J60GFM",
+      "domain": "shopping_list",
+      "modified_at": 1792068079.441558,
+      "title": "Shopping list",
+      "source": "onboarding",
+      "state": "loaded",
+      "supports_options": false,
+      "supports_remove_device": false,
+      "supports_unload": false,
+      "supports_reconfigure": false,
+      "supported_subentry_types": {},
+      "pref_disable_new_entities": false,
+      "pref_disable_polling": false,
+      "disabled_by": null,
+      "reason": null,
+      "error_reason_translation_domain": null,
+      "error_reason_translation_key": null,
+      "error_reason_translation_placeholders": null,
+      "num_subentries": 0
+    },
+    {
+      "created_at": 1792068079.443304,
+      "entry_id": "01M4ZS9KTK0KSHR2BHBKYFKPQA",
+      "domain": "demo",
+      "modified_at": 1792068079.443305,
+      "title": "Demo",
+      "source": "import",
+      "state": "loaded",
+      "supports_options": true,
+      "supports_remove_device": false,
+      "supports_unload": true,
+      "supports_reconfigure": false,
+      "supported_subentry_types": {},
+      "pref_disable_new_entities": false,
+      "pref_disable_polling": false,
+      "disabled_by": null,
+      "reason": null,
+      "error_reason_translation_domain": null,
+      "error_reason_translation_key": null,
+      "error_reason_translation_placeholders": null,
+      "num_subentries": 0
+    },
+    {
+      "created_at": 1792068079.472108,
+      "entry_id": "01M4ZS9KVG1573MHRJQDZGGF0B",
+      "domain": "sun",
+      "modified_at": 1792068079.472109,
+      "title": "Sun",
+      "source": "import",
+      "state": "loaded",
+      "supports_options": false,
+      "supports_remove_device": false,
+      "supports_unload": true,
+      "supports_reconfigure": false,
+      "supported_subentry_types": {},
+      "pref_disable_new_entities": false,
+      "pref_disable_polling": false,
+      "disabled_by": null,
+      "reason": null,
+      "error_reason_translation_domain": null,
+      "error_reason_translation_key": null,
+      "error_reason_translation_placeholders": null,
+      "num_subentries": 0
+    },
+    {
+      "created_at": 1792068079.52859,
+      "entry_id": "01M4ZS9KX8B4X7XS5FNA2TK6TB",
+      "domain": "analytics",
+      "modified_at": 1792068079.528591,
+      "title": "Analytics",
+      "source": "system",
+      "state": "loaded",
+      "supports_options": false,
+      "supports_remove_device": false,
+      "supports_unload": false,
+      "supports_reconfigure": false,
+      "supported_subentry_types": {},
+      "pref_disable_new_entities": false,
+      "pref_disable_polling": false,
+      "disabled_by": null,
+      "reason": null,
+      "error_reason_translation_domain": null,
+      "error_reason_translation_key": null,
+      "error_reason_translation_placeholders": null,
+      "num_subentries": 0
+    },
+    {
+      "created_at": 1792068079.535696,
+      "entry_id": "01M4ZS9KXF4ZW8FZD9WA0FKCX3",
+      "domain": "backup",
+      "modified_at": 1792068079.535697,
+      "title": "Backup",
+      "source": "system",
+      "state": "loaded",
+      "supports_options": false,
+      "supports_remove_device": false,
+      "supports_unload": true,
+      "supports_reconfigure": false,
+      "supported_subentry_types": {},
+      "pref_disable_new_entities": false,
+      "pref_disable_polling": false,
+      "disabled_by": null,
+      "reason": null,
+      "error_reason_translation_domain": null,
+      "error_reason_translation_key": null,
+      "error_reason_translation_placeholders": null,
+      "num_subentries": 0
+    }
+  ]
+}

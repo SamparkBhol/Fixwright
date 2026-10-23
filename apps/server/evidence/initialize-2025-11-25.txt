@@ -1,0 +1,16 @@
+# 2026-10-18T14:16:28.793Z wrangler dev --local, 127.0.0.1:8701
+$ curl -sS -i -X POST http://127.0.0.1:8701/mcp -H 'content-type: application/json' -H 'accept: application/json, text/event-stream' -H 'origin: http://localhost:8711' --data '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"curl","version":"8"}}}'
+
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Content-Type: text/event-stream
+Access-Control-Allow-Origin: http://localhost:8711
+Cache-Control: no-cache, no-transform
+Vary: Origin
+X-Accel-Buffering: no
+access-control-expose-headers: mcp-session-id, mcp-protocol-version, retry-after
+
+event: message
+data: {"result":{"protocolVersion":"2025-11-25","capabilities":{"tools":{"listChanged":true},"resources":{"listChanged":true}},"serverInfo":{"name":"fixwright","title":"Fixwright","version":"0.1.0"},"instructions":"Fixwright is a home doctor. Use diagnose when a device misbehaves, explain_event for something the home already did, home_checkup for a general check. Ask the person every question a result carries, word for word. Never call repair_apply until the person has said yes to that exact plan. Speak the speech field as it is."},"jsonrpc":"2.0","id":1}
+
+

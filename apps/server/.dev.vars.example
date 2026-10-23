@@ -1,0 +1,4 @@
+# Read by `wrangler dev` only; `wrangler deploy` never uploads this file. Not a real secret.
+CONFIRM_SECRET=fixwright-local-dev-only-confirm-secret-0001
+# Optional, only with ALLOW_HA_LINK=1: seals the stored Home Assistant token (falls back to CONFIRM_SECRET).
+# HA_TOKEN_KEY=fixwright-local-dev-only-ha-token-key-00001

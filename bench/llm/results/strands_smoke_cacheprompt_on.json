@@ -1,0 +1,122 @@
+{
+  "generated_at": "2026-10-15T12:16:09.560Z",
+  "endpoint": "http://127.0.0.1:8771/v1",
+  "model": "gpt-oss-20b",
+  "generation": {
+    "temperature": 0,
+    "maxTokens": 1024,
+    "seed": 42,
+    "reasoningEffort": "low",
+    "timeoutMs": 180000,
+    "cachePrompt": true
+  },
+  "case": {
+    "symptom": "The hallway lamp keeps saying it's not responding.",
+    "expected_cause": "stale_duplicate"
+  },
+  "primary_strands_mode": "json_schema",
+  "passed": true,
+  "summary": [
+    {
+      "client": "strands:json_schema",
+      "calls": 2,
+      "parsed": 2,
+      "matched_expected_cause": 0,
+      "mean_wall_ms": 11988
+    },
+    {
+      "client": "strands:structured_output",
+      "calls": 2,
+      "parsed": 2,
+      "matched_expected_cause": 2,
+      "mean_wall_ms": 19702
+    },
+    {
+      "client": "fetch:json_schema",
+      "calls": 2,
+      "parsed": 2,
+      "matched_expected_cause": 0,
+      "mean_wall_ms": 8974
+    }
+  ],
+  "rows": [
+    {
+      "client": "strands:json_schema",
+      "run": 1,
+      "ok": true,
+      "error": null,
+      "cause_id": "name_collision",
+      "confidence": 0.95,
+      "explanation": "Both light.hallway_lamp (unavailable) and light.hallway_lamp_2 (working) share the spoken name “Hallway Lamp”, causing voice commands to target the unavailable entity.",
+      "matches_expected_cause": false,
+      "wall_ms": 16317,
+      "prompt_tokens": 785,
+      "completion_tokens": 87
+    },
+    {
+      "client": "strands:structured_output",
+      "run": 1,
+      "ok": true,
+      "error": null,
+      "cause_id": "stale_duplicate",
+      "confidence": 0.85,
+      "explanation": "The original entity light.hallway_lamp became unavailable while a new device hallway_lamp_2 joined with the same spoken name, causing the voice command to target the stale entity.",
+      "matches_expected_cause": true,
+      "wall_ms": 28726,
+      "prompt_tokens": 973,
+      "completion_tokens": 135
+    },
+    {
+      "client": "fetch:json_schema",
+      "run": 1,
+      "ok": true,
+      "error": null,
+      "cause_id": "name_collision",
+      "confidence": 0.95,
+      "explanation": "Both light.hallway_lamp (unavailable) and light.hallway_lamp_2 (working) share the spoken name “Hallway Lamp”, causing voice commands to target the unavailable entity.",
+      "matches_expected_cause": false,
+      "wall_ms": 8541,
+      "prompt_tokens": 785,
+      "completion_tokens": 87
+    },
+    {
+      "client": "strands:json_schema",
+      "run": 2,
+      "ok": true,
+      "error": null,
+      "cause_id": "name_collision",
+      "confidence": 0.95,
+      "explanation": "Both light.hallway_lamp (unavailable) and light.hallway_lamp_2 (working) share the spoken name “Hallway Lamp”, causing voice commands to target the unavailable entity.",
+      "matches_expected_cause": false,
+      "wall_ms": 7658,
+      "prompt_tokens": 785,
+      "completion_tokens": 87
+    },
+    {
+      "client": "strands:structured_output",
+      "run": 2,
+      "ok": true,
+      "error": null,
+      "cause_id": "stale_duplicate",
+      "confidence": 0.95,
+      "explanation": "The original entity light.hallway_lamp became unavailable while a new device hallway_lamp_2 joined with the same spoken name, indicating a stale duplicate.",
+      "matches_expected_cause": true,
+      "wall_ms": 10677,
+      "prompt_tokens": 973,
+      "completion_tokens": 125
+    },
+    {
+      "client": "fetch:json_schema",
+      "run": 2,
+      "ok": true,
+      "error": null,
+      "cause_id": "name_collision",
+      "confidence": 0.95,
+      "explanation": "Both light.hallway_lamp (unavailable) and light.hallway_lamp_2 (working) share the spoken name “Hallway Lamp”, causing voice commands to target the unavailable entity.",
+      "matches_expected_cause": false,
+      "wall_ms": 9406,
+      "prompt_tokens": 785,
+      "completion_tokens": 87
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "measured_at": "2026-10-18T06:13:11.150Z",
+  "method": "Node process.cpuUsage(), esbuild bundle with workerd conditions (as cpu-bench.ts). Each sample is one POST /demo/household through createApp with the household on node:sqlite (do = time inside the household call, worker = the rest). Cold = a fresh Node process per run, median of 7; startup = what index.ts runs at module scope (primeSchemas, the engine warmUp and, for template, warmTemplate).",
+  "node": "v22.22.1",
+  "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
+  "loadavg_at_start": [
+    1.67,
+    1.15,
+    0.92
+  ],
+  "template": {
+    "start": "2026-10-15T22:00:00.000Z",
+    "bytes": 73668
+  },
+  "cold_ms_median_of_7_processes": {
+    "create": {
+      "import": 94.9,
+      "startup_prime_and_warmup": 43.013,
+      "first_household": {
+        "total": 47.968,
+        "do": 23.633,
+        "worker": 24.442
+      },
+      "second_household": {
+        "total": 7.283,
+        "do": 3.669,
+        "worker": 2.379
+      },
+      "third_household": {
+        "total": 9.684,
+        "do": 4.943,
+        "worker": 4.758
+      }
+    },
+    "template": {
+      "import": 89.584,
+      "startup_prime_and_warmup": 45.737,
+      "first_household": {
+        "total": 27.565,
+        "do": 3.913,
+        "worker": 23.623
+      },
+      "second_household": {
+        "total": 7.23,
+        "do": 3.343,
+        "worker": 4.497
+      },
+      "third_household": {
+        "total": 6.58,
+        "do": 5.018,
+        "worker": 1.533
+      }
+    },
+    "template_without_module_warm": {
+      "import": 92.422,
+      "startup_prime_and_warmup": 42.895,
+      "first_household": {
+        "total": 29.396,
+        "do": 5.725,
+        "worker": 23.689
+      },
+      "second_household": {
+        "total": 6.405,
+        "do": 4.766,
+        "worker": 1.357
+      },
+      "third_household": {
+        "total": 9.764,
+        "do": 5.258,
+        "worker": 4.227
+      }
+    }
+  },
+  "warm_ms": {
+    "create_every_house": {
+      "total": {
+        "n": 200,
+        "p50": 5.313,
+        "p95": 9.538,
+        "max": 25.834
+      },
+      "do": {
+        "n": 200,
+        "p50": 5.022,
+        "p95": 8.322,
+        "max": 25.259
+      },
+      "worker": {
+        "n": 200,
+        "p50": 0.213,
+        "p95": 2.017,
+        "max": 2.639
+      }
+    },
+    "template_rebase_every_house": {
+      "total": {
+        "n": 200,
+        "p50": 1.91,
+        "p95": 4.554,
+        "max": 21.662
+      },
+      "do": {
+        "n": 200,
+        "p50": 1.697,
+        "p95": 2.444,
+        "max": 11.851
+      },
+      "worker": {
+        "n": 200,
+        "p50": 0.201,
+        "p95": 0.755,
+        "max": 17.746
+      }
+    },
+    "template_cached_copy": {
+      "total": {
+        "n": 200,
+        "p50": 0.763,
+        "p95": 1.364,
+        "max": 9.071
+      },
+      "do": {
+        "n": 200,
+        "p50": 0.586,
+        "p95": 1.092,
+        "max": 2.23
+      },
+      "worker": {
+        "n": 200,
+        "p50": 0.177,
+        "p95": 0.233,
+        "max": 7.723
+      }
+    }
+  },
+  "loadavg_at_end": [
+    1.62,
+    1.14,
+    0.92
+  ]
+}

@@ -1,0 +1,47 @@
+HomeTruth benchmark: hometruth-start-fixwright-incidents
+Date: 2026-10-17T13:10:23.989Z to 2026-10-17T13:10:24.073Z (UTC), 0.08 s
+Machine: AMD Ryzen 9 5950X 16-Core Processor, 16 vCPUs, 48 GiB, Node v22.22.1; load average 0.74 at start, 0.74 at end
+Command: node src/run.ts --agents fixwright --set incidents --seed 1 --human-reliability 0.9 --human-seed 1 --out hometruth-start-fixwright-incidents
+
+Scenarios
+  Set: incidents, all 20
+  By subset: incidents 20
+  By cause: account_link_expired 2, dead_trigger 2, device_power_lost 1, hub_down 1, name_collision 2, power_on_default_on 3, radio_link_weak 2, stale_duplicate 3, vendor_cloud_outage 2, wifi_network_changed 2
+  Ids: inc-01-cant-find-then-works, inc-02-hue-readded-six-times, inc-03-deleted-hue-lights-rediscovered, inc-04-all-plugs-turned-on, inc-05-bedroom-lamps-after-brief-outages, inc-06-lights-on-after-power-restored, inc-07-new-router-plugs-dead, inc-08-strip-stuck-on-old-network, inc-09-harmony-skill-disabled, inc-10-skills-broke-after-app-update, inc-11-hue-server-unresponsive, inc-12-tuya-ac-unresponsive, inc-13-hue-lost-after-powercut, inc-14-wifi-bulbs-keep-disconnecting, inc-15-hardwired-switch-keeps-going-offline, inc-16-more-than-one-office-light, inc-17-two-devices-same-name-openhab, inc-18-presence-routine-after-sensor-readded, inc-19-grow-light-schedule-broken, inc-20-switched-off-at-the-wall
+  Simulated person: truthful with probability 0.9 (seed 1); "not sure" when the scenario does not say.
+
+Agents
+  fixwright: @fixwright/engine on scenarioHome(view). The assistant router (@fixwright/router) picks the tool as the live product does: explain_event for questions about something the home did, else the diagnose loop (startDiagnosis, then answerDiagnosis for each question). The simulated person answers its questions; permission questions are granted.
+
+Results
+fixwright (n 20)
+  top1                 0.800 (16 of 20), 95% CI 0.584 to 0.919
+  false confirmations  0, rate 0.000 (0 of 20), 95% CI 0.000 to 0.161
+  abstention           0.200 (4 of 20), 95% CI 0.081 to 0.416
+  confirmed precision  1.000 (14 of 14), 95% CI 0.785 to 1.000
+  top1 when answering  1.000 (16 of 16), 95% CI 0.806 to 1.000
+  probes               mean 5.75 (total 115); disruptive mean 0.35 (total 7)
+  questions to person  mean 0.55 (total 11, of which 0 permission questions)
+  tool used            diagnose 18, explain_event 2
+  engine errors        1 (ambiguous_device 1; counted as abstentions)
+  latency per case     p50 1.367 ms, p95 5.952 ms, max 22.155 ms
+  per cause (n, correct, confirmed, false confirmations, abstained):
+    account_link_expired   n   2  correct   2  confirmed   0  false  0  abstained   0
+    dead_trigger           n   2  correct   1  confirmed   1  false  0  abstained   1
+    device_power_lost      n   1  correct   1  confirmed   1  false  0  abstained   0
+    hub_down               n   1  correct   1  confirmed   1  false  0  abstained   0
+    name_collision         n   2  correct   1  confirmed   1  false  0  abstained   1
+    power_on_default_on    n   3  correct   2  confirmed   2  false  0  abstained   1
+    radio_link_weak        n   2  correct   2  confirmed   2  false  0  abstained   0
+    stale_duplicate        n   3  correct   3  confirmed   3  false  0  abstained   0
+    vendor_cloud_outage    n   2  correct   2  confirmed   2  false  0  abstained   0
+    wifi_network_changed   n   2  correct   1  confirmed   1  false  0  abstained   1
+
+Kill switch (spec 10)
+  Rule: A baseline matches Fixwright on a metric when its 95% Wilson interval overlaps Fixwright's on the same scenarios, or when it is at least as good. The kill switch fires if B1 or B2 matches on both top1 and the false_confirmed rate.
+  Result: Not evaluated: this run has no baseline (B1 or B2) next to Fixwright.
+
+Timings (for sizing a longer run)
+  fixwright: 0.06 s wall for this run
+
+Every number above comes from this run; the cases and settings are in the JSON file next to this one.

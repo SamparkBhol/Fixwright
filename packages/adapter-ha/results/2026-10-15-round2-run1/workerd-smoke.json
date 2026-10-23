@@ -1,0 +1,85 @@
+{
+  "measured_at": "2026-10-15T13:21:30.586Z",
+  "wrangler_ready_ms": 1572,
+  "ok": true,
+  "runtime": "Cloudflare-Workers",
+  "steps": {
+    "hubStatus": {
+      "ok": true,
+      "ms": 2,
+      "detail": {
+        "reachable": true,
+        "latencyMs": 2,
+        "version": "2026.9.4"
+      }
+    },
+    "listEntities": {
+      "ok": true,
+      "ms": 24,
+      "detail": {
+        "count": 168,
+        "invalid": []
+      }
+    },
+    "flash with read-back": {
+      "ok": true,
+      "ms": 10,
+      "detail": [
+        "on",
+        "off"
+      ]
+    },
+    "events": {
+      "ok": true,
+      "ms": 1609,
+      "detail": {
+        "count": 19,
+        "valid": true,
+        "lampOnWithServiceContext": true
+      }
+    },
+    "signals": {
+      "ok": true,
+      "ms": 4,
+      "detail": {
+        "linkQuality": 148,
+        "powerOnBehavior": "on",
+        "flaps24h": 5
+      }
+    },
+    "registryUpdate rename and reset": {
+      "ok": true,
+      "ms": 6,
+      "detail": [
+        "Hallway Lamp (workerd)",
+        "Hallway Lamp"
+      ]
+    },
+    "selectOption with read-back": {
+      "ok": true,
+      "ms": 7,
+      "detail": [
+        "on",
+        "previous",
+        "on"
+      ]
+    },
+    "integrations": {
+      "ok": true,
+      "ms": 1,
+      "detail": 6
+    },
+    "fetch-upgrade websocket path": {
+      "ok": true,
+      "ms": 2,
+      "detail": {
+        "area": "Hallway"
+      }
+    },
+    "wrong token is an auth error": {
+      "ok": true,
+      "ms": 2,
+      "detail": "auth"
+    }
+  }
+}

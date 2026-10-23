@@ -1,0 +1,105 @@
+/* Primary values from the Alexa+ MCP add-on design guide token reference (Visual foundations), at the
+   768x480 base canvas. design/DESIGN.md gives the rule behind each choice. */
+:root {
+  --text-display1: 48px;
+  --text-display2: 40px;
+  --text-display3: 32px;
+  --text-display4: 28px;
+  --text-display5: 24px;
+  --text-headline1: 20px;
+  --text-headline2: 18px;
+  --text-body1: 16px;
+  --text-body2: 14px;
+
+  --space-4xs: 2px;
+  --space-2xs: 6px;
+  --space-xs: 8px;
+  --space-s: 12px;
+  --space-m: 16px;
+  --space-l: 20px;
+  --space-xl: 24px;
+
+  --radius-xs: 4px;
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --radius-l: 16px;
+  --radius-circle: 9999px;
+
+  --icon-s: 16px;
+  --icon-m: 20px;
+  --icon-l: 24px;
+
+  --radius-xl: calc(var(--radius-l) * 1.5);
+  --target: 48px; /* Accessibility: minimum 48x48 touch target */
+  --control-h: calc(var(--target) + var(--space-xs));
+  --dot: var(--icon-l);
+
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Inter Display", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur-bar: 720ms;
+  --dur-in: 260ms;
+  --dur-press: 120ms;
+
+  /* Dark is the default theme on Echo devices */
+  color-scheme: dark;
+  --card: #14181e; /* default-normal: dark card background */
+  --inner: #1b2028; /* nested-inner-normal: dark inner background */
+  --raised: #232a35;
+  --line: #2c3440;
+  --track: #2a3240;
+  --text: #f4f6fa;
+  --text-2: #b3bcc9;
+  --text-3: #98a3b3;
+  --primary: #2d415e; /* secondary blue/270: dark primary button */
+  --primary-hover: #36507a;
+  --on-primary: #ffffff;
+  --secondary: #232f40; /* secondary blue/190: dark secondary button */
+  --secondary-hover: #2b3a50;
+  --on-secondary: #f4f6fa;
+  --secondary-line: #3a4a63;
+  --focus: #9cc2ff;
+  --pass: #5dd39e;
+  --fail: #ff8b80;
+  --warn: #f4c25b;
+  --info: #8eb8ff;
+  --neutral: #98a3b3;
+  --glyph: #0b0e12;
+  --tint: 14%;
+  --elevation: none;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --card: #faf9fb; /* nested-outer-normal: light card outer background */
+  --inner: #ffffff; /* nested-inner-normal: light inner background */
+  --raised: #f1f3f7;
+  --line: #e1e5eb;
+  --track: #e3e8ef;
+  --text: #11151b;
+  --text-2: #4a5463;
+  --text-3: #5a6575;
+  --primary: #2d415e;
+  --primary-hover: #243550;
+  --on-primary: #ffffff;
+  --secondary: #e8ecf2;
+  --secondary-hover: #dde3eb;
+  --on-secondary: #11151b;
+  --secondary-line: #c9d1dc;
+  --focus: #1f5fd1;
+  --pass: #13703f;
+  --fail: #b4352b;
+  --warn: #875a00;
+  --info: #2358b5;
+  --neutral: #5a6575;
+  --glyph: #ffffff;
+  --tint: 11%;
+  --elevation: 0 1px 2px rgba(17, 21, 27, 0.06), 0 6px 18px rgba(17, 21, 27, 0.06);
+}
+
+.tone-pass { --tone: var(--pass); }
+.tone-fail { --tone: var(--fail); }
+.tone-warn { --tone: var(--warn); }
+.tone-info { --tone: var(--info); }
+.tone-neutral { --tone: var(--neutral); }

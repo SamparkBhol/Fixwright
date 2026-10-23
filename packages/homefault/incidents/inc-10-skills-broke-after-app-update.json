@@ -1,0 +1,294 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-10-skills-broke-after-app-update",
+  "title": "Smart Life and Gree stopped working with the assistant after an app update",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/alexa/comments/1x25meq/",
+    "date": "2026-10-10",
+    "publisher": "Reddit r/alexa",
+    "quote": "Customer support had me completely remove all of the smart devices and said I had to rebuild all of my routines from scratch."
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "The post says the vendor apps work but the assistant does not after an app update. We model the Smart Life (Tuya) and Gree account links needing a new sign in, which fits that pattern; the true cause is not stated.",
+    "Time zone US Central is assumed."
+  ],
+  "tz": "America/Chicago",
+  "now": "2026-10-10T03:55:00.000Z",
+  "symptom": {
+    "text": "My Smart Life and Gree devices stopped working with Alexa, but the apps work.",
+    "device": "Bedroom Plug"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "climate.living_room_ac",
+        "name": "Living Room AC",
+        "aliases": [],
+        "domain": "climate",
+        "deviceId": "dev_living_room_ac",
+        "integration": "gree",
+        "transport": "cloud",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Living Room AC"
+        },
+        "lastChanged": "2026-10-10T00:31:06.000Z",
+        "lastUpdated": "2026-10-10T00:31:06.000Z",
+        "area": "living_room",
+        "vendor": "Gree"
+      },
+      {
+        "entityId": "switch.bedroom_plug",
+        "name": "Bedroom Plug",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_bedroom_plug",
+        "integration": "tuya",
+        "transport": "cloud",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Bedroom Plug"
+        },
+        "lastChanged": "2026-10-10T00:31:03.000Z",
+        "lastUpdated": "2026-10-10T00:31:03.000Z",
+        "area": "bedroom",
+        "vendor": "Tuya"
+      },
+      {
+        "entityId": "switch.desk_plug",
+        "name": "Desk Plug",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_desk_plug",
+        "integration": "tuya",
+        "transport": "cloud",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Desk Plug"
+        },
+        "lastChanged": "2026-10-10T00:31:03.000Z",
+        "lastUpdated": "2026-10-10T00:31:03.000Z",
+        "area": "office",
+        "vendor": "Tuya"
+      },
+      {
+        "entityId": "switch.kasa_lamp",
+        "name": "Kasa Lamp",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_kasa_lamp",
+        "integration": "kasa",
+        "transport": "wifi",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Kasa Lamp"
+        },
+        "lastChanged": "2026-10-10T01:10:00.040Z",
+        "lastUpdated": "2026-10-10T01:10:00.040Z",
+        "area": "living_room",
+        "vendor": "TP-Link"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "gree",
+        "state": "setup_error",
+        "entryId": "entry_gree",
+        "reason": "Reauthentication required: the account link expired"
+      },
+      {
+        "integration": "kasa",
+        "state": "loaded",
+        "entryId": "entry_kasa"
+      },
+      {
+        "integration": "tuya",
+        "state": "setup_error",
+        "entryId": "entry_tuya",
+        "reason": "Reauthentication required: the account link expired"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [],
+    "signals": {
+      "switch.bedroom_plug": {
+        "lastSeen": "2026-10-10T00:31:03.000Z"
+      },
+      "switch.desk_plug": {
+        "lastSeen": "2026-10-10T00:31:03.000Z"
+      },
+      "climate.living_room_ac": {
+        "lastSeen": "2026-10-10T00:31:06.000Z"
+      },
+      "switch.kasa_lamp": {
+        "rssi": -50,
+        "lastSeen": "2026-10-10T03:55:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "call_service",
+      "when": "2026-10-09T02:00:00.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.bedroom_plug"
+      ],
+      "context": {
+        "id": "ctx_i10_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-10-09T02:00:00.040Z",
+      "entity_id": "switch.bedroom_plug",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i10_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-10-09T04:30:00.000Z",
+      "domain": "switch",
+      "service": "turn_off",
+      "entity_ids": [
+        "switch.bedroom_plug"
+      ],
+      "context": {
+        "id": "ctx_i10_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-10-09T04:30:00.040Z",
+      "entity_id": "switch.bedroom_plug",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i10_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "integration",
+      "when": "2026-10-10T00:31:02.000Z",
+      "integration": "tuya",
+      "state": "setup_error",
+      "old_state": "loaded",
+      "reason": "Reauthentication required: the account link expired"
+    },
+    {
+      "type": "state",
+      "when": "2026-10-10T00:31:03.000Z",
+      "entity_id": "switch.bedroom_plug",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-10-10T00:31:03.000Z",
+      "entity_id": "switch.desk_plug",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "integration",
+      "when": "2026-10-10T00:31:05.000Z",
+      "integration": "gree",
+      "state": "setup_error",
+      "old_state": "loaded",
+      "reason": "Reauthentication required: the account link expired"
+    },
+    {
+      "type": "state",
+      "when": "2026-10-10T00:31:06.000Z",
+      "entity_id": "climate.living_room_ac",
+      "state": "unavailable",
+      "old_state": "cool"
+    },
+    {
+      "type": "call_service",
+      "when": "2026-10-10T01:10:00.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.kasa_lamp"
+      ],
+      "context": {
+        "id": "ctx_i10_3",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-10-10T01:10:00.040Z",
+      "entity_id": "switch.kasa_lamp",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i10_3",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-10-10T02:40:00.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.bedroom_plug"
+      ],
+      "context": {
+        "id": "ctx_i10_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-10-10T03:30:00.000Z",
+      "domain": "switch",
+      "service": "turn_off",
+      "entity_ids": [
+        "switch.desk_plug"
+      ],
+      "context": {
+        "id": "ctx_i10_5",
+        "user_id": "user_voice_assistant"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "account_link_expired",
+    "entity_ids": [
+      "switch.bedroom_plug"
+    ],
+    "explanation": "The Smart Life account link needs signing in again; removing every device is not needed."
+  },
+  "human_truth": {
+    "power_switch_check": "yes",
+    "router_changed": "no"
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "account_link_expired"
+  ]
+}

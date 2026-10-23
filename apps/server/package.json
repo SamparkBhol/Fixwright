@@ -1,0 +1,38 @@
+{
+  "name": "@fixwright/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Cloudflare Worker: MCP server, HouseholdDO, demo routes and assistant router.",
+  "license": "MIT",
+  "scripts": {
+    "build": "node --no-warnings scripts/build-template.ts",
+    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.test.json",
+    "test": "node ../views/scripts/build.ts && vitest run",
+    "test:unit": "vitest run test/unit",
+    "test:ha": "bash scripts/ha-run.sh",
+    "check": "tsc -p tsconfig.json && tsc -p tsconfig.test.json && node ../views/scripts/build.ts && vitest run",
+    "dev": "wrangler dev --local --ip 127.0.0.1 --port 8701",
+    "bench:cpu": "node --no-warnings scripts/cpu-bench.ts",
+    "bench:workerd": "node --no-warnings scripts/workerd-cpu.ts",
+    "bench:household": "node --no-warnings scripts/household-cpu.ts",
+    "size": "wrangler deploy --dry-run --outdir .wrangler/dry",
+    "deploy": "node --no-warnings scripts/build-template.ts && wrangler deploy"
+  },
+  "dependencies": {
+    "@fixwright/adapter-ha": "*",
+    "@fixwright/engine": "*",
+    "@fixwright/protocol": "*",
+    "@fixwright/router": "*",
+    "@modelcontextprotocol/core": "2.2.0",
+    "@modelcontextprotocol/ext-apps": "2.0.3",
+    "@modelcontextprotocol/server": "2.2.0",
+    "homefault": "*",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20260929.1",
+    "@modelcontextprotocol/client": "2.2.0",
+    "wrangler": "4.144.0"
+  }
+}

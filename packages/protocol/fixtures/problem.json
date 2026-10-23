@@ -1,0 +1,13 @@
+{
+  "speech": "I couldn't reach your hub just now. Try again in a minute.",
+  "status": "error",
+  "ids": {},
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "problem": {
+    "code": "hub_unreachable",
+    "retryable": true
+  }
+}

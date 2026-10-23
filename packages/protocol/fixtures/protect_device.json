@@ -1,0 +1,16 @@
+{
+  "speech": "Done. I'll never switch off the aquarium filter, even through its power strip.",
+  "status": "ok",
+  "ids": {},
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "protected": [
+    {
+      "entity_id": "switch.living_room_power_strip_outlet_2",
+      "name": "Aquarium Filter",
+      "reason": "The fish need it running."
+    }
+  ]
+}

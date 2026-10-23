@@ -1,0 +1,381 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-11-hue-server-unresponsive",
+  "title": "Hue works in its own app, the assistant says server unresponsive",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/alexa/comments/1qh9utk/",
+    "date": "2026-01-19",
+    "publisher": "Reddit r/alexa",
+    "quote": "on the app it says ‘device unresponsive’ or ‘server unresponsive’"
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "The home is reconstructed from the assistant's side: Hue reaches it through the Hue cloud link, which we model as degraded since 08:12, while local control in the Hue app keeps working.",
+    "Earlier episodes from 12 to 16 January are outside the log window. Time zone UK is assumed."
+  ],
+  "tz": "Europe/London",
+  "now": "2026-01-19T17:00:00.000Z",
+  "symptom": {
+    "text": "Alexa cannot control my Hue lights. It says server unresponsive, but the Hue app works.",
+    "device": "Lounge Lamp"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "fan.dyson",
+        "name": "Dyson",
+        "aliases": [],
+        "domain": "fan",
+        "deviceId": "dev_dyson",
+        "integration": "matter",
+        "transport": "thread",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Dyson"
+        },
+        "lastChanged": "2026-01-19T16:49:00.040Z",
+        "lastUpdated": "2026-01-19T16:49:00.040Z",
+        "area": "bedroom",
+        "vendor": "Dyson"
+      },
+      {
+        "entityId": "light.kitchen_spots",
+        "name": "Kitchen Spots",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_kitchen_spots",
+        "integration": "hue_cloud",
+        "transport": "cloud",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Kitchen Spots"
+        },
+        "lastChanged": "2026-01-19T08:12:40.000Z",
+        "lastUpdated": "2026-01-19T08:12:40.000Z",
+        "area": "kitchen",
+        "vendor": "Signify"
+      },
+      {
+        "entityId": "light.landing",
+        "name": "Landing",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_landing",
+        "integration": "hue_cloud",
+        "transport": "cloud",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Landing"
+        },
+        "lastChanged": "2026-01-19T08:12:41.000Z",
+        "lastUpdated": "2026-01-19T08:12:41.000Z",
+        "area": "hallway",
+        "vendor": "Signify"
+      },
+      {
+        "entityId": "light.lounge_lamp",
+        "name": "Lounge Lamp",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_lounge_lamp",
+        "integration": "hue_cloud",
+        "transport": "cloud",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Lounge Lamp"
+        },
+        "lastChanged": "2026-01-19T08:12:40.000Z",
+        "lastUpdated": "2026-01-19T08:12:40.000Z",
+        "area": "living_room",
+        "vendor": "Signify"
+      },
+      {
+        "entityId": "light.nanoleaf_panels",
+        "name": "Nanoleaf Panels",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_nanoleaf_panels",
+        "integration": "matter",
+        "transport": "thread",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Nanoleaf Panels"
+        },
+        "lastChanged": "2026-01-18T22:00:00.040Z",
+        "lastUpdated": "2026-01-18T22:00:00.040Z",
+        "area": "office",
+        "vendor": "Nanoleaf"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "hue_cloud",
+        "state": "loaded",
+        "entryId": "entry_hue_cloud"
+      },
+      {
+        "integration": "matter",
+        "state": "loaded",
+        "entryId": "entry_matter"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [
+      {
+        "vendor": "Signify",
+        "status": "degraded",
+        "source": "vendor status page (reconstructed)",
+        "checkedAt": "2026-01-19T17:00:00.000Z"
+      }
+    ],
+    "signals": {
+      "light.lounge_lamp": {
+        "lastSeen": "2026-01-19T08:12:40.000Z"
+      },
+      "light.kitchen_spots": {
+        "lastSeen": "2026-01-19T08:12:40.000Z"
+      },
+      "light.landing": {
+        "lastSeen": "2026-01-19T08:12:41.000Z"
+      },
+      "light.nanoleaf_panels": {
+        "lastSeen": "2026-01-19T17:00:00.000Z"
+      },
+      "fan.dyson": {
+        "lastSeen": "2026-01-19T17:00:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "call_service",
+      "when": "2026-01-17T18:05:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.lounge_lamp"
+      ],
+      "context": {
+        "id": "ctx_i11_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-01-17T18:05:00.040Z",
+      "entity_id": "light.lounge_lamp",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i11_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-01-17T23:20:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.lounge_lamp"
+      ],
+      "context": {
+        "id": "ctx_i11_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-01-17T23:20:00.040Z",
+      "entity_id": "light.lounge_lamp",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i11_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-01-18T08:10:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.kitchen_spots"
+      ],
+      "context": {
+        "id": "ctx_i11_3",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-01-18T08:10:00.040Z",
+      "entity_id": "light.kitchen_spots",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i11_3",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-01-18T09:00:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.kitchen_spots"
+      ],
+      "context": {
+        "id": "ctx_i11_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-01-18T09:00:00.040Z",
+      "entity_id": "light.kitchen_spots",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i11_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-01-18T19:30:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.nanoleaf_panels"
+      ],
+      "context": {
+        "id": "ctx_i11_5",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-01-18T19:30:00.040Z",
+      "entity_id": "light.nanoleaf_panels",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i11_5",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-01-18T22:00:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.nanoleaf_panels"
+      ],
+      "context": {
+        "id": "ctx_i11_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-01-18T22:00:00.040Z",
+      "entity_id": "light.nanoleaf_panels",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i11_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-01-19T08:12:40.000Z",
+      "entity_id": "light.lounge_lamp",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-01-19T08:12:40.000Z",
+      "entity_id": "light.kitchen_spots",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-01-19T08:12:41.000Z",
+      "entity_id": "light.landing",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "call_service",
+      "when": "2026-01-19T16:48:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.lounge_lamp"
+      ],
+      "context": {
+        "id": "ctx_i11_7",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-01-19T16:49:00.000Z",
+      "domain": "fan",
+      "service": "turn_on",
+      "entity_ids": [
+        "fan.dyson"
+      ],
+      "context": {
+        "id": "ctx_i11_8",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-01-19T16:49:00.040Z",
+      "entity_id": "fan.dyson",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i11_8",
+        "user_id": "user_voice_assistant"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "vendor_cloud_outage",
+    "entity_ids": [
+      "light.lounge_lamp"
+    ],
+    "explanation": "The Hue cloud path the assistant uses is degraded; the lights themselves are fine."
+  },
+  "human_truth": {
+    "router_changed": "no",
+    "power_switch_check": "yes",
+    "notes": "The Hue app controls the lights fine."
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "vendor_cloud_outage"
+  ]
+}

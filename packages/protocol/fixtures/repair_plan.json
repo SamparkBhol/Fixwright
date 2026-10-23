@@ -1,0 +1,52 @@
+{
+  "speech": "Here's the fix. Hallway Lamp will point to the lamp that is online. The old copy, offline since October 3, is retired. Shall I go ahead?",
+  "status": "needs_confirmation",
+  "view": "stepper",
+  "ids": {
+    "diagnosis_id": "dx_01m50980d03sy1gk7c",
+    "plan_id": "pln_01m5098trrwqn6nph9"
+  },
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "plan_id": "pln_01m5098trrwqn6nph9",
+  "confirm_token": "yw1wvkkd7nja2cvfkgv20zg0zx169kcm",
+  "expires_at": "2026-10-15T17:25:31.000Z",
+  "diff": [
+    {
+      "entity_id": "light.hallway_lamp_2",
+      "field": "name",
+      "from": "Hallway Lamp 2",
+      "to": "Hallway Lamp"
+    },
+    {
+      "entity_id": "light.hallway_lamp",
+      "field": "registry",
+      "from": "kept, offline since October 3",
+      "to": "removed"
+    }
+  ],
+  "diff_lines": [
+    "Hallway Lamp will point to the lamp that is online.",
+    "The old copy, offline since October 3, is retired."
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "label": "Give the online lamp the name Hallway Lamp",
+      "status": "pending"
+    },
+    {
+      "step": 2,
+      "label": "Retire the old copy",
+      "status": "pending"
+    },
+    {
+      "step": 3,
+      "label": "Switch it on and off to check it answers",
+      "status": "pending"
+    }
+  ],
+  "protected_conflicts": []
+}

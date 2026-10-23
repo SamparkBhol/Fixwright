@@ -1,0 +1,63 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  // Fixwright: MCP server, HouseholdDO, demo routes, assistant router and the host simulator's static files.
+  // Deploy ready (see README "Deploy"); nothing here needs an account for `wrangler dev --local`.
+  "name": "fixwright",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-29",
+  "workers_dev": true,
+  // Smaller upload and faster isolate startup; source maps keep stack traces readable in Workers Logs.
+  "minify": true,
+  "upload_source_maps": true,
+  // Workers Logs show cpuTime per invocation, which is how the 10 ms Free plan budget is checked after deploy.
+  "observability": { "enabled": true },
+
+  // The Alexa+-style host simulator (apps/host build) at /. Paths that match a file never reach the Worker;
+  // everything else does, and the Worker hands unknown paths back to this binding.
+  "assets": {
+    "directory": "../host/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "none"
+  },
+
+  // The three MCP Apps views (apps/views/dist/*.html, built by apps/views) are imported as text modules
+  // (src/mcp/views.ts) and served from resources/read.
+  "rules": [{ "type": "Text", "globs": ["**/*.html"], "fallthrough": false }],
+
+  "durable_objects": {
+    "bindings": [
+      { "name": "HOUSEHOLD", "class_name": "HouseholdDO" },
+      { "name": "RATE_LIMIT", "class_name": "RateLimitDO" }
+    ]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["HouseholdDO", "RateLimitDO"] }],
+
+  "vars": {
+    // Exact origins of hosts that call this server from another origin (comma separated). The page this
+    // Worker serves itself is same origin and always allowed. Local values are the host dev server's.
+    "ALLOWED_ORIGINS": "http://localhost:8711,http://127.0.0.1:8711",
+    // Host names this Worker answers to. "*" matches one DNS label, so any account subdomain works.
+    "PUBLIC_HOSTNAMES": "localhost,127.0.0.1,fixwright.*.workers.dev",
+    // Push service for the next morning check. Tests point it at a local mock.
+    "NTFY_BASE": "https://ntfy.sh",
+    // "1" enables POST /demo/link-ha (stores a Home Assistant URL and token in the household).
+    "ALLOW_HA_LINK": "0",
+    // Where a new demo house's simulated clock starts: "HH:MM" (that Los Angeles time on the day the house is
+    // built), an ISO instant, or "now" (real time). "15:00" gives every judge the demo script's afternoon at any
+    // real hour; household time then runs with real time (plus whatever /demo/clock adds). /health and
+    // /demo/state label the clock as simulated.
+    "DEMO_START": "15:00",
+    // Per IP token buckets: requests per minute (burst = the same number).
+    "RATE_MCP_PER_MIN": "240",
+    "RATE_DEMO_PER_MIN": "30"
+  }
+
+  // CONFIRM_SECRET is a secret (32+ characters; signs repair confirm tokens and household tokens):
+  // `wrangler secret put CONFIRM_SECRET` before deploying. Under `wrangler dev` it comes from .dev.vars
+  // (copy .dev.vars.example), which is never uploaded. Without it, signing routes answer 503.
+  // HA_TOKEN_KEY is an optional secret (32+ characters) used only with ALLOW_HA_LINK=1: the key material that
+  // seals a linked Home Assistant token at rest (AES-GCM). Without it the seal key is derived from CONFIRM_SECRET.
+
+  // Optional, never required: a Workers AI binding for a model fallback in /assistant/route.
+  // "ai": { "binding": "AI" }
+}

@@ -1,0 +1,222 @@
+.carousel {
+  gap: var(--space-l);
+}
+
+.track {
+  --item-w: 216px;
+  /* A scroller: the containing block for what it holds (see .card). */
+  position: relative;
+  display: flex;
+  gap: var(--space-m);
+  flex: 1;
+  min-height: 0;
+  /* Cards scroll edge to edge inside the card padding, so the next card peeks in when there are more. */
+  margin: 0 calc(-1 * var(--space-xl));
+  padding: var(--space-4xs) var(--space-xl) var(--space-xs);
+  list-style: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 var(--space-xl);
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+/* The row takes focus when it scrolls (fitCarousel): arrow keys then move along it. */
+.track:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -3px;
+  border-radius: var(--radius-xl);
+}
+
+.item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  flex: 1 0 var(--item-w);
+  min-width: 0;
+  padding: var(--space-l);
+  border-radius: var(--radius-xl);
+  background: var(--inner);
+  border: 1px solid var(--line);
+  box-shadow: var(--elevation);
+  scroll-snap-align: start;
+  /* clip, not hidden: a card can never be scrolled inside itself (focus moving to its button would
+     otherwise slide the head out of view). fitCarousel keeps the content inside. */
+  overflow: clip;
+}
+
+/* Focus comes back to a card (it has no button once Fixed): an inset ring, so the row cannot clip it. */
+.item:focus {
+  outline: none;
+}
+
+.item:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: -3px;
+}
+
+.track[data-count="4"] .item,
+.track[data-count="5"] .item {
+  flex: 0 0 var(--item-w);
+}
+
+.item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+}
+
+.kind-icon {
+  display: grid;
+  place-items: center;
+  color: var(--text-2);
+  flex-shrink: 0;
+}
+
+.kind-icon .icon {
+  width: 28px;
+  height: 28px;
+}
+
+.sev {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  min-width: 0;
+  height: 32px;
+  padding: 0 var(--space-s) 0 var(--space-xs);
+  border-radius: var(--radius-circle);
+  background: color-mix(in srgb, var(--tone) var(--tint), var(--inner));
+  color: var(--tone);
+  font-size: var(--text-body1);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.sev .icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.75;
+}
+
+.item > * {
+  flex-shrink: 0;
+}
+
+.item-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-display5);
+  font-weight: 700;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.item-detail {
+  font-size: var(--text-body1);
+  line-height: 1.35;
+  color: var(--text-2);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/* Inline on a landscape screen: the detail gets the height left above the action (fitCarousel sets
+   --detail-lines; two lines until it runs). */
+html.orient-landscape.mode-inline .item-detail {
+  -webkit-line-clamp: var(--detail-lines, 2);
+}
+
+.item-action {
+  display: flex;
+  margin-top: auto;
+}
+
+.item-action .btn {
+  flex: 1;
+  padding: 0 var(--space-m);
+}
+
+.item.is-fixed .item-title {
+  color: var(--text-2);
+}
+
+/* Four or five cards share the row, or a title would be cut at the display size (fitCarousel): every
+   title in the row drops one type step together, so each shows in full and the hierarchy stays even. */
+.track[data-count="4"] .item-title,
+.track[data-count="5"] .item-title,
+.track.is-compact .item-title {
+  font-size: var(--text-headline1);
+  line-height: 1.25;
+}
+
+/* No box, so the error takes no more height than the detail did and the card's button keeps its place. */
+.item .error {
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  font-size: var(--text-body1);
+  line-height: 1.3;
+}
+
+/* A finding with nothing to press: a quiet line where the action would be, so the card ends cleanly. */
+.item-note {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: auto;
+  min-height: var(--control-h);
+  padding-top: var(--space-4xs);
+  border-top: 1px solid var(--line);
+  font-size: var(--text-body1);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-2);
+}
+
+.item-note-icon {
+  width: var(--icon-m);
+  height: var(--icon-m);
+}
+
+/* Phone: a vertical list in a vertically scrolling card (Card viewport). */
+html.dc-phone .track {
+  flex-direction: column;
+  flex: none;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  scroll-snap-type: none;
+}
+
+html.dc-phone .item,
+html.dc-phone .track[data-count] .item {
+  flex: none;
+}
+
+html.dc-phone .item-title,
+html.dc-phone .item-detail {
+  -webkit-line-clamp: unset;
+}
+
+/* Fullscreen: more room, so every card shows in full on a wrapping grid. */
+html.mode-fullscreen .track {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--item-w), 1fr));
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  flex: none;
+}
+
+html.mode-fullscreen .item-title,
+html.mode-fullscreen .item-detail {
+  -webkit-line-clamp: unset;
+}

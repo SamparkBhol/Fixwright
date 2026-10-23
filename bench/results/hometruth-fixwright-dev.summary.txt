@@ -1,0 +1,46 @@
+HomeTruth benchmark: hometruth-fixwright-dev
+Date: 2026-10-17T17:25:07.435Z to 2026-10-17T17:25:09.317Z (UTC), 1.88 s
+Machine: AMD Ryzen 9 5950X 16-Core Processor, 16 vCPUs, 48 GiB, Node v22.22.1; load average 8.95 at start, 8.95 at end
+Command: node src/run.ts --agents fixwright --set dev --seed 1 --human-reliability 0.9 --human-seed 1 --out hometruth-fixwright-dev
+
+Scenarios
+  Set: dev, all 500
+  By subset: dev 500
+  By cause: account_link_expired 50, dead_trigger 50, device_power_lost 50, hub_down 50, name_collision 50, power_on_default_on 50, radio_link_weak 50, stale_duplicate 50, vendor_cloud_outage 50, wifi_network_changed 50
+  Simulated person: truthful with probability 0.9 (seed 1); "not sure" when the scenario does not say.
+
+Agents
+  fixwright: @fixwright/engine on scenarioHome(view). The assistant router (@fixwright/router) picks the tool as the live product does: explain_event for questions about something the home did, else the diagnose loop (startDiagnosis, then answerDiagnosis for each question). The simulated person answers its questions; permission questions are granted.
+
+Results
+fixwright (n 500)
+  top1                 0.828 (414 of 500), 95% CI 0.792 to 0.859
+  false confirmations  17, rate 0.034 (17 of 500), 95% CI 0.021 to 0.054
+  abstention           0.138 (69 of 500), 95% CI 0.111 to 0.171
+  confirmed precision  0.951 (329 of 346), 95% CI 0.923 to 0.969
+  top1 when answering  0.961 (414 of 431), 95% CI 0.938 to 0.975
+  probes               mean 5.88 (total 2938); disruptive mean 0.24 (total 120)
+  questions to person  mean 0.62 (total 310, of which 5 permission questions)
+  tool used            diagnose 444, explain_event 56
+  engine errors        17 (ambiguous_device 17; counted as abstentions)
+  latency per case     p50 1.215 ms, p95 2.54 ms, max 17.827 ms
+  per cause (n, correct, confirmed, false confirmations, abstained):
+    account_link_expired   n  50  correct  35  confirmed   0  false  0  abstained  15
+    dead_trigger           n  50  correct  27  confirmed  41  false 14  abstained   9
+    device_power_lost      n  50  correct  48  confirmed  48  false  0  abstained   2
+    hub_down               n  50  correct  50  confirmed  50  false  0  abstained   0
+    name_collision         n  50  correct  36  confirmed  21  false  1  abstained  13
+    power_on_default_on    n  50  correct  31  confirmed  31  false  0  abstained  19
+    radio_link_weak        n  50  correct  50  confirmed  48  false  0  abstained   0
+    stale_duplicate        n  50  correct  43  confirmed  44  false  1  abstained   6
+    vendor_cloud_outage    n  50  correct  50  confirmed  50  false  0  abstained   0
+    wifi_network_changed   n  50  correct  44  confirmed  13  false  1  abstained   5
+
+Kill switch (spec 10)
+  Rule: A baseline matches Fixwright on a metric when its 95% Wilson interval overlaps Fixwright's on the same scenarios, or when it is at least as good. The kill switch fires if B1 or B2 matches on both top1 and the false_confirmed rate.
+  Result: Not evaluated: this run has no baseline (B1 or B2) next to Fixwright.
+
+Timings (for sizing a longer run)
+  fixwright: 0.86 s wall for this run
+
+Every number above comes from this run; the cases and settings are in the JSON file next to this one.

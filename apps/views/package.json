@@ -1,0 +1,29 @@
+{
+  "name": "@fixwright/views",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "MCP Apps views (single-file HTML): stepper, carousel, repair card.",
+  "license": "MIT",
+  "exports": {
+    "./stepper.html": "./dist/stepper.html",
+    "./carousel.html": "./dist/carousel.html",
+    "./repair-card.html": "./dist/repair-card.html",
+    "./manifest.json": "./dist/manifest.json"
+  },
+  "scripts": {
+    "build": "node scripts/build.ts",
+    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.node.json",
+    "test": "node scripts/build.ts && vitest run",
+    "test:visual": "node scripts/build.ts && vitest run --config vitest.visual.config.ts",
+    "harness": "node scripts/build.ts && node test/harness/serve.ts",
+    "check": "tsc -p tsconfig.json && tsc -p tsconfig.node.json && node scripts/build.ts && vitest run && vitest run --config vitest.visual.config.ts",
+    "check:fast": "tsc -p tsconfig.json && tsc -p tsconfig.node.json && node scripts/build.ts && vitest run"
+  },
+  "dependencies": {
+    "@fixwright/protocol": "*",
+    "@modelcontextprotocol/core": "2.2.0",
+    "@modelcontextprotocol/ext-apps": "2.0.3",
+    "zod": "4.6.5"
+  }
+}

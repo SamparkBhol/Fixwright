@@ -1,0 +1,160 @@
+{
+  "measured_at": "2026-10-15T13:19:57.401Z",
+  "ha_url": "http://127.0.0.1:8741",
+  "unit": "ms",
+  "timings": {
+    "hubStatus": {
+      "n": 1,
+      "min": 2.9,
+      "p50": 2.9,
+      "max": 2.9
+    },
+    "listEntities": {
+      "n": 2,
+      "min": 12.5,
+      "p50": 12.5,
+      "max": 43.5
+    },
+    "inject ghost (template reload)": {
+      "n": 1,
+      "min": 91.8,
+      "p50": 91.8,
+      "max": 91.8
+    },
+    "getEntity": {
+      "n": 1,
+      "min": 5.1,
+      "p50": 5.1,
+      "max": 5.1
+    },
+    "registryRemove": {
+      "n": 1,
+      "min": 9.3,
+      "p50": 9.3,
+      "max": 9.3
+    },
+    "inject unghost (template reload)": {
+      "n": 1,
+      "min": 50,
+      "p50": 50,
+      "max": 50
+    },
+    "registryUpdate name": {
+      "n": 2,
+      "min": 4.2,
+      "p50": 4.2,
+      "max": 5.2
+    },
+    "registryUpdate aliases": {
+      "n": 1,
+      "min": 3.4,
+      "p50": 3.4,
+      "max": 3.4
+    },
+    "registryUpdate disable": {
+      "n": 1,
+      "min": 17.7,
+      "p50": 17.7,
+      "max": 17.7
+    },
+    "reloadIntegration template": {
+      "n": 1,
+      "min": 36.7,
+      "p50": 36.7,
+      "max": 36.7
+    },
+    "inject power cut": {
+      "n": 1,
+      "min": 2852.9,
+      "p50": 2852.9,
+      "max": 2852.9
+    },
+    "events (all entities)": {
+      "n": 1,
+      "min": 36.7,
+      "p50": 36.7,
+      "max": 36.7
+    },
+    "events (circuit only)": {
+      "n": 1,
+      "min": 17.1,
+      "p50": 17.1,
+      "max": 17.1
+    },
+    "mains back to devices back": {
+      "n": 1,
+      "min": 2,
+      "p50": 2,
+      "max": 2
+    },
+    "selectOption": {
+      "n": 1,
+      "min": 6.4,
+      "p50": 6.4,
+      "max": 6.4
+    },
+    "signals": {
+      "n": 1,
+      "min": 6.7,
+      "p50": 6.7,
+      "max": 6.7
+    },
+    "inject bridge down": {
+      "n": 1,
+      "min": 8.7,
+      "p50": 8.7,
+      "max": 8.7
+    },
+    "reloadIntegration bridge": {
+      "n": 1,
+      "min": 10.7,
+      "p50": 10.7,
+      "max": 10.7
+    },
+    "reloadIntegration demo": {
+      "n": 1,
+      "min": 64.9,
+      "p50": 64.9,
+      "max": 64.9
+    },
+    "inject duplicate name": {
+      "n": 1,
+      "min": 6.9,
+      "p50": 6.9,
+      "max": 6.9
+    },
+    "callService refused": {
+      "n": 13,
+      "min": 0,
+      "p50": 1.1,
+      "max": 7.4
+    },
+    "getEntity automation": {
+      "n": 1,
+      "min": 3.3,
+      "p50": 3.3,
+      "max": 3.3
+    },
+    "integrations": {
+      "n": 1,
+      "min": 2.9,
+      "p50": 2.9,
+      "max": 2.9
+    },
+    "cloudStatus": {
+      "n": 1,
+      "min": 5.8,
+      "p50": 5.8,
+      "max": 5.8
+    },
+    "callService (flash step)": {
+      "n": 4,
+      "min": 5.4,
+      "p50": 6.8,
+      "max": 9.3
+    }
+  },
+  "counts": {
+    "rejected logins for 6 calls with a wrong token": 1
+  }
+}

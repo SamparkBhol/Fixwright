@@ -1,0 +1,18 @@
+{
+  "measured_at": "2026-10-17T12:51:36.944Z",
+  "method": "utime+stime of the wrangler dev process group from /proc, golden path cycles (reset, diagnose, answer, plan, apply, next_morning, status, explain, plan, apply, checkup, switch, protect, undo, refresh_view)",
+  "requests": 300,
+  "failed": 0,
+  "cycles": 20,
+  "tick_ms": 10,
+  "wall_ms": 1539,
+  "workerd_processes": 2,
+  "workerd_cpu_ms_total": 1640,
+  "workerd_cpu_ms_per_request": 5.467,
+  "process_group_cpu_ms_per_request": 6.2,
+  "loadavg": [
+    1.17,
+    4.14,
+    5.68
+  ]
+}

@@ -1,0 +1,254 @@
+HomeTruth: the full benchmark run for Fixwright
+Written 2026-10-17T17:25:17.307Z from the result files in bench/results. Every number below is read from those
+files or computed from their case rows with the runner's own code (bench/src/hometruth.ts).
+
+WHAT RAN
+  Fixwright (the live product path: the assistant router, then @fixwright/engine) on every scenario:
+    dev        500 scenarios
+    heldout    200 scenarios
+    incidents  20 scenarios
+    all        720 scenarios
+  B1 (the LLM with the rendered logs and the symptom) and B2 (B1 plus the answers the person gave
+  Fixwright) next to Fixwright on the same scenarios:
+    held-out sample: 100 of 200, stratified, seed 1 (account_link_expired 10, dead_trigger 10, device_power_lost 10, hub_down 10, name_collision 10, power_on_default_on 10, radio_link_weak 10, stale_duplicate 10, vendor_cloud_outage 10, wifi_network_changed 10)
+    incidents: all 20
+  The simulated person answers truthfully with probability 0.9 (seed 1), the same for every agent.
+  Machine: AMD Ryzen 9 5950X 16-Core Processor, 16 vCPUs, 48 GiB, Node v22.22.1.
+  Other builds ran on the same machine during the baseline runs, so llama.cpp was given 8 threads
+  and wall times are those of a shared machine.
+
+MODEL AND SETTINGS (B1 AND B2)
+  Model: gpt-oss-20b (gpt-oss-20b-MXFP4.gguf, MXFP4 MoE, 20.9 B parameters)
+  Server: llama.cpp b11146-7fe450e19, CPU backend haswell, 1 slot, context 16384 tokens, threads 8, batch threads 8
+  Generation: temperature 0, seed 42, max tokens 1024 (reasoning included), reasoning effort low, cache_prompt false, one call at a time
+  Client: Strands Agents SDK 1.19.0 (json_schema mode, openai 6.49.0); confirmed when confidence >= 0.9
+  Server command line: --model $LLM_HOME/models/gpt-oss-20b-MXFP4.gguf --alias gpt-oss-20b --host 127.0.0.1 --port 8771 --ctx-size 16384 --parallel 1 --threads 8 --threads-batch 8 --flash-attn on --load-mode none --jinja --reasoning-format auto --reasoning-effort low --cache-ram 2048 --metrics --no-webui --cors-origins localhost
+  The incident run used the same server command line and generation settings.
+
+FIXWRIGHT ON EVERY SET (run at the end, on the engine as it was then)
+  dev (n 500)
+    top1                 0.828 (414 of 500), 95% CI 0.792 to 0.859
+    false confirmations  17, rate 0.034 (17 of 500), 95% CI 0.021 to 0.054
+    abstention           0.138 (69 of 500), 95% CI 0.111 to 0.171
+    confirmed precision  0.951 (329 of 346), 95% CI 0.923 to 0.969
+    top1 when answering  0.961 (414 of 431), 95% CI 0.938 to 0.975
+    probes               mean 5.88, disruptive mean 0.24; questions to the person mean 0.62
+  heldout (n 200)
+    top1                 0.805 (161 of 200), 95% CI 0.745 to 0.854
+    false confirmations  7, rate 0.035 (7 of 200), 95% CI 0.017 to 0.070
+    abstention           0.160 (32 of 200), 95% CI 0.116 to 0.217
+    confirmed precision  0.947 (126 of 133), 95% CI 0.895 to 0.974
+    top1 when answering  0.958 (161 of 168), 95% CI 0.916 to 0.980
+    probes               mean 5.88, disruptive mean 0.28; questions to the person mean 0.65
+  incidents (n 20)
+    top1                 0.800 (16 of 20), 95% CI 0.584 to 0.919
+    false confirmations  0, rate 0.000 (0 of 20), 95% CI 0.000 to 0.161
+    abstention           0.200 (4 of 20), 95% CI 0.081 to 0.416
+    confirmed precision  1.000 (14 of 14), 95% CI 0.785 to 1.000
+    top1 when answering  1.000 (16 of 16), 95% CI 0.806 to 1.000
+    probes               mean 5.75, disruptive mean 0.35; questions to the person mean 0.55
+  all (n 720)
+    top1                 0.821 (591 of 720), 95% CI 0.791 to 0.847
+    false confirmations  24, rate 0.033 (24 of 720), 95% CI 0.022 to 0.049
+    abstention           0.146 (105 of 720), 95% CI 0.122 to 0.173
+    confirmed precision  0.951 (469 of 493), 95% CI 0.929 to 0.967
+    top1 when answering  0.961 (591 of 615), 95% CI 0.943 to 0.974
+    probes               mean 5.87, disruptive mean 0.25; questions to the person mean 0.63
+  Tools on all 720: diagnose 643, explain_event 77; engine stops ambiguous_device 27 (counted as abstentions).
+  With the router off (diagnose loop for every symptom), all 720: top1 0.792 (570 of 720), 95% CI 0.760 to 0.820; false confirmations 4, rate 0.006 (4 of 720), 95% CI 0.002 to 0.014.
+
+FIXWRIGHT, B1 AND B2 ON THE SAME SCENARIOS
+  Fixwright here is the run made next to the baselines: its questions and answers are what B2 read.
+
+Held-out sample (100 scenarios)
+  Fixwright (n 100)
+    top1                 0.780 (78 of 100), 95% CI 0.689 to 0.850
+    false confirmations  3, rate 0.030 (3 of 100), 95% CI 0.010 to 0.085
+    abstention           0.190 (19 of 100), 95% CI 0.125 to 0.278
+    confirmed precision  0.951 (58 of 61), 95% CI 0.865 to 0.983
+    top1 when answering  0.963 (78 of 81), 95% CI 0.897 to 0.987
+    probes               mean 5.88, disruptive mean 0.29; questions to the person mean 0.65
+  B1 (n 100)
+    top1                 0.710 (71 of 100), 95% CI 0.615 to 0.790
+    false confirmations  5, rate 0.050 (5 of 100), 95% CI 0.021 to 0.112
+    abstention           0.040 (4 of 100), 95% CI 0.016 to 0.098
+    confirmed precision  0.919 (57 of 62), 95% CI 0.825 to 0.965
+    top1 when answering  0.740 (71 of 96), 95% CI 0.644 to 0.817
+    invalid outputs      0 (counted as can't tell); infra failures 0
+  B2 (n 100)
+    top1                 0.830 (83 of 100), 95% CI 0.745 to 0.891
+    false confirmations  3, rate 0.030 (3 of 100), 95% CI 0.010 to 0.085
+    abstention           0.030 (3 of 100), 95% CI 0.010 to 0.085
+    confirmed precision  0.958 (69 of 72), 95% CI 0.884 to 0.986
+    top1 when answering  0.856 (83 of 97), 95% CI 0.772 to 0.912
+    invalid outputs      0 (counted as can't tell); infra failures 0
+  top1 per cause (correct of n): Fixwright, B1, B2
+    account_link_expired   9 of 10   9 of 10   9 of 10
+    dead_trigger           7 of 10   10 of 10  10 of 10
+    device_power_lost      8 of 10   3 of 10   4 of 10
+    hub_down               10 of 10  7 of 10   7 of 10
+    name_collision         5 of 10   9 of 10   10 of 10
+    power_on_default_on    2 of 10   9 of 10   9 of 10
+    radio_link_weak        10 of 10  8 of 10   8 of 10
+    stale_duplicate        9 of 10   5 of 10   8 of 10
+    vendor_cloud_outage    10 of 10  10 of 10  10 of 10
+    wifi_network_changed   8 of 10   1 of 10   8 of 10
+
+Incidents (20 reconstructed reports)
+  Fixwright (n 20)
+    top1                 0.800 (16 of 20), 95% CI 0.584 to 0.919
+    false confirmations  0, rate 0.000 (0 of 20), 95% CI 0.000 to 0.161
+    abstention           0.200 (4 of 20), 95% CI 0.081 to 0.416
+    confirmed precision  1.000 (14 of 14), 95% CI 0.785 to 1.000
+    top1 when answering  1.000 (16 of 16), 95% CI 0.806 to 1.000
+    probes               mean 5.75, disruptive mean 0.35; questions to the person mean 0.55
+  B1 (n 20)
+    top1                 0.800 (16 of 20), 95% CI 0.584 to 0.919
+    false confirmations  2, rate 0.100 (2 of 20), 95% CI 0.028 to 0.301
+    abstention           0.050 (1 of 20), 95% CI 0.009 to 0.236
+    confirmed precision  0.846 (11 of 13), 95% CI 0.578 to 0.957
+    top1 when answering  0.842 (16 of 19), 95% CI 0.624 to 0.945
+    invalid outputs      0 (counted as can't tell); infra failures 0
+  B2 (n 20)
+    top1                 0.850 (17 of 20), 95% CI 0.640 to 0.948
+    false confirmations  2, rate 0.100 (2 of 20), 95% CI 0.028 to 0.301
+    abstention           0.050 (1 of 20), 95% CI 0.009 to 0.236
+    confirmed precision  0.857 (12 of 14), 95% CI 0.601 to 0.960
+    top1 when answering  0.895 (17 of 19), 95% CI 0.686 to 0.971
+    invalid outputs      0 (counted as can't tell); infra failures 0
+  top1 per cause (correct of n): Fixwright, B1, B2
+    account_link_expired   2 of 2    2 of 2    2 of 2
+    dead_trigger           1 of 2    2 of 2    1 of 2
+    device_power_lost      1 of 1    1 of 1    1 of 1
+    hub_down               1 of 1    1 of 1    1 of 1
+    name_collision         1 of 2    2 of 2    2 of 2
+    power_on_default_on    2 of 3    3 of 3    3 of 3
+    radio_link_weak        2 of 2    2 of 2    2 of 2
+    stale_duplicate        3 of 3    1 of 3    1 of 3
+    vendor_cloud_outage    2 of 2    2 of 2    2 of 2
+    wifi_network_changed   1 of 2    0 of 2    2 of 2
+
+Both together (120 scenarios)
+  Fixwright (n 120)
+    top1                 0.783 (94 of 120), 95% CI 0.702 to 0.848
+    false confirmations  3, rate 0.025 (3 of 120), 95% CI 0.009 to 0.071
+    abstention           0.192 (23 of 120), 95% CI 0.131 to 0.271
+    confirmed precision  0.960 (72 of 75), 95% CI 0.889 to 0.986
+    top1 when answering  0.969 (94 of 97), 95% CI 0.913 to 0.989
+    probes               mean 5.86, disruptive mean 0.30; questions to the person mean 0.63
+  B1 (n 120)
+    top1                 0.725 (87 of 120), 95% CI 0.639 to 0.797
+    false confirmations  7, rate 0.058 (7 of 120), 95% CI 0.029 to 0.116
+    abstention           0.042 (5 of 120), 95% CI 0.018 to 0.094
+    confirmed precision  0.907 (68 of 75), 95% CI 0.820 to 0.954
+    top1 when answering  0.756 (87 of 115), 95% CI 0.671 to 0.826
+    invalid outputs      0 (counted as can't tell); infra failures 0
+  B2 (n 120)
+    top1                 0.833 (100 of 120), 95% CI 0.756 to 0.889
+    false confirmations  5, rate 0.042 (5 of 120), 95% CI 0.018 to 0.094
+    abstention           0.033 (4 of 120), 95% CI 0.013 to 0.083
+    confirmed precision  0.942 (81 of 86), 95% CI 0.871 to 0.975
+    top1 when answering  0.862 (100 of 116), 95% CI 0.788 to 0.913
+    invalid outputs      0 (counted as can't tell); infra failures 0
+  top1 per cause (correct of n): Fixwright, B1, B2
+    account_link_expired   11 of 12  11 of 12  11 of 12
+    dead_trigger           8 of 12   12 of 12  11 of 12
+    device_power_lost      9 of 11   4 of 11   5 of 11
+    hub_down               11 of 11  8 of 11   8 of 11
+    name_collision         6 of 12   11 of 12  12 of 12
+    power_on_default_on    4 of 13   12 of 13  12 of 13
+    radio_link_weak        12 of 12  10 of 12  10 of 12
+    stale_duplicate        12 of 13  6 of 13   9 of 13
+    vendor_cloud_outage    12 of 12  12 of 12  12 of 12
+    wifi_network_changed   9 of 12   1 of 12   10 of 12
+
+KILL SWITCH (SPEC 10)
+  Rule: A baseline matches Fixwright on a metric when its 95% Wilson interval overlaps Fixwright's on
+  the same scenarios, or when it is at least as good. The kill switch fires if B1 or B2 matches on both
+  top1 and the false_confirmed rate.
+  The deciding set, fixed before the run: the held-out sample of 100. Below 30 paired scenarios the
+  rule is not conclusive. The exact McNemar p values are a second opinion and not part of the rule.
+  Held-out sample of 100 (the verdict): FIRES
+    B1 vs Fixwright on the same 100 scenarios: matches on both
+      top1             Fixwright 0.780 [95% CI 0.689 to 0.850], B1 0.710 [95% CI 0.615 to 0.790]; matches: yes
+                       paired: right only for Fixwright 24, only B1 17, exact McNemar p 0.349
+      false confirmed  Fixwright 0.030 [95% CI 0.010 to 0.085], B1 0.050 [95% CI 0.021 to 0.112]; matches: yes
+                       paired: falsely confirmed only by Fixwright 3, only B1 5, exact McNemar p 0.727
+    B2 vs Fixwright on the same 100 scenarios: matches on both
+      top1             Fixwright 0.780 [95% CI 0.689 to 0.850], B2 0.830 [95% CI 0.745 to 0.891]; matches: yes
+                       paired: right only for Fixwright 12, only B2 17, exact McNemar p 0.458
+      false confirmed  Fixwright 0.030 [95% CI 0.010 to 0.085], B2 0.030 [95% CI 0.010 to 0.085]; matches: yes
+                       paired: falsely confirmed only by Fixwright 3, only B2 3, exact McNemar p 1.00
+  Incidents (20): not conclusive (the rule alone would say fires)
+    B1 vs Fixwright on the same 20 scenarios: matches on both
+      top1             Fixwright 0.800 [95% CI 0.584 to 0.919], B1 0.800 [95% CI 0.584 to 0.919]; matches: yes
+                       paired: right only for Fixwright 3, only B1 3, exact McNemar p 1.00
+      false confirmed  Fixwright 0.000 [95% CI 0.000 to 0.161], B1 0.100 [95% CI 0.028 to 0.301]; matches: yes
+                       paired: falsely confirmed only by Fixwright 0, only B1 2, exact McNemar p 0.500
+    B2 vs Fixwright on the same 20 scenarios: matches on both
+      top1             Fixwright 0.800 [95% CI 0.584 to 0.919], B2 0.850 [95% CI 0.640 to 0.948]; matches: yes
+                       paired: right only for Fixwright 2, only B2 3, exact McNemar p 1.00
+      false confirmed  Fixwright 0.000 [95% CI 0.000 to 0.161], B2 0.100 [95% CI 0.028 to 0.301]; matches: yes
+                       paired: falsely confirmed only by Fixwright 0, only B2 2, exact McNemar p 0.500
+  Both together (120): FIRES
+    B1 vs Fixwright on the same 120 scenarios: matches on both
+      top1             Fixwright 0.783 [95% CI 0.702 to 0.848], B1 0.725 [95% CI 0.639 to 0.797]; matches: yes
+                       paired: right only for Fixwright 27, only B1 20, exact McNemar p 0.382
+      false confirmed  Fixwright 0.025 [95% CI 0.009 to 0.071], B1 0.058 [95% CI 0.029 to 0.116]; matches: yes
+                       paired: falsely confirmed only by Fixwright 3, only B1 7, exact McNemar p 0.344
+    B2 vs Fixwright on the same 120 scenarios: matches on both
+      top1             Fixwright 0.783 [95% CI 0.702 to 0.848], B2 0.833 [95% CI 0.756 to 0.889]; matches: yes
+                       paired: right only for Fixwright 14, only B2 20, exact McNemar p 0.392
+      false confirmed  Fixwright 0.025 [95% CI 0.009 to 0.071], B2 0.042 [95% CI 0.018 to 0.094]; matches: yes
+                       paired: falsely confirmed only by Fixwright 3, only B2 5, exact McNemar p 0.727
+  Verdict: Fires: a baseline cannot be told apart from Fixwright on both top1 and false confirmations.
+  Move the headline to the human-as-sensor and verified-repair loop.
+
+DID THE ENGINE CHANGE WHILE THE BASELINES RAN?
+  dev: 0 of 500 Fixwright answers differ between the run before the baselines (2026-10-17T13:10:20.385Z) and the final run (2026-10-17T17:25:07.435Z).
+  heldout: 0 of 200 Fixwright answers differ between the run before the baselines (2026-10-17T13:10:22.716Z) and the final run (2026-10-17T17:25:09.744Z).
+  incidents: 0 of 20 Fixwright answers differ between the run before the baselines (2026-10-17T13:10:23.989Z) and the final run (2026-10-17T17:25:11.013Z).
+  all: 0 of 720 Fixwright answers differ between the run before the baselines (2026-10-17T13:10:24.478Z) and the final run (2026-10-17T17:25:11.508Z).
+  held-out sample: 0 of 100 Fixwright answers next to the baselines differ from the final run.
+  incidents: 0 of 20 Fixwright answers next to the baselines differ from the final run.
+  An answer differs when the cause, the verdict level or the number of questions changed. Where any
+  differ, the comparison with B1 and B2 above still pairs each baseline with the Fixwright run it read.
+
+TIMINGS
+  Incidents run: 2026-10-17T13:10:47.371Z to 2026-10-17T13:22:15.038Z, 11 min 28 s wall; load average 1.75 at start, 12.41 at end; 0 cases carried over from a checkpoint
+    B1: 20 calls (Strands 20, fetch fallback 0, failed 0), 0 reused byte identical B1 requests; per call mean 24.0 s, p50 24.0 s, p95 28.6 s; prompt tokens mean 1113, max 1347; 0 prompt tokens from cache
+    B2: 7 calls (Strands 7, fetch fallback 0, failed 0), 13 reused byte identical B1 requests; per call mean 29.6 s, p50 30.2 s, p95 34.7 s; prompt tokens mean 1190, max 1362; 0 prompt tokens from cache
+  Held-out run: 2026-10-17T13:22:15.470Z to 2026-10-17T17:25:05.502Z, 4 h 2 min wall; load average 12.41 at start, 8.95 at end; 0 cases carried over from a checkpoint
+    B1: 100 calls (Strands 100, fetch fallback 0, failed 0), 0 reused byte identical B1 requests; per call mean 1 min 47 s, p50 1 min 43 s, p95 2 min 47 s; prompt tokens mean 5826, max 9947; 0 prompt tokens from cache
+    B2: 38 calls (Strands 38, fetch fallback 0, failed 0), 62 reused byte identical B1 requests; per call mean 1 min 41 s, p50 1 min 43 s, p95 2 min 14 s; prompt tokens mean 6152, max 8845; 0 prompt tokens from cache
+  Fixwright alone on all 720: 1.2 s for the agent, 2.6 s for the run.
+
+HONEST CAVEATS
+  Generated scenarios. The 700 dev and held-out scenarios come from homefault's generator, which uses
+  the same 10 cause library as Fixwright's engine and was written by the same team. The held-out seeds
+  (10001 to 10200) were kept for reporting, but held-out smoke runs were seen during the build, so they
+  are not untouched. The setup favours Fixwright: its probes are made for exactly these 10 causes.
+  Reconstructed incidents. The 20 incidents are hand reconstructions of dated public reports into Home
+  Assistant shaped logs, with stated assumptions where a report names no cause. They are not recordings
+  of real homes, and 20 is too few to decide anything on their own.
+  Unanswered calls. None: every B1 and B2 call got an answer from the LLM server.
+  Simulated person. Answers come from each scenario's ground truth, wrong 10% of the time, not from people.
+  One model. B1 and B2 use one open weights model (gpt-oss-20b, MXFP4 MoE) on CPU with reasoning effort low
+  and a 1024 token cap, called once per scenario with no tools. A larger model, more reasoning or an LLM
+  that can run probes may do better; this run does not measure that.
+  One seed. One stratified sample of 100 held-out scenarios, one person seed, one model seed.
+  Lenient kill switch. Interval overlap counts as a match, so the switch fires whenever the data cannot
+  tell the agents apart. It stays off only when Fixwright leads by a gap larger than both intervals allow.
+  Router. The live product's router sends some questions to explain_event; on all 720 it produced 21 of
+  Fixwright's 24 false confirmations (true causes: dead_trigger).
+  Threads. Answers were reproducible at temperature 0 with one slot and no prompt cache in bench/llm's
+  check; this run used 8 threads, and a different thread count can change floating point sums and so
+  answers. Not measured here.
+
+WHAT THESE NUMBERS DO NOT SHOW
+  That Fixwright finds faults in real homes with real devices and real people.
+  Whether people answer "Did it blink?" as reliably as the simulated person.
+  Repairs: HomeTruth scores the diagnosis only, not the dry run, apply, read back or rollback.
+  Voice latency, Alexa+ integration, or how the answers sound.
+  How a frontier LLM, or an LLM agent with probe tools, would compare.
+  Whether the 10 causes cover the faults real homes have.

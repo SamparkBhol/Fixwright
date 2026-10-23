@@ -1,0 +1,70 @@
+{
+  "measured_at": "2026-10-17T14:31:42.877Z",
+  "node": "v22.22.1",
+  "platform": "linux x64",
+  "runs": 200,
+  "warmup_runs": 20,
+  "house": "golden house (F1 to F5 plus power strip), FakeAdapter in memory",
+  "budget_ms": 10,
+  "steps": {
+    "diagnose": {
+      "cpu_ms_median": 0.919,
+      "cpu_ms_p95": 2.888,
+      "cpu_ms_max": 5.714,
+      "wall_ms_median": 0.855,
+      "wall_ms_p95": 1.44,
+      "cold_first_run_cpu_ms": 12.902
+    },
+    "diagnose_answer": {
+      "cpu_ms_median": 0.371,
+      "cpu_ms_p95": 1.878,
+      "cpu_ms_max": 4.377,
+      "wall_ms_median": 0.367,
+      "wall_ms_p95": 0.622,
+      "cold_first_run_cpu_ms": 4.152
+    },
+    "repair_plan": {
+      "cpu_ms_median": 0.134,
+      "cpu_ms_p95": 0.343,
+      "cpu_ms_max": 1.424,
+      "wall_ms_median": 0.131,
+      "wall_ms_p95": 0.228,
+      "cold_first_run_cpu_ms": 0.955
+    },
+    "explain_event": {
+      "cpu_ms_median": 0.684,
+      "cpu_ms_p95": 2.377,
+      "cpu_ms_max": 3.833,
+      "wall_ms_median": 0.67,
+      "wall_ms_p95": 1.142,
+      "cold_first_run_cpu_ms": 8.348
+    },
+    "home_checkup": {
+      "cpu_ms_median": 0.653,
+      "cpu_ms_p95": 2.254,
+      "cpu_ms_max": 5.618,
+      "wall_ms_median": 0.644,
+      "wall_ms_p95": 1.075,
+      "cold_first_run_cpu_ms": 4.115
+    }
+  },
+  "first_request_in_fresh_process": {
+    "processes_per_mode": 5,
+    "without_warmup": {
+      "warmup_cpu_ms_median": 0.014,
+      "diagnose_median": 12.857,
+      "diagnose_answer_median": 3.922,
+      "repair_plan_median": 0.642,
+      "explain_event_median": 7.082,
+      "home_checkup_median": 3.377
+    },
+    "after_warmup": {
+      "warmup_cpu_ms_median": 32.761,
+      "diagnose_median": 6.445,
+      "diagnose_answer_median": 1.155,
+      "repair_plan_median": 0.352,
+      "explain_event_median": 3.112,
+      "home_checkup_median": 1.847
+    }
+  }
+}

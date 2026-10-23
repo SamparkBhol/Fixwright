@@ -1,0 +1,26 @@
+{
+  "name": "@fixwright/adapter-ha",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Home Assistant adapter over REST and WebSocket (fetch and standard WebSocket only).",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.worker.json",
+    "test": "vitest run",
+    "check": "tsc -p tsconfig.json && tsc -p tsconfig.worker.json && vitest run",
+    "test:integration": "bash scripts/integration.sh",
+    "ha:start": "bash scripts/ha-local.sh start",
+    "ha:stop": "bash scripts/ha-local.sh stop",
+    "fixtures:record": "node scripts/record-fixtures.ts"
+  },
+  "dependencies": {
+    "@fixwright/protocol": "*"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20260929.1"
+  }
+}

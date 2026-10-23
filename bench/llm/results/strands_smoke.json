@@ -1,0 +1,128 @@
+{
+  "generated_at": "2026-10-15T12:50:54.910Z",
+  "endpoint": "http://127.0.0.1:8771/v1",
+  "model": "gpt-oss-20b",
+  "generation": {
+    "temperature": 0,
+    "maxTokens": 1024,
+    "seed": 42,
+    "reasoningEffort": "low",
+    "timeoutMs": 180000,
+    "cachePrompt": false
+  },
+  "case": {
+    "symptom": "The hallway lamp keeps saying it's not responding.",
+    "expected_cause": "stale_duplicate"
+  },
+  "primary_strands_mode": "json_schema",
+  "passed": true,
+  "summary": [
+    {
+      "client": "strands:json_schema",
+      "calls": 2,
+      "parsed": 2,
+      "matched_expected_cause": 2,
+      "mean_wall_ms": 28034
+    },
+    {
+      "client": "strands:structured_output",
+      "calls": 2,
+      "parsed": 2,
+      "matched_expected_cause": 2,
+      "mean_wall_ms": 31626
+    },
+    {
+      "client": "fetch:json_schema",
+      "calls": 2,
+      "parsed": 2,
+      "matched_expected_cause": 2,
+      "mean_wall_ms": 29477
+    }
+  ],
+  "rows": [
+    {
+      "client": "strands:json_schema",
+      "run": 1,
+      "ok": true,
+      "kind": null,
+      "error": null,
+      "cause_id": "stale_duplicate",
+      "confidence": 0.8,
+      "explanation": "The log shows the original light.hallway_lamp became unavailable on 2026‑10‑03, while a new device hallway_lamp_2 joined and is the active lamp. Voice commands still target the old entity name, causing errors.",
+      "matches_expected_cause": true,
+      "wall_ms": 26563,
+      "prompt_tokens": 785,
+      "completion_tokens": 134
+    },
+    {
+      "client": "strands:structured_output",
+      "run": 1,
+      "ok": true,
+      "kind": null,
+      "error": null,
+      "cause_id": "stale_duplicate",
+      "confidence": 0.85,
+      "explanation": "The original entity light.hallway_lamp became unavailable while a new device hallway_lamp_2 joined with the same spoken name, causing the voice command to target the stale entity.",
+      "matches_expected_cause": true,
+      "wall_ms": 34754,
+      "prompt_tokens": 973,
+      "completion_tokens": 135
+    },
+    {
+      "client": "fetch:json_schema",
+      "run": 1,
+      "ok": true,
+      "kind": null,
+      "error": null,
+      "cause_id": "stale_duplicate",
+      "confidence": 0.8,
+      "explanation": "The log shows the original light.hallway_lamp became unavailable on 2026‑10‑03, while a new device hallway_lamp_2 joined and is the active lamp. Voice commands still target the old entity name, causing errors.",
+      "matches_expected_cause": true,
+      "wall_ms": 31034,
+      "prompt_tokens": 785,
+      "completion_tokens": 134
+    },
+    {
+      "client": "strands:json_schema",
+      "run": 2,
+      "ok": true,
+      "kind": null,
+      "error": null,
+      "cause_id": "stale_duplicate",
+      "confidence": 0.8,
+      "explanation": "The log shows the original light.hallway_lamp became unavailable on 2026‑10‑03, while a new device hallway_lamp_2 joined and is the active lamp. Voice commands still target the old entity name, causing errors.",
+      "matches_expected_cause": true,
+      "wall_ms": 29505,
+      "prompt_tokens": 785,
+      "completion_tokens": 134
+    },
+    {
+      "client": "strands:structured_output",
+      "run": 2,
+      "ok": true,
+      "kind": null,
+      "error": null,
+      "cause_id": "stale_duplicate",
+      "confidence": 0.85,
+      "explanation": "The original entity light.hallway_lamp became unavailable while a new device hallway_lamp_2 joined with the same spoken name, causing the voice command to target the stale entity.",
+      "matches_expected_cause": true,
+      "wall_ms": 28498,
+      "prompt_tokens": 973,
+      "completion_tokens": 135
+    },
+    {
+      "client": "fetch:json_schema",
+      "run": 2,
+      "ok": true,
+      "kind": null,
+      "error": null,
+      "cause_id": "stale_duplicate",
+      "confidence": 0.8,
+      "explanation": "The log shows the original light.hallway_lamp became unavailable on 2026‑10‑03, while a new device hallway_lamp_2 joined and is the active lamp. Voice commands still target the old entity name, causing errors.",
+      "matches_expected_cause": true,
+      "wall_ms": 27919,
+      "prompt_tokens": 785,
+      "completion_tokens": 134
+    }
+  ]
+}

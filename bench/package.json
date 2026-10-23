@@ -1,0 +1,25 @@
+{
+  "name": "@fixwright/bench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "HomeTruth benchmark runner and LLM-only baselines (Strands + local llama.cpp).",
+  "license": "MIT",
+  "scripts": {
+    "bench": "node src/run.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run --passWithNoTests",
+    "check": "tsc -p tsconfig.json && vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@fixwright/engine": "*",
+    "@fixwright/protocol": "*",
+    "@fixwright/router": "0.1.0",
+    "@modelcontextprotocol/sdk": "1.31.0",
+    "@opentelemetry/api": "1.9.1",
+    "@strands-agents/sdk": "1.19.0",
+    "homefault": "*",
+    "openai": "6.49.0",
+    "zod": "4.6.5"
+  }
+}

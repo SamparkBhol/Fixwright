@@ -1,0 +1,401 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-02-hue-readded-six-times",
+  "title": "Old copies left behind after re-adding Hue devices",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.theverge.com/tech/1007565/amazon-alexa-plus-review-one-year-echo-show-dot-max",
+    "date": "2026-10-08",
+    "publisher": "The Verge",
+    "quote": "I’ve had to re-add 55 Hue devices six times over the past year."
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "The review describes repeated re-adding, not one failure. We model what a re-add commonly leaves behind: old copies kept under the same names, offline since the re-add on 30 September.",
+    "Three of the re-added lights are shown; the office lamp is the one the person asks about."
+  ],
+  "tz": "America/New_York",
+  "now": "2026-10-08T12:30:00.000Z",
+  "symptom": {
+    "text": "Alexa says the office lamp is not responding.",
+    "device": "Office Lamp"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "binary_sensor.front_door",
+        "name": "Front Door",
+        "aliases": [],
+        "domain": "binary_sensor",
+        "deviceId": "dev_front_door",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Front Door"
+        },
+        "lastChanged": "2026-10-06T22:45:40.000Z",
+        "lastUpdated": "2026-10-06T22:45:40.000Z",
+        "area": "hallway",
+        "vendor": "Aqara"
+      },
+      {
+        "entityId": "light.kitchen_pendants",
+        "name": "Kitchen Pendants",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_kitchen_pendants_old",
+        "integration": "hue",
+        "transport": "zigbee",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Kitchen Pendants",
+          "restored": true
+        },
+        "lastChanged": "2026-10-01T00:15:00.000Z",
+        "lastUpdated": "2026-10-01T00:15:00.000Z",
+        "area": "kitchen",
+        "vendor": "Signify",
+        "restored": true
+      },
+      {
+        "entityId": "light.kitchen_pendants_2",
+        "name": "Kitchen Pendants",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_kitchen_pendants_2",
+        "integration": "hue",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Kitchen Pendants"
+        },
+        "lastChanged": "2026-10-07T02:10:00.040Z",
+        "lastUpdated": "2026-10-07T02:10:00.040Z",
+        "area": "kitchen",
+        "vendor": "Signify"
+      },
+      {
+        "entityId": "light.office_lamp",
+        "name": "Office Lamp",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_office_lamp_old",
+        "integration": "hue",
+        "transport": "zigbee",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Office Lamp",
+          "restored": true
+        },
+        "lastChanged": "2026-10-01T00:15:00.000Z",
+        "lastUpdated": "2026-10-01T00:15:00.000Z",
+        "area": "office",
+        "vendor": "Signify",
+        "restored": true
+      },
+      {
+        "entityId": "light.office_lamp_2",
+        "name": "Office Lamp",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_office_lamp_2",
+        "integration": "hue",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Office Lamp"
+        },
+        "lastChanged": "2026-10-07T21:30:00.040Z",
+        "lastUpdated": "2026-10-07T21:30:00.040Z",
+        "area": "office",
+        "vendor": "Signify"
+      },
+      {
+        "entityId": "light.porch",
+        "name": "Porch",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_porch",
+        "integration": "hue",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Porch"
+        },
+        "lastChanged": "2026-10-08T03:00:00.040Z",
+        "lastUpdated": "2026-10-08T03:00:00.040Z",
+        "area": "porch",
+        "vendor": "Signify"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "hue",
+        "state": "loaded",
+        "entryId": "entry_hue"
+      },
+      {
+        "integration": "zigbee2mqtt",
+        "state": "loaded",
+        "entryId": "entry_zigbee2mqtt"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [],
+    "signals": {
+      "light.office_lamp": {
+        "lastSeen": "2026-10-01T00:15:00.000Z"
+      },
+      "light.office_lamp_2": {
+        "lastSeen": "2026-10-08T12:30:00.000Z"
+      },
+      "light.kitchen_pendants": {
+        "lastSeen": "2026-10-01T00:15:00.000Z"
+      },
+      "light.kitchen_pendants_2": {
+        "lastSeen": "2026-10-08T12:30:00.000Z"
+      },
+      "light.porch": {
+        "lastSeen": "2026-10-08T12:30:00.000Z"
+      },
+      "binary_sensor.front_door": {
+        "linkQuality": 164,
+        "batteryPct": 71,
+        "lastSeen": "2026-10-08T12:30:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "call_service",
+      "when": "2026-10-06T22:20:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.kitchen_pendants"
+      ],
+      "context": {
+        "id": "ctx_i02_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-10-06T22:20:30.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.kitchen_pendants_2"
+      ],
+      "context": {
+        "id": "ctx_i02_2",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-10-06T22:20:30.040Z",
+      "entity_id": "light.kitchen_pendants_2",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i02_2",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-10-06T22:45:10.000Z",
+      "entity_id": "binary_sensor.front_door",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i02_3"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-10-06T22:45:40.000Z",
+      "entity_id": "binary_sensor.front_door",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i02_4"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-10-07T02:10:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.kitchen_pendants_2"
+      ],
+      "context": {
+        "id": "ctx_i02_5",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-10-07T02:10:00.040Z",
+      "entity_id": "light.kitchen_pendants_2",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i02_5",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-10-07T12:05:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.office_lamp"
+      ],
+      "context": {
+        "id": "ctx_i02_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-10-07T12:05:41.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.office_lamp_2"
+      ],
+      "context": {
+        "id": "ctx_i02_7",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-10-07T12:05:41.040Z",
+      "entity_id": "light.office_lamp_2",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i02_7",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-10-07T21:30:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.office_lamp_2"
+      ],
+      "context": {
+        "id": "ctx_i02_8",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-10-07T21:30:00.040Z",
+      "entity_id": "light.office_lamp_2",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i02_8",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-10-07T23:00:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.porch"
+      ],
+      "context": {
+        "id": "ctx_i02_9",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-10-07T23:00:00.040Z",
+      "entity_id": "light.porch",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i02_9",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-10-08T03:00:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.porch"
+      ],
+      "context": {
+        "id": "ctx_i02_a",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-10-08T03:00:00.040Z",
+      "entity_id": "light.porch",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i02_a",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-10-08T12:24:15.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.office_lamp"
+      ],
+      "context": {
+        "id": "ctx_i02_b",
+        "user_id": "user_voice_assistant"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "stale_duplicate",
+    "entity_ids": [
+      "light.office_lamp",
+      "light.office_lamp_2"
+    ],
+    "explanation": "The office lamp was re-added; the old copy kept the name and the voice command reaches it."
+  },
+  "human_truth": {
+    "confirm_flash": "yes",
+    "power_switch_check": "yes"
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "stale_duplicate"
+  ]
+}

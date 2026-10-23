@@ -1,0 +1,379 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-14-wifi-bulbs-keep-disconnecting",
+  "title": "Wi-Fi bulbs keep disconnecting, one or two a week",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/amazonecho/comments/1uq82cv/",
+    "date": "2026-07-07",
+    "publisher": "Reddit r/amazonecho",
+    "quote": "Now a week doesn't go by without one or two randomly disconnecting."
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "The post says the bulbs sit close to an Echo. Wi-Fi bulbs connect to the router, not the Echo, so we model the den lamp at the edge of router coverage (RSSI -81 dBm) dropping off six times in a day.",
+    "Time zone US Eastern is assumed."
+  ],
+  "tz": "America/New_York",
+  "now": "2026-07-07T20:55:00.000Z",
+  "symptom": {
+    "text": "My Sengled den lamp keeps disconnecting and I have to keep re-adding it.",
+    "device": "Den Lamp"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "light.bedroom_lamp",
+        "name": "Bedroom Lamp",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_bedroom_lamp",
+        "integration": "sengled",
+        "transport": "wifi",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Bedroom Lamp"
+        },
+        "lastChanged": "2026-07-07T11:40:00.040Z",
+        "lastUpdated": "2026-07-07T11:40:00.040Z",
+        "area": "bedroom",
+        "vendor": "Sengled"
+      },
+      {
+        "entityId": "light.den_lamp",
+        "name": "Den Lamp",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_den_lamp",
+        "integration": "sengled",
+        "transport": "wifi",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Den Lamp"
+        },
+        "lastChanged": "2026-07-07T20:20:00.000Z",
+        "lastUpdated": "2026-07-07T20:20:00.000Z",
+        "area": "den",
+        "vendor": "Sengled"
+      },
+      {
+        "entityId": "light.living_room_lamp",
+        "name": "Living Room Lamp",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_living_room_lamp",
+        "integration": "sengled",
+        "transport": "wifi",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Living Room Lamp"
+        },
+        "lastChanged": "2026-07-07T03:00:00.040Z",
+        "lastUpdated": "2026-07-07T03:00:00.040Z",
+        "area": "living_room",
+        "vendor": "Sengled"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "sengled",
+        "state": "loaded",
+        "entryId": "entry_sengled"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [],
+    "signals": {
+      "light.den_lamp": {
+        "rssi": -81,
+        "lastSeen": "2026-07-07T20:20:00.000Z"
+      },
+      "light.living_room_lamp": {
+        "rssi": -58,
+        "lastSeen": "2026-07-07T20:55:00.000Z"
+      },
+      "light.bedroom_lamp": {
+        "rssi": -63,
+        "lastSeen": "2026-07-07T20:55:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "state",
+      "when": "2026-07-06T22:02:00.000Z",
+      "entity_id": "light.den_lamp",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-07-06T22:05:30.000Z",
+      "entity_id": "light.den_lamp",
+      "state": "off",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i14_1"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-07-06T23:00:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.living_room_lamp"
+      ],
+      "context": {
+        "id": "ctx_i14_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-07-06T23:00:00.040Z",
+      "entity_id": "light.living_room_lamp",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i14_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-07-07T00:41:00.000Z",
+      "entity_id": "light.den_lamp",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-07-07T00:43:10.000Z",
+      "entity_id": "light.den_lamp",
+      "state": "off",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i14_3"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-07-07T01:00:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.den_lamp"
+      ],
+      "context": {
+        "id": "ctx_i14_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-07-07T01:00:00.040Z",
+      "entity_id": "light.den_lamp",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i14_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-07-07T02:30:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.den_lamp"
+      ],
+      "context": {
+        "id": "ctx_i14_5",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-07-07T02:30:00.040Z",
+      "entity_id": "light.den_lamp",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i14_5",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-07-07T03:00:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.living_room_lamp"
+      ],
+      "context": {
+        "id": "ctx_i14_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-07-07T03:00:00.040Z",
+      "entity_id": "light.living_room_lamp",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i14_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-07-07T05:15:00.000Z",
+      "entity_id": "light.den_lamp",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-07-07T05:21:00.000Z",
+      "entity_id": "light.den_lamp",
+      "state": "off",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i14_7"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-07-07T10:50:00.000Z",
+      "entity_id": "light.den_lamp",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-07-07T10:52:20.000Z",
+      "entity_id": "light.den_lamp",
+      "state": "off",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i14_8"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-07-07T11:10:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.bedroom_lamp"
+      ],
+      "context": {
+        "id": "ctx_i14_9",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-07-07T11:10:00.040Z",
+      "entity_id": "light.bedroom_lamp",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i14_9",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-07-07T11:40:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.bedroom_lamp"
+      ],
+      "context": {
+        "id": "ctx_i14_a",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-07-07T11:40:00.040Z",
+      "entity_id": "light.bedroom_lamp",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i14_a",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-07-07T15:33:00.000Z",
+      "entity_id": "light.den_lamp",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-07-07T15:37:45.000Z",
+      "entity_id": "light.den_lamp",
+      "state": "off",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i14_b"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-07-07T20:20:00.000Z",
+      "entity_id": "light.den_lamp",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "call_service",
+      "when": "2026-07-07T20:45:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.den_lamp"
+      ],
+      "context": {
+        "id": "ctx_i14_c",
+        "user_id": "user_voice_assistant"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "radio_link_weak",
+    "entity_ids": [
+      "light.den_lamp"
+    ],
+    "explanation": "The den lamp is at the edge of Wi-Fi coverage and keeps dropping off."
+  },
+  "human_truth": {
+    "power_switch_check": "yes",
+    "confirm_flash": "no",
+    "router_changed": "no"
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "radio_link_weak"
+  ]
+}

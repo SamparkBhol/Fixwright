@@ -1,0 +1,720 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  flex: 1;
+  min-height: 0;
+}
+
+.probes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.probe {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  height: 40px;
+  padding: 0 var(--space-m) 0 var(--space-xs);
+  border-radius: var(--radius-circle);
+  background: var(--inner);
+  border: 1px solid var(--line);
+  box-shadow: var(--elevation);
+  font-size: var(--text-headline2);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.probe.is-human {
+  border-color: color-mix(in srgb, var(--info) 60%, var(--line));
+}
+
+.probe-more {
+  padding-left: var(--space-m);
+  color: var(--text-2);
+}
+
+.probe-summary,
+.probes.is-folded .probe.is-foldable {
+  display: none;
+}
+
+.probes.is-folded .probe-summary:not(.probe-summary-issues),
+.probes.is-folded-issues .probe-summary-issues {
+  display: inline-flex;
+}
+
+.probes.is-folded-issues .probe.is-issue {
+  display: none;
+}
+
+.probe-dot {
+  display: grid;
+  place-items: center;
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: 50%;
+  background: var(--tone);
+  color: var(--glyph);
+  flex-shrink: 0;
+}
+
+.probe-dot .icon {
+  width: var(--icon-s);
+  height: var(--icon-s);
+  stroke-width: 3.25;
+}
+
+.body {
+  display: flex;
+  gap: var(--space-m);
+  flex: 1;
+  min-height: 0;
+}
+
+.main-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+  flex: 1.35 1 0;
+  min-width: 0;
+}
+
+.decision {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  flex: 1 1 0;
+  min-width: 0;
+  padding: var(--space-l);
+  border-radius: var(--radius-xl);
+  background: var(--inner);
+  border: 1px solid var(--line);
+  box-shadow: var(--elevation);
+}
+
+html.orient-portrait .body {
+  flex-direction: column;
+  flex: none;
+}
+
+/* Portrait and growing frames: the panel is as tall as its content and the card scrolls (Card viewport).
+   It must not shrink to the card, or the pinned action bar would lose its track. */
+html.orient-portrait .panel,
+html.h-flex .panel {
+  flex: none;
+}
+
+/* The card's bottom padding moves into the bar, so it sits in the same place stuck or not. */
+.action-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  margin-top: calc(var(--space-xs) - var(--space-m));
+  padding: var(--space-xs) 0 calc(var(--space-m) + var(--inset-bottom, 0px));
+  background: var(--card);
+}
+
+.action-bar::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: var(--space-m);
+  background: linear-gradient(to bottom, transparent, var(--card));
+  pointer-events: none;
+}
+
+html.orient-portrait .card:has(> .panel > .action-bar:last-child) {
+  padding-bottom: 0;
+}
+
+/* Right under the decision (portrait, decision first): a normal gap below, it only pins if a long
+   decision pushes it past the bottom edge. */
+.action-bar:not(:last-child) {
+  padding-bottom: var(--space-xs);
+}
+
+html.orient-portrait .main-col,
+html.orient-portrait .decision {
+  flex: none;
+}
+
+/* Portrait: the decision spans the width whether or not it has buttons (they may sit in the bar). */
+html.orient-portrait .decision {
+  align-self: stretch;
+}
+
+/* With nothing to press, the card hugs its content instead of stretching (no empty slab). */
+.decision:not(:has(.actions)) {
+  align-self: flex-start;
+}
+
+.decision-head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-s);
+}
+
+.decision-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-m);
+  background: color-mix(in srgb, var(--tone) var(--tint), var(--inner));
+  color: var(--tone);
+  flex-shrink: 0;
+}
+
+.decision-icon .icon {
+  width: var(--icon-l);
+  height: var(--icon-l);
+}
+
+.decision-copy {
+  min-width: 0;
+}
+
+.decision-lead {
+  margin-bottom: var(--space-4xs);
+  font-size: var(--text-body2);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.decision-text {
+  font-size: var(--text-headline1);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.decision[data-weight="hero"] .decision-text {
+  font-size: var(--text-display5);
+  line-height: 1.25;
+}
+
+.decision-note {
+  margin-top: var(--space-2xs);
+  font-size: var(--text-body1);
+  color: var(--text-2);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-s);
+  margin-top: auto;
+}
+
+/* fitDecision (panel.ts) adds these one at a time until the card holds everything. */
+.decision.fit-tight {
+  gap: var(--space-s);
+}
+
+.decision.fit-tight .decision-text {
+  font-size: var(--text-headline2);
+}
+
+.decision.fit-tight[data-weight="hero"] .decision-text {
+  font-size: var(--text-headline1);
+  line-height: 1.3;
+}
+
+.decision.fit-tight .error,
+.decision.fit-tight .notice {
+  padding: var(--space-2xs) var(--space-xs);
+}
+
+/* Wider: the evidence column gives the decision some of its width (the step fold then measures it). */
+.decision.fit-wide {
+  flex-grow: 1.35;
+}
+
+/* Body size, and the sentence takes the icon's width (the header chip still carries the tone and shape). */
+.decision.fit-tight.fit-small .decision-text {
+  font-size: var(--text-body1);
+  line-height: 1.35;
+}
+
+.decision.fit-small .decision-icon {
+  display: none;
+}
+
+.decision.fit-wide.fit-wider {
+  flex-grow: 1.8;
+}
+
+.actions .btn {
+  flex: 1 1 0;
+}
+
+.block-h {
+  margin: 0 0 var(--space-s);
+  font-size: var(--text-body1);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.row-text {
+  min-width: 0;
+}
+
+.row-title {
+  font-size: var(--text-headline1);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.row-sub {
+  margin-top: var(--space-4xs);
+  font-size: var(--text-body1);
+  line-height: 1.35;
+  color: var(--text-2);
+}
+
+.row-meta {
+  margin-top: var(--space-4xs);
+  font-size: var(--text-body2);
+  color: var(--text-3);
+}
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bar-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-s);
+  margin-bottom: var(--space-xs);
+}
+
+.bar-label {
+  min-width: 0;
+  text-wrap: balance;
+  font-size: var(--text-headline2);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.bar-pct {
+  font-family: var(--font-display);
+  font-size: var(--text-headline1);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+}
+
+.bar-track {
+  height: 10px;
+  border-radius: var(--radius-circle);
+  background: var(--track);
+  overflow: hidden;
+}
+
+.bar-fill {
+  width: var(--to);
+  height: 100%;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--neutral) 70%, var(--track));
+}
+
+.bar.is-lead .bar-label {
+  font-size: var(--text-headline1);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.bar.is-lead .bar-pct {
+  font-size: var(--text-display2);
+  line-height: 1;
+  color: var(--tone);
+}
+
+.bar.is-lead .bar-track {
+  height: 16px;
+}
+
+.bar.is-lead .bar-fill {
+  background: var(--tone);
+}
+
+.enter .bar-fill {
+  animation: bar-grow var(--dur-bar) var(--ease) both;
+}
+
+@keyframes bar-grow {
+  from {
+    width: var(--from);
+  }
+  to {
+    width: var(--to);
+  }
+}
+
+.timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tl-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--dot) auto 1fr;
+  align-items: baseline;
+  column-gap: var(--space-s);
+  padding-bottom: var(--space-m);
+}
+
+.tl-item:last-child {
+  padding-bottom: 0;
+}
+
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--dot) / 2 - 1px);
+  top: 18px;
+  bottom: -2px;
+  width: 2px;
+  background: var(--line);
+}
+
+.tl-item:last-child::before {
+  display: none;
+}
+
+.tl-dot {
+  justify-self: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 3px solid var(--info);
+  background: var(--card);
+  transform: translateY(1px);
+}
+
+.tl-time {
+  font-size: var(--text-headline2);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.tl-label {
+  font-size: var(--text-headline1);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.diff {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.diff-line {
+  display: flex;
+  gap: var(--space-s);
+  font-size: var(--text-headline1);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.diff-icon {
+  width: var(--icon-l);
+  height: var(--icon-l);
+  margin-top: 1px;
+  color: var(--info);
+}
+
+.diff-line.is-conflict .diff-icon {
+  color: var(--warn);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-s);
+}
+
+.step-mark {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  font-size: var(--text-body1);
+  font-weight: 700;
+  color: var(--text-2);
+  border: 2px solid var(--secondary-line);
+}
+
+.step-mark .icon {
+  width: var(--icon-m);
+  height: var(--icon-m);
+  stroke-width: 3;
+}
+
+.step.status-done .step-mark {
+  border: 0;
+  background: var(--pass);
+  color: var(--glyph);
+}
+
+.step.status-rolled_back .step-mark {
+  border: 0;
+  background: var(--warn);
+  color: var(--glyph);
+}
+
+.step.status-failed .step-mark {
+  border: 0;
+  background: var(--fail);
+  color: var(--glyph);
+}
+
+.step.status-skipped .step-mark {
+  border-style: dashed;
+}
+
+.step .row-title {
+  padding-top: 4px;
+}
+
+.enter .step.status-done .step-mark,
+.enter .step.status-rolled_back .step-mark,
+.enter .step.status-failed .step-mark {
+  animation: tick 380ms var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 140ms);
+}
+
+@keyframes tick {
+  from {
+    transform: scale(0.4);
+  }
+}
+
+.probe-list,
+.checks,
+.claims,
+.changes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.probe-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-s);
+}
+
+.probe-row .row-title {
+  font-size: var(--text-headline2);
+}
+
+.change-entity {
+  font-size: var(--text-body2);
+  color: var(--text-3);
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+.change-values {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-headline2);
+  font-weight: 600;
+}
+
+.change-from {
+  color: var(--text-2);
+  text-decoration: line-through;
+}
+
+.change-icon {
+  color: var(--info);
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-m);
+}
+
+.details .block {
+  padding: var(--space-l);
+  border-radius: var(--radius-xl);
+  background: var(--inner);
+  border: 1px solid var(--line);
+}
+
+html.mode-fullscreen .body {
+  flex: none;
+}
+
+/* Fullscreen landscape lists everything, so the page can run long (14 steps): the decision hugs its
+   content and stays in view while the evidence scrolls past, so Fix it is never a long scroll away. */
+html.mode-fullscreen.orient-landscape .decision {
+  position: sticky;
+  top: var(--space-m);
+  align-self: flex-start;
+}
+
+/* Folded steps (fold.ts): the first steps stay, one row stands in for the rest and opens them in place. */
+.step.is-folded {
+  display: none;
+}
+
+.steps-more {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  width: 100%;
+  min-height: var(--target);
+  margin-top: var(--space-2xs);
+  padding: 0 var(--space-xs) 0 0;
+  border: 0;
+  border-radius: var(--radius-m);
+  background: transparent;
+  color: var(--text-2);
+  font: inherit;
+  font-size: var(--text-headline2);
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.steps-more:hover {
+  color: var(--text);
+}
+
+.steps-more:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.steps-more-mark {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px dashed var(--secondary-line);
+  color: var(--text-2);
+}
+
+.steps-more-mark .icon {
+  width: var(--icon-m);
+  height: var(--icon-m);
+  stroke-width: 3.5;
+}
+
+.steps-more-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.steps-more-icon {
+  width: var(--icon-m);
+  height: var(--icon-m);
+  flex-shrink: 0;
+  transition: transform var(--dur-in) var(--ease);
+}
+
+.steps-more.is-open .steps-more-icon {
+  transform: rotate(180deg);
+}
+
+/* Every scroller is the containing block for what it holds: the absolutely placed screen reader text
+   (.sr-only) inside the evidence column then scrolls and clips with it, and never stretches the card. */
+.main-col {
+  position: relative;
+}
+
+/* Opened on a fixed height screen: only the evidence column scrolls; header and decision stay in place.
+   The fade at the foot shows there is more, and the padding lets the last row clear the fade. */
+.main-col.is-scrolling {
+  min-height: 0;
+  margin: 0 calc(-1 * var(--space-2xs));
+  padding: 0 var(--space-2xs) var(--space-xl);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--space-xl)), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - var(--space-xl)), transparent);
+}
+
+/* Plans list their steps compactly: the change itself is the hero. */
+.panel[data-screen="plan"] .steps {
+  gap: var(--space-xs);
+}
+
+.panel[data-screen="plan"] .step-mark {
+  width: 28px;
+  height: 28px;
+  font-size: var(--text-body2);
+}
+
+.panel[data-screen="plan"] .step .row-title {
+  padding-top: 2px;
+  font-size: var(--text-headline2);
+}
+
+.panel[data-screen="plan"] .steps-more-mark {
+  width: 28px;
+  height: 28px;
+}
+
+/* Phone: title gets the full width; chip and controls sit on their own row. */
+html.dc-phone .hd {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-s);
+}
+
+html.dc-phone .hd-side {
+  justify-content: space-between;
+}

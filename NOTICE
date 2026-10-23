@@ -1,0 +1,34 @@
+Fixwright
+Copyright (c) 2026 Fixwright contributors
+
+The Fixwright code, tests, fixtures, documentation and screenshots are licensed under the MIT License in
+LICENSE, except for the material listed below.
+
+Quoted passages are not covered by that licence.
+
+README.md quotes a few short passages from dated public reports: posts on Reddit (r/alexa) and one review
+in The Verge. Those passages belong to their authors and publishers. They are quoted briefly, each with
+its date and a link to its source, to show the problem Fixwright works on in the words of the people who
+had it. This repository does not ship copies of the posts or the review, only the short quotes. If you
+wrote one of the quoted posts and want your words taken out, open an issue and the quote will be replaced
+with a link alone. The demo video and its script (video/script.txt) quote none of them.
+
+Fonts
+
+apps/host/src/fonts holds Atkinson Hyperlegible Next and Atkinson Hyperlegible Mono by the Braille
+Institute, from the @fontsource packages. They are licensed under the SIL Open Font License 1.1, whose
+text sits beside the font files (OFL-AtkinsonHyperlegibleNext.txt, OFL-AtkinsonHyperlegibleMono.txt).
+
+homefault
+
+packages/homefault is a git submodule pointing at the separate homefault repository. It carries its own
+LICENSE and its own NOTICE for the quotes in its incident scenarios.
+
+Names
+
+Alexa, Alexa+, Amazon, Echo, Home Assistant, Hue, Reddit, The Verge, ntfy, Cloudflare and the other
+product and company names in this repository are used only to describe what Fixwright works with or what
+was reported. They belong to their owners. Fixwright is not affiliated with or endorsed by any of them.
+
+The benchmark model (gpt-oss-20b, Apache-2.0) and llama.cpp (MIT) are downloaded by bench/llm/fetch-llm.sh
+into a cache outside the repository and are not distributed with it.

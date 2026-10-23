@@ -1,0 +1,106 @@
+{
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "speech": "Done. I made fourteen changes and checked each one. I'll check on them again tomorrow morning.",
+  "status": "ok",
+  "view": "repair_card",
+  "ids": {
+    "explanation_id": "exp_01m52g8k205e3py55a",
+    "issue_id": "iss_01m52g8k20yka0razf",
+    "plan_id": "pln_01m509t6e0sskrm6jy",
+    "repair_id": "rep_01m509tsz0xjn2we7g"
+  },
+  "repair_id": "rep_01m509tsz0xjn2we7g",
+  "plan_id": "pln_01m509t6e0sskrm6jy",
+  "state": "applied",
+  "steps": [
+    {
+      "step": 1,
+      "label": "Set Kitchen Ceiling to remember its last state",
+      "status": "done",
+      "read_back": "Set to previous"
+    },
+    {
+      "step": 2,
+      "label": "Set Bedroom Lamp to remember its last state",
+      "status": "done",
+      "read_back": "Set to previous"
+    },
+    {
+      "step": 3,
+      "label": "Set Office Lamp to remember its last state",
+      "status": "done",
+      "read_back": "Set to previous"
+    },
+    {
+      "step": 4,
+      "label": "Set Porch Light to remember its last state",
+      "status": "done",
+      "read_back": "Set to previous"
+    },
+    {
+      "step": 5,
+      "label": "Set Office Heater Plug to remember its last state",
+      "status": "done",
+      "read_back": "Set to previous"
+    },
+    {
+      "step": 6,
+      "label": "Set Dining Pendant to remember its last state",
+      "status": "done",
+      "read_back": "Set to previous"
+    },
+    {
+      "step": 7,
+      "label": "Set TV Plug to remember its last state",
+      "status": "done",
+      "read_back": "Set to previous"
+    },
+    {
+      "step": 8,
+      "label": "Set Coffee Maker to remember its last state",
+      "status": "done",
+      "read_back": "Set to previous"
+    },
+    {
+      "step": 9,
+      "label": "Set Bedroom Fan Plug to remember its last state",
+      "status": "done",
+      "read_back": "Set to previous"
+    },
+    {
+      "step": 10,
+      "label": "Set Garden Lights to remember its last state",
+      "status": "done",
+      "read_back": "Set to previous"
+    },
+    {
+      "step": 11,
+      "label": "Set Desk Plug to remember its last state",
+      "status": "done",
+      "read_back": "Set to previous"
+    },
+    {
+      "step": 12,
+      "label": "Set Nursery Lamp to remember its last state",
+      "status": "done",
+      "read_back": "Set to previous"
+    },
+    {
+      "step": 13,
+      "label": "Set Patio Heater Plug to remember its last state",
+      "status": "done",
+      "read_back": "Set to previous"
+    },
+    {
+      "step": 14,
+      "label": "Set Stairs Light to remember its last state",
+      "status": "done",
+      "read_back": "Set to previous"
+    }
+  ],
+  "undo_available": true,
+  "next_check_at": "2026-10-16T14:00:00.000Z"
+}

@@ -1,0 +1,290 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-12-tuya-ac-unresponsive",
+  "title": "Air conditioner unresponsive through the assistant, fine in the Tuya app",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/alexa/comments/1whg1x0/",
+    "date": "2026-09-15",
+    "publisher": "Reddit r/alexa",
+    "quote": "The A/C responds via the Tuya app."
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "The post lists re-linking and re-adding, which did not help, and no network change. We model a degraded Tuya cloud path for third party control since 14 September; the true cause is not stated.",
+    "Commands are accepted but never reach the unit, so the entity still looks available. Time zone US Pacific is assumed."
+  ],
+  "tz": "America/Los_Angeles",
+  "now": "2026-09-15T23:05:00.000Z",
+  "symptom": {
+    "text": "Alexa says the A/C is unresponsive, but it works in the Tuya app.",
+    "device": "Bedroom AC"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "climate.bedroom_ac",
+        "name": "Bedroom AC",
+        "aliases": [],
+        "domain": "climate",
+        "deviceId": "dev_bedroom_ac",
+        "integration": "tuya",
+        "transport": "cloud",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Bedroom AC"
+        },
+        "lastChanged": "2026-09-15T22:58:00.000Z",
+        "lastUpdated": "2026-09-15T22:58:00.000Z",
+        "area": "bedroom",
+        "vendor": "Tuya"
+      },
+      {
+        "entityId": "light.desk_lamp",
+        "name": "Desk Lamp",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_desk_lamp",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Desk Lamp"
+        },
+        "lastChanged": "2026-09-15T19:30:00.040Z",
+        "lastUpdated": "2026-09-15T19:30:00.040Z",
+        "area": "office",
+        "vendor": "IKEA"
+      },
+      {
+        "entityId": "switch.patio_lights",
+        "name": "Patio Lights",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_patio_lights",
+        "integration": "kasa",
+        "transport": "wifi",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Patio Lights"
+        },
+        "lastChanged": "2026-09-15T06:00:00.040Z",
+        "lastUpdated": "2026-09-15T06:00:00.040Z",
+        "area": "patio",
+        "vendor": "TP-Link"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "kasa",
+        "state": "loaded",
+        "entryId": "entry_kasa"
+      },
+      {
+        "integration": "tuya",
+        "state": "loaded",
+        "entryId": "entry_tuya"
+      },
+      {
+        "integration": "zigbee2mqtt",
+        "state": "loaded",
+        "entryId": "entry_zigbee2mqtt"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [
+      {
+        "vendor": "Tuya",
+        "status": "degraded",
+        "source": "vendor status page (reconstructed)",
+        "checkedAt": "2026-09-15T23:05:00.000Z"
+      }
+    ],
+    "signals": {
+      "climate.bedroom_ac": {
+        "lastSeen": "2026-09-15T22:58:00.000Z"
+      },
+      "switch.patio_lights": {
+        "rssi": -60,
+        "lastSeen": "2026-09-15T23:05:00.000Z"
+      },
+      "light.desk_lamp": {
+        "linkQuality": 180,
+        "lastSeen": "2026-09-15T23:05:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "state",
+      "when": "2026-09-14T20:20:00.000Z",
+      "entity_id": "climate.bedroom_ac",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-09-14T20:24:10.000Z",
+      "entity_id": "climate.bedroom_ac",
+      "state": "off",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i12_1"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-14T22:30:00.000Z",
+      "domain": "climate",
+      "service": "turn_on",
+      "entity_ids": [
+        "climate.bedroom_ac"
+      ],
+      "context": {
+        "id": "ctx_i12_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-14T22:30:00.040Z",
+      "entity_id": "climate.bedroom_ac",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i12_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-15T02:45:00.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.patio_lights"
+      ],
+      "context": {
+        "id": "ctx_i12_3",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-15T02:45:00.040Z",
+      "entity_id": "switch.patio_lights",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i12_3",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-15T06:00:00.000Z",
+      "domain": "switch",
+      "service": "turn_off",
+      "entity_ids": [
+        "switch.patio_lights"
+      ],
+      "context": {
+        "id": "ctx_i12_4",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-15T06:00:00.040Z",
+      "entity_id": "switch.patio_lights",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i12_4",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-15T16:00:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.desk_lamp"
+      ],
+      "context": {
+        "id": "ctx_i12_5",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-15T16:00:00.040Z",
+      "entity_id": "light.desk_lamp",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i12_5",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-15T19:30:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.desk_lamp"
+      ],
+      "context": {
+        "id": "ctx_i12_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-15T19:30:00.040Z",
+      "entity_id": "light.desk_lamp",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i12_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-15T22:58:00.000Z",
+      "entity_id": "climate.bedroom_ac",
+      "state": "unavailable",
+      "old_state": "on"
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "vendor_cloud_outage",
+    "entity_ids": [
+      "climate.bedroom_ac"
+    ],
+    "explanation": "The Tuya cloud path used for third party control is degraded."
+  },
+  "human_truth": {
+    "router_changed": "no",
+    "power_switch_check": "yes",
+    "notes": "The unit beeps and works from the Tuya app."
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "vendor_cloud_outage"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "@fixwright/engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Pure diagnosis, explain, checkup, claim checker, repair planner and phrasing engine.",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.src.json && tsc -p tsconfig.json",
+    "test": "vitest run",
+    "check": "tsc -p tsconfig.src.json && tsc -p tsconfig.json && vitest run",
+    "bench:cpu": "node scripts/cpu-bench.ts",
+    "smoke:simhome": "node scripts/simhome-smoke.ts",
+    "sweep:simhome": "node scripts/simhome-sweep.ts"
+  },
+  "dependencies": {
+    "@fixwright/protocol": "*"
+  }
+}

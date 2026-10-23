@@ -1,0 +1,19 @@
+{
+  "speech": "That strip runs the aquarium filter, which you marked protected. I'll turn off the lamp on it instead.",
+  "status": "refused",
+  "ids": {},
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "switched": {
+    "entity_id": "switch.living_room_power_strip_outlet_1",
+    "name": "Floor Lamp",
+    "state": "off"
+  },
+  "alternative": {
+    "entity_id": "switch.living_room_power_strip_outlet_1",
+    "name": "Floor Lamp",
+    "label": "Turn off the Floor Lamp on the same strip"
+  }
+}

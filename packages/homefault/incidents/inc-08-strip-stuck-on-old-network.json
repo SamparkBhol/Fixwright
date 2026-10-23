@@ -1,0 +1,326 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-08-strip-stuck-on-old-network",
+  "title": "Smart strip still connected to a network that no longer exists",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/alexa/comments/1rkosz7/",
+    "date": "2026-03-04",
+    "publisher": "Reddit r/alexa",
+    "quote": "It just says it’s connected to the old network, which is no longer in existence and it won’t let me change it."
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "The router changed on 2 March. Two plugs were reset and set up again as new devices (they work); the six outlet strip is modelled with three of its outlets, all offline.",
+    "Time zone US Eastern is assumed."
+  ],
+  "tz": "America/New_York",
+  "now": "2026-03-04T15:40:00.000Z",
+  "symptom": {
+    "text": "The smart strip says it is connected to the old network and I cannot change it.",
+    "device": "Strip Outlet 1"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "binary_sensor.hall_motion",
+        "name": "Hall Motion",
+        "aliases": [],
+        "domain": "binary_sensor",
+        "deviceId": "dev_hall_motion",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Hall Motion"
+        },
+        "lastChanged": "2026-03-04T12:13:30.000Z",
+        "lastUpdated": "2026-03-04T12:13:30.000Z",
+        "area": "hallway",
+        "vendor": "Aqara"
+      },
+      {
+        "entityId": "switch.bedroom_plug_2",
+        "name": "Bedroom Plug",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_bedroom_plug_2",
+        "integration": "amazon_smart_plug",
+        "transport": "wifi",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Bedroom Plug"
+        },
+        "lastChanged": "2026-03-04T04:00:00.040Z",
+        "lastUpdated": "2026-03-04T04:00:00.040Z",
+        "area": "bedroom",
+        "vendor": "Amazon"
+      },
+      {
+        "entityId": "switch.kitchen_plug_2",
+        "name": "Kitchen Plug",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_kitchen_plug_2",
+        "integration": "amazon_smart_plug",
+        "transport": "wifi",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Kitchen Plug"
+        },
+        "lastChanged": "2026-03-04T00:31:00.000Z",
+        "lastUpdated": "2026-03-04T00:31:00.000Z",
+        "area": "kitchen",
+        "vendor": "Amazon"
+      },
+      {
+        "entityId": "switch.strip_outlet_1",
+        "name": "Strip Outlet 1",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_strip",
+        "integration": "amazon_basics",
+        "transport": "wifi",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Strip Outlet 1"
+        },
+        "lastChanged": "2026-03-03T01:11:40.000Z",
+        "lastUpdated": "2026-03-03T01:11:40.000Z",
+        "area": "office",
+        "vendor": "Amazon Basics"
+      },
+      {
+        "entityId": "switch.strip_outlet_2",
+        "name": "Strip Outlet 2",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_strip",
+        "integration": "amazon_basics",
+        "transport": "wifi",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Strip Outlet 2"
+        },
+        "lastChanged": "2026-03-03T01:11:40.000Z",
+        "lastUpdated": "2026-03-03T01:11:40.000Z",
+        "area": "office",
+        "vendor": "Amazon Basics"
+      },
+      {
+        "entityId": "switch.strip_outlet_3",
+        "name": "Strip Outlet 3",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_strip",
+        "integration": "amazon_basics",
+        "transport": "wifi",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Strip Outlet 3"
+        },
+        "lastChanged": "2026-03-03T01:11:40.000Z",
+        "lastUpdated": "2026-03-03T01:11:40.000Z",
+        "area": "office",
+        "vendor": "Amazon Basics"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "amazon_basics",
+        "state": "loaded",
+        "entryId": "entry_amazon_basics"
+      },
+      {
+        "integration": "amazon_smart_plug",
+        "state": "loaded",
+        "entryId": "entry_amazon_smart_plug"
+      },
+      {
+        "integration": "zigbee2mqtt",
+        "state": "loaded",
+        "entryId": "entry_zigbee2mqtt"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [],
+    "signals": {
+      "switch.strip_outlet_1": {
+        "rssi": -61,
+        "lastSeen": "2026-03-03T01:11:40.000Z"
+      },
+      "switch.strip_outlet_2": {
+        "rssi": -61,
+        "lastSeen": "2026-03-03T01:11:40.000Z"
+      },
+      "switch.strip_outlet_3": {
+        "rssi": -61,
+        "lastSeen": "2026-03-03T01:11:40.000Z"
+      },
+      "switch.bedroom_plug_2": {
+        "rssi": -54,
+        "lastSeen": "2026-03-04T15:40:00.000Z"
+      },
+      "switch.kitchen_plug_2": {
+        "rssi": -58,
+        "lastSeen": "2026-03-04T15:40:00.000Z"
+      },
+      "binary_sensor.hall_motion": {
+        "linkQuality": 140,
+        "batteryPct": 64,
+        "lastSeen": "2026-03-04T15:40:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "state",
+      "when": "2026-03-03T01:11:40.000Z",
+      "entity_id": "switch.strip_outlet_1",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-03-03T01:11:40.000Z",
+      "entity_id": "switch.strip_outlet_2",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-03-03T01:11:40.000Z",
+      "entity_id": "switch.strip_outlet_3",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "registry",
+      "when": "2026-03-04T00:22:00.000Z",
+      "action": "create",
+      "entity_id": "switch.bedroom_plug_2",
+      "changes": {
+        "name": "Bedroom Plug"
+      }
+    },
+    {
+      "type": "registry",
+      "when": "2026-03-04T00:31:00.000Z",
+      "action": "create",
+      "entity_id": "switch.kitchen_plug_2",
+      "changes": {
+        "name": "Kitchen Plug"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-03-04T02:00:00.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.bedroom_plug_2"
+      ],
+      "context": {
+        "id": "ctx_i08_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-03-04T02:00:00.040Z",
+      "entity_id": "switch.bedroom_plug_2",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i08_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-03-04T04:00:00.000Z",
+      "domain": "switch",
+      "service": "turn_off",
+      "entity_ids": [
+        "switch.bedroom_plug_2"
+      ],
+      "context": {
+        "id": "ctx_i08_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-03-04T04:00:00.040Z",
+      "entity_id": "switch.bedroom_plug_2",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i08_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-03-04T12:12:00.000Z",
+      "entity_id": "binary_sensor.hall_motion",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i08_3"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-03-04T12:13:30.000Z",
+      "entity_id": "binary_sensor.hall_motion",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i08_4"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-03-04T15:30:00.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.strip_outlet_1"
+      ],
+      "context": {
+        "id": "ctx_i08_5",
+        "user_id": "user_resident"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "wifi_network_changed",
+    "entity_ids": [
+      "switch.strip_outlet_1",
+      "switch.strip_outlet_2",
+      "switch.strip_outlet_3"
+    ],
+    "explanation": "The strip only knows the old router's network."
+  },
+  "human_truth": {
+    "router_changed": "yes",
+    "power_switch_check": "yes",
+    "confirm_flash": "no"
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "wifi_network_changed"
+  ]
+}

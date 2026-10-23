@@ -1,0 +1,31 @@
+{
+  "speech": "Undone. Hallway Lamp is back the way it was before the fix.",
+  "status": "ok",
+  "view": "repair_card",
+  "ids": {
+    "plan_id": "pln_01m5098trrwqn6nph9",
+    "repair_id": "rep_01m50991kggcp2zeys"
+  },
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "repair_id": "rep_01m50991kggcp2zeys",
+  "plan_id": "pln_01m5098trrwqn6nph9",
+  "state": "undone",
+  "steps": [
+    {
+      "step": 1,
+      "label": "Bring back the old copy",
+      "status": "done",
+      "read_back": "Old copy is back in the device list"
+    },
+    {
+      "step": 2,
+      "label": "Give the online lamp its old name back",
+      "status": "done",
+      "read_back": "Name reads Hallway Lamp 2"
+    }
+  ],
+  "undo_available": false
+}

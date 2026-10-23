@@ -1,0 +1,13 @@
+# 2026-10-17T13:02:35.813Z wrangler dev --local (ALLOW_HA_LINK=1) linked to Home Assistant at http://127.0.0.1:8741
+power cut: breaker off 2026-10-17T13:02:30.546Z, on 2026-10-17T13:02:33.087Z, back on: light.hallway_lamp, light.porch_light, light.landing_light, light.stair_light, light.entry_light, switch.hallway_smart_plug
+linked: Home Assistant 2026.9.4
+explain_event (confirmed power_restore): Power came back at 6:02. Nine devices restarted within one second. The hallway lights was one of them. I can make them remember whether they were on or off. Do it?
+repair_plan: Six devices will remember whether they were on or off when power comes back.
+repair_apply applied: Done. I made six changes and checked each one. I'll check on them again tomorrow morning.
+  step Set Hallway Lamp to remember its last state: Set to previous
+  step Set Landing Light to remember its last state: Set to previous
+  step Set Stair Light to remember its last state: Set to previous
+  step Set Entry Light to remember its last state: Set to previous
+  step Set Hallway Smart Plug to remember its last state: Set to previous
+  step Set Porch Light to remember its last state: Set to previous
+undo: Undone. Those six power on settings are back the way they were.

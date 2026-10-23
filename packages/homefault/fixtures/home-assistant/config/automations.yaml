@@ -1,0 +1,34 @@
+# A household automation that reacts to the hallway power coming back. It only notes the time; it
+# never switches a device. Its rows carry automation context, which the adapter's tests use to prove
+# that automation, user and no-context changes are told apart in the same power cut and restore.
+- id: homefault_hallway_power_restore_log
+  alias: Hallway power restore log
+  description: Notes when the hallway circuit gets power back. It never switches devices.
+  mode: queued
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.hallway_mains_power
+      from: "off"
+      to: "on"
+  actions:
+    - action: input_datetime.set_datetime
+      target:
+        entity_id: input_datetime.hallway_last_power_restore
+      data:
+        timestamp: "{{ now().timestamp() }}"
+# F9 shape (dead trigger): the grow light schedule still points at a smart plug that was removed from
+# the house. switch.grow_light_plug does not exist, so this automation can never fire or act.
+- id: homefault_grow_light_schedule
+  alias: Grow light schedule
+  description: Switches the grow light plug off after 12 hours on. The plug itself was removed.
+  mode: single
+  triggers:
+    - trigger: state
+      entity_id: switch.grow_light_plug
+      to: "on"
+      for:
+        hours: 12
+  actions:
+    - action: switch.turn_off
+      target:
+        entity_id: switch.grow_light_plug

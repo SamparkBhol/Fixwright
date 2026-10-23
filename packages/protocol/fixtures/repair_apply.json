@@ -1,0 +1,39 @@
+{
+  "speech": "Done. I switched it on and off, it answered both times. I'll check on it again tomorrow morning.",
+  "status": "ok",
+  "view": "repair_card",
+  "ids": {
+    "diagnosis_id": "dx_01m50980d03sy1gk7c",
+    "plan_id": "pln_01m5098trrwqn6nph9",
+    "repair_id": "rep_01m50991kggcp2zeys"
+  },
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "repair_id": "rep_01m50991kggcp2zeys",
+  "plan_id": "pln_01m5098trrwqn6nph9",
+  "state": "applied",
+  "steps": [
+    {
+      "step": 1,
+      "label": "Give the online lamp the name Hallway Lamp",
+      "status": "done",
+      "read_back": "Name reads Hallway Lamp"
+    },
+    {
+      "step": 2,
+      "label": "Retire the old copy",
+      "status": "done",
+      "read_back": "Old copy is gone from the device list"
+    },
+    {
+      "step": 3,
+      "label": "Switch it on and off to check it answers",
+      "status": "done",
+      "read_back": "It answered both times"
+    }
+  ],
+  "undo_available": true,
+  "next_check_at": "2026-10-16T14:00:00.000Z"
+}

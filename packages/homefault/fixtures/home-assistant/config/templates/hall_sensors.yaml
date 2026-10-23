@@ -1,0 +1,18 @@
+# A battery motion sensor in the hall. Its battery is a separate sensor, the way Zigbee2MQTT
+# exposes sensor.<device>_battery, so the adapter has to find it as a related entity.
+- binary_sensor:
+    - name: Hall Motion
+      unique_id: homefault_hall_motion
+      default_entity_id: binary_sensor.hall_motion
+      device_class: motion
+      state: "{{ is_state('input_boolean.hall_motion_detected', 'on') }}"
+      attributes:
+        linkquality: "{{ 96 }}"
+- sensor:
+    - name: Hall Motion Battery
+      unique_id: homefault_hall_motion_battery
+      default_entity_id: sensor.hall_motion_battery
+      unit_of_measurement: "%"
+      device_class: battery
+      state_class: measurement
+      state: "{{ states('input_number.hall_motion_battery_level') | int(0) }}"

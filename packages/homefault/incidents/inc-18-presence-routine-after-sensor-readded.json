@@ -1,0 +1,271 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-18-presence-routine-after-sensor-readded",
+  "title": "Presence sensor logs motion, the routine never starts",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/alexa/comments/1oezaks/",
+    "date": "2025-10-24",
+    "publisher": "Reddit r/alexa",
+    "quote": "Alexa sees the sensor and logs motion, but does not start the routine."
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "What first stopped the routine is not known. We model the state after the person's own fix attempt: the sensor was deleted and added again, and both routines still point at the deleted copy.",
+    "The new copy reports motion; a manual run of the routine works. Time zone US Eastern is assumed."
+  ],
+  "tz": "America/New_York",
+  "now": "2025-10-24T14:25:00.000Z",
+  "symptom": {
+    "text": "My presence sensor logs motion but the light routine never starts.",
+    "device": "Hallway Light"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "automation.presence_light_off",
+        "name": "Presence light off",
+        "aliases": [],
+        "domain": "automation",
+        "integration": "automation",
+        "transport": "virtual",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Presence light off",
+          "references": [
+            "binary_sensor.hallway_presence",
+            "light.hallway_light"
+          ]
+        },
+        "lastChanged": "2025-09-24T14:25:00.000Z",
+        "lastUpdated": "2025-09-24T14:25:00.000Z"
+      },
+      {
+        "entityId": "automation.presence_light_on",
+        "name": "Presence light on",
+        "aliases": [],
+        "domain": "automation",
+        "integration": "automation",
+        "transport": "virtual",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Presence light on",
+          "references": [
+            "binary_sensor.hallway_presence",
+            "light.hallway_light"
+          ]
+        },
+        "lastChanged": "2025-09-24T14:25:00.000Z",
+        "lastUpdated": "2025-09-24T14:25:00.000Z"
+      },
+      {
+        "entityId": "binary_sensor.hallway_presence_2",
+        "name": "Hallway Presence",
+        "aliases": [],
+        "domain": "binary_sensor",
+        "deviceId": "dev_hallway_presence_2",
+        "integration": "govee",
+        "transport": "cloud",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Hallway Presence"
+        },
+        "lastChanged": "2025-10-24T14:12:00.000Z",
+        "lastUpdated": "2025-10-24T14:12:00.000Z",
+        "area": "hallway",
+        "vendor": "Govee"
+      },
+      {
+        "entityId": "light.hallway_light",
+        "name": "Hallway Light",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_hallway_light",
+        "integration": "govee",
+        "transport": "cloud",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Hallway Light"
+        },
+        "lastChanged": "2025-10-24T11:45:00.040Z",
+        "lastUpdated": "2025-10-24T11:45:00.040Z",
+        "area": "hallway",
+        "vendor": "Govee"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "automation",
+        "state": "loaded",
+        "entryId": "entry_automation"
+      },
+      {
+        "integration": "govee",
+        "state": "loaded",
+        "entryId": "entry_govee"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [],
+    "signals": {
+      "binary_sensor.hallway_presence_2": {
+        "lastSeen": "2025-10-24T14:25:00.000Z"
+      },
+      "light.hallway_light": {
+        "lastSeen": "2025-10-24T14:25:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "registry",
+      "when": "2025-10-24T00:10:00.000Z",
+      "action": "remove",
+      "entity_id": "binary_sensor.hallway_presence"
+    },
+    {
+      "type": "registry",
+      "when": "2025-10-24T00:14:00.000Z",
+      "action": "create",
+      "entity_id": "binary_sensor.hallway_presence_2",
+      "changes": {
+        "name": "Hallway Presence"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-10-24T01:02:00.000Z",
+      "entity_id": "binary_sensor.hallway_presence_2",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i18_1"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-10-24T01:04:30.000Z",
+      "entity_id": "binary_sensor.hallway_presence_2",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i18_2"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-10-24T11:15:00.000Z",
+      "entity_id": "binary_sensor.hallway_presence_2",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i18_3"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-10-24T11:16:40.000Z",
+      "entity_id": "binary_sensor.hallway_presence_2",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i18_4"
+      }
+    },
+    {
+      "type": "automation_triggered",
+      "when": "2025-10-24T11:20:00.000Z",
+      "entity_id": "automation.presence_light_on",
+      "name": "Presence light on",
+      "source": "manual trigger",
+      "context": {
+        "id": "ctx_i18_5",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2025-10-24T11:20:00.020Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.hallway_light"
+      ],
+      "context": {
+        "id": "ctx_i18_5",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-10-24T11:20:00.060Z",
+      "entity_id": "light.hallway_light",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i18_5",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2025-10-24T11:45:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.hallway_light"
+      ],
+      "context": {
+        "id": "ctx_i18_6",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-10-24T11:45:00.040Z",
+      "entity_id": "light.hallway_light",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i18_6",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-10-24T14:12:00.000Z",
+      "entity_id": "binary_sensor.hallway_presence_2",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i18_7"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "dead_trigger",
+    "entity_ids": [
+      "automation.presence_light_on",
+      "binary_sensor.hallway_presence"
+    ],
+    "explanation": "The routine is triggered by the deleted sensor, not the new copy."
+  },
+  "human_truth": {
+    "notes": "The light stays off when they walk in."
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "dead_trigger"
+  ]
+}

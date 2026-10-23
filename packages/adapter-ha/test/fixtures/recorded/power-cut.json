@@ -1,0 +1,351 @@
+{
+  "recorded_with": "Home Assistant 2026.9.4",
+  "since": "2026-10-15T12:41:24.735Z",
+  "until": "2026-10-15T12:41:28.875Z",
+  "cut": {
+    "breakerOffAt": "2026-10-15T12:41:24.737Z",
+    "mainsOffAt": "2026-10-15T12:41:25.361Z",
+    "breakerOnAt": "2026-10-15T12:41:26.870Z",
+    "mainsOnAt": "2026-10-15T12:41:27.361Z",
+    "devicesBackAt": [
+      "2026-10-15T12:41:27.361Z",
+      "2026-10-15T12:41:27.363Z",
+      "2026-10-15T12:41:27.361Z",
+      "2026-10-15T12:41:27.361Z",
+      "2026-10-15T12:41:27.361Z",
+      "2026-10-15T12:41:27.361Z"
+    ],
+    "devicesOnAfter": [
+      "light.hallway_lamp",
+      "light.porch_light",
+      "light.landing_light",
+      "light.stair_light",
+      "light.entry_light",
+      "switch.hallway_smart_plug"
+    ]
+  },
+  "logbook": [
+    {
+      "state": "off",
+      "entity_id": "input_boolean.hallway_mains",
+      "icon": "mdi:transmission-tower",
+      "when": 1792068084.7379413,
+      "context_user_id": "ffb4c079dd0e4278b74bc3904e406927",
+      "context_domain": "input_boolean",
+      "context_service": "turn_off",
+      "context_event_type": "call_service"
+    },
+    {
+      "state": "off",
+      "entity_id": "binary_sensor.hallway_mains_power",
+      "when": 1792068085.361408
+    },
+    {
+      "state": "unavailable",
+      "entity_id": "light.hallway_lamp",
+      "when": 1792068085.3615444,
+      "context_state": "off",
+      "context_entity_id": "binary_sensor.hallway_mains_power"
+    },
+    {
+      "state": "unavailable",
+      "entity_id": "light.porch_light",
+      "when": 1792068085.3616421,
+      "context_state": "off",
+      "context_entity_id": "binary_sensor.hallway_mains_power"
+    },
+    {
+      "state": "unavailable",
+      "entity_id": "light.landing_light",
+      "when": 1792068085.361701,
+      "context_state": "off",
+      "context_entity_id": "binary_sensor.hallway_mains_power"
+    },
+    {
+      "state": "unavailable",
+      "entity_id": "light.stair_light",
+      "when": 1792068085.361752,
+      "context_state": "off",
+      "context_entity_id": "binary_sensor.hallway_mains_power"
+    },
+    {
+      "state": "unavailable",
+      "entity_id": "light.entry_light",
+      "when": 1792068085.3618004,
+      "context_state": "off",
+      "context_entity_id": "binary_sensor.hallway_mains_power"
+    },
+    {
+      "state": "unavailable",
+      "entity_id": "switch.hallway_smart_plug",
+      "when": 1792068085.3618543,
+      "context_state": "off",
+      "context_entity_id": "binary_sensor.hallway_mains_power"
+    },
+    {
+      "state": "unavailable",
+      "entity_id": "light.hallway_lights",
+      "when": 1792068085.3620892,
+      "context_state": "off",
+      "context_entity_id": "binary_sensor.hallway_mains_power"
+    },
+    {
+      "state": "on",
+      "entity_id": "input_boolean.hallway_mains",
+      "icon": "mdi:transmission-tower",
+      "when": 1792068086.8702004,
+      "context_user_id": "ffb4c079dd0e4278b74bc3904e406927",
+      "context_domain": "input_boolean",
+      "context_service": "turn_on",
+      "context_event_type": "call_service"
+    },
+    {
+      "state": "on",
+      "entity_id": "binary_sensor.hallway_mains_power",
+      "when": 1792068087.3610065
+    },
+    {
+      "state": "on",
+      "entity_id": "light.hallway_lamp",
+      "when": 1792068087.3613443,
+      "context_state": "off",
+      "context_entity_id": "binary_sensor.hallway_mains_power"
+    },
+    {
+      "state": "on",
+      "entity_id": "light.landing_light",
+      "when": 1792068087.3615305,
+      "context_state": "off",
+      "context_entity_id": "binary_sensor.hallway_mains_power"
+    },
+    {
+      "state": "on",
+      "entity_id": "light.stair_light",
+      "when": 1792068087.3616922,
+      "context_state": "off",
+      "context_entity_id": "binary_sensor.hallway_mains_power"
+    },
+    {
+      "state": "on",
+      "entity_id": "light.entry_light",
+      "when": 1792068087.3618422,
+      "context_state": "off",
+      "context_entity_id": "binary_sensor.hallway_mains_power"
+    },
+    {
+      "state": "on",
+      "entity_id": "switch.hallway_smart_plug",
+      "when": 1792068087.361989,
+      "context_state": "off",
+      "context_entity_id": "binary_sensor.hallway_mains_power"
+    },
+    {
+      "name": "Hallway power restore log",
+      "message": "triggered by state of binary_sensor.hallway_mains_power",
+      "source": "state of binary_sensor.hallway_mains_power",
+      "entity_id": "automation.hallway_power_restore_log",
+      "context_id": "01M4ZS9VJ2BKDYAG607PBXSKXK",
+      "domain": "automation",
+      "when": 1792068087.3622265,
+      "context_state": "on",
+      "context_entity_id": "binary_sensor.hallway_mains_power"
+    },
+    {
+      "state": "2026-10-15 12:41:27",
+      "entity_id": "input_datetime.hallway_last_power_restore",
+      "when": 1792068087.3632367,
+      "context_event_type": "automation_triggered",
+      "context_domain": "automation",
+      "context_name": "Hallway power restore log",
+      "context_message": "triggered by state of binary_sensor.hallway_mains_power",
+      "context_source": "state of binary_sensor.hallway_mains_power",
+      "context_entity_id": "automation.hallway_power_restore_log"
+    },
+    {
+      "state": "on",
+      "entity_id": "light.porch_light",
+      "when": 1792068087.3634834,
+      "context_state": "off",
+      "context_entity_id": "binary_sensor.hallway_mains_power"
+    },
+    {
+      "state": "on",
+      "entity_id": "light.hallway_lights",
+      "when": 1792068087.3639016,
+      "context_state": "off",
+      "context_entity_id": "binary_sensor.hallway_mains_power"
+    }
+  ],
+  "history": {
+    "light.hallway_lamp": [
+      {
+        "s": "off",
+        "lu": 1792068084.735
+      },
+      {
+        "s": "unavailable",
+        "lu": 1792068085.3615444
+      },
+      {
+        "s": "on",
+        "lu": 1792068087.3613443
+      }
+    ],
+    "light.porch_light": [
+      {
+        "s": "off",
+        "lu": 1792068084.735
+      },
+      {
+        "s": "unavailable",
+        "lu": 1792068085.3616421
+      },
+      {
+        "s": "on",
+        "lu": 1792068087.3634834
+      }
+    ],
+    "light.landing_light": [
+      {
+        "s": "off",
+        "lu": 1792068084.735
+      },
+      {
+        "s": "unavailable",
+        "lu": 1792068085.361701
+      },
+      {
+        "s": "on",
+        "lu": 1792068087.3615305
+      }
+    ],
+    "light.stair_light": [
+      {
+        "s": "off",
+        "lu": 1792068084.735
+      },
+      {
+        "s": "unavailable",
+        "lu": 1792068085.361752
+      },
+      {
+        "s": "on",
+        "lu": 1792068087.3616922
+      }
+    ],
+    "light.entry_light": [
+      {
+        "s": "off",
+        "lu": 1792068084.735
+      },
+      {
+        "s": "unavailable",
+        "lu": 1792068085.3618004
+      },
+      {
+        "s": "on",
+        "lu": 1792068087.3618422
+      }
+    ],
+    "switch.hallway_smart_plug": [
+      {
+        "s": "off",
+        "lu": 1792068084.735
+      },
+      {
+        "s": "unavailable",
+        "lu": 1792068085.3618543
+      },
+      {
+        "s": "on",
+        "lu": 1792068087.361989
+      }
+    ],
+    "input_boolean.hallway_mains": [
+      {
+        "s": "on",
+        "lu": 1792068084.735
+      },
+      {
+        "s": "off",
+        "lu": 1792068084.7379413
+      },
+      {
+        "s": "on",
+        "lu": 1792068086.8702004
+      }
+    ],
+    "binary_sensor.hallway_mains_power": [
+      {
+        "s": "on",
+        "lu": 1792068084.735
+      },
+      {
+        "s": "off",
+        "lu": 1792068085.361408
+      },
+      {
+        "s": "on",
+        "lu": 1792068087.3610065
+      }
+    ],
+    "light.hallway_lights": [
+      {
+        "s": "off",
+        "lu": 1792068084.735
+      },
+      {
+        "s": "unavailable",
+        "lu": 1792068085.3620892
+      },
+      {
+        "s": "on",
+        "lu": 1792068087.3639016
+      }
+    ],
+    "sensor.hallway_plug_power": [
+      {
+        "s": "0.4",
+        "lu": 1792068084.735
+      },
+      {
+        "s": "unavailable",
+        "lu": 1792068085.3619132
+      },
+      {
+        "s": "7.5",
+        "lu": 1792068087.3620887
+      }
+    ],
+    "sensor.hallway_smart_plug_uptime": [
+      {
+        "s": "5",
+        "lu": 1792068084.735
+      },
+      {
+        "s": "6",
+        "lu": 1792068085.2632775
+      },
+      {
+        "s": "unavailable",
+        "lu": 1792068086.2654142
+      },
+      {
+        "s": "1",
+        "lu": 1792068088.2655866
+      }
+    ],
+    "input_datetime.hallway_last_power_restore": [
+      {
+        "s": "2026-10-15 00:00:00",
+        "a": {},
+        "lu": 1792068084.735
+      },
+      {
+        "s": "2026-10-15 12:41:27",
+        "a": {},
+        "lu": 1792068087.3632367
+      }
+    ]
+  }
+}

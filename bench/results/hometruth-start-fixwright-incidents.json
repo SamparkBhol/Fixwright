@@ -1,0 +1,1757 @@
+{
+ "format": "hometruth.results/1",
+ "name": "hometruth-start-fixwright-incidents",
+ "started_at": "2026-10-17T13:10:23.989Z",
+ "finished_at": "2026-10-17T13:10:24.073Z",
+ "duration_ms": 84,
+ "command": [
+  "node",
+  "src/run.ts",
+  "--agents",
+  "fixwright",
+  "--set",
+  "incidents",
+  "--seed",
+  "1",
+  "--human-reliability",
+  "0.9",
+  "--human-seed",
+  "1",
+  "--out",
+  "hometruth-start-fixwright-incidents"
+ ],
+ "machine": {
+  "start": {
+   "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
+   "vcpus": 16,
+   "total_mem_gib": 48,
+   "node": "v22.22.1",
+   "load_average": [
+    0.74,
+    1.13,
+    2.67
+   ]
+  },
+  "end": {
+   "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
+   "vcpus": 16,
+   "total_mem_gib": 48,
+   "node": "v22.22.1",
+   "load_average": [
+    0.74,
+    1.13,
+    2.67
+   ]
+  }
+ },
+ "config": {
+  "agents": [
+   "fixwright"
+  ],
+  "set": "incidents",
+  "n": null,
+  "stratified": false,
+  "seed": 1,
+  "ids": null,
+  "human_reliability": 0.9,
+  "human_seed": 1,
+  "fixwright_routing": "router",
+  "reuse_identical_requests": true,
+  "resumed_cases": 0
+ },
+ "scenarios": {
+  "set_size": 20,
+  "run": 20,
+  "by_set": {
+   "incidents": 20
+  },
+  "by_cause": {
+   "account_link_expired": 2,
+   "dead_trigger": 2,
+   "device_power_lost": 1,
+   "hub_down": 1,
+   "name_collision": 2,
+   "power_on_default_on": 3,
+   "radio_link_weak": 2,
+   "stale_duplicate": 3,
+   "vendor_cloud_outage": 2,
+   "wifi_network_changed": 2
+  },
+  "ids": [
+   "inc-01-cant-find-then-works",
+   "inc-02-hue-readded-six-times",
+   "inc-03-deleted-hue-lights-rediscovered",
+   "inc-04-all-plugs-turned-on",
+   "inc-05-bedroom-lamps-after-brief-outages",
+   "inc-06-lights-on-after-power-restored",
+   "inc-07-new-router-plugs-dead",
+   "inc-08-strip-stuck-on-old-network",
+   "inc-09-harmony-skill-disabled",
+   "inc-10-skills-broke-after-app-update",
+   "inc-11-hue-server-unresponsive",
+   "inc-12-tuya-ac-unresponsive",
+   "inc-13-hue-lost-after-powercut",
+   "inc-14-wifi-bulbs-keep-disconnecting",
+   "inc-15-hardwired-switch-keeps-going-offline",
+   "inc-16-more-than-one-office-light",
+   "inc-17-two-devices-same-name-openhab",
+   "inc-18-presence-routine-after-sensor-readded",
+   "inc-19-grow-light-schedule-broken",
+   "inc-20-switched-off-at-the-wall"
+  ]
+ },
+ "agents": {
+  "fixwright": "@fixwright/engine on scenarioHome(view). The assistant router (@fixwright/router) picks the tool as the live product does: explain_event for questions about something the home did, else the diagnose loop (startDiagnosis, then answerDiagnosis for each question). The simulated person answers its questions; permission questions are granted."
+ },
+ "llm": null,
+ "agent_ms": {
+  "fixwright": 62
+ },
+ "metrics": {
+  "fixwright": {
+   "all": {
+    "n": 20,
+    "answered": 16,
+    "confirmed": 14,
+    "top1": {
+     "k": 16,
+     "n": 20,
+     "value": 0.8,
+     "ci95": [
+      0.584,
+      0.9193
+     ]
+    },
+    "top1_answered": {
+     "k": 16,
+     "n": 16,
+     "value": 1,
+     "ci95": [
+      0.8064,
+      1
+     ]
+    },
+    "false_confirmed": {
+     "count": 0,
+     "rate": {
+      "k": 0,
+      "n": 20,
+      "value": 0,
+      "ci95": [
+       0,
+       0.1611
+      ]
+     }
+    },
+    "abstention": {
+     "k": 4,
+     "n": 20,
+     "value": 0.2,
+     "ci95": [
+      0.0807,
+      0.416
+     ]
+    },
+    "confirmed_precision": {
+     "k": 14,
+     "n": 14,
+     "value": 1,
+     "ci95": [
+      0.7847,
+      1
+     ]
+    },
+    "invalid_outputs": {
+     "count": 0,
+     "rate": {
+      "k": 0,
+      "n": 20,
+      "value": 0,
+      "ci95": [
+       0,
+       0.1611
+      ]
+     }
+    },
+    "infra_errors": 0,
+    "errors": 1,
+    "probes_used": {
+     "total": 115,
+     "mean": 5.75
+    },
+    "disruptive_probes": {
+     "total": 7,
+     "mean": 0.35
+    },
+    "human_questions": {
+     "total": 11,
+     "mean": 0.55
+    },
+    "latency_ms": {
+     "mean": 2.998,
+     "p50": 1.367,
+     "p95": 5.952,
+     "max": 22.155
+    },
+    "per_cause": {
+     "stale_duplicate": {
+      "n": 3,
+      "correct": 3,
+      "top1": 1,
+      "confirmed": 3,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "power_on_default_on": {
+      "n": 3,
+      "correct": 2,
+      "top1": 0.6667,
+      "confirmed": 2,
+      "false_confirmed": 0,
+      "abstained": 1
+     },
+     "wifi_network_changed": {
+      "n": 2,
+      "correct": 1,
+      "top1": 0.5,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 1
+     },
+     "account_link_expired": {
+      "n": 2,
+      "correct": 2,
+      "top1": 1,
+      "confirmed": 0,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "vendor_cloud_outage": {
+      "n": 2,
+      "correct": 2,
+      "top1": 1,
+      "confirmed": 2,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "hub_down": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "radio_link_weak": {
+      "n": 2,
+      "correct": 2,
+      "top1": 1,
+      "confirmed": 2,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "name_collision": {
+      "n": 2,
+      "correct": 1,
+      "top1": 0.5,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 1
+     },
+     "dead_trigger": {
+      "n": 2,
+      "correct": 1,
+      "top1": 0.5,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 1
+     },
+     "device_power_lost": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 0
+     }
+    },
+    "fixwright": {
+     "tools": {
+      "diagnose": 18,
+      "explain_event": 2
+     },
+     "permission_questions": 0,
+     "error_codes": {
+      "ambiguous_device": 1
+     }
+    }
+   },
+   "sets": {
+    "incidents": {
+     "n": 20,
+     "answered": 16,
+     "confirmed": 14,
+     "top1": {
+      "k": 16,
+      "n": 20,
+      "value": 0.8,
+      "ci95": [
+       0.584,
+       0.9193
+      ]
+     },
+     "top1_answered": {
+      "k": 16,
+      "n": 16,
+      "value": 1,
+      "ci95": [
+       0.8064,
+       1
+      ]
+     },
+     "false_confirmed": {
+      "count": 0,
+      "rate": {
+       "k": 0,
+       "n": 20,
+       "value": 0,
+       "ci95": [
+        0,
+        0.1611
+       ]
+      }
+     },
+     "abstention": {
+      "k": 4,
+      "n": 20,
+      "value": 0.2,
+      "ci95": [
+       0.0807,
+       0.416
+      ]
+     },
+     "confirmed_precision": {
+      "k": 14,
+      "n": 14,
+      "value": 1,
+      "ci95": [
+       0.7847,
+       1
+      ]
+     },
+     "invalid_outputs": {
+      "count": 0,
+      "rate": {
+       "k": 0,
+       "n": 20,
+       "value": 0,
+       "ci95": [
+        0,
+        0.1611
+       ]
+      }
+     },
+     "infra_errors": 0,
+     "errors": 1,
+     "probes_used": {
+      "total": 115,
+      "mean": 5.75
+     },
+     "disruptive_probes": {
+      "total": 7,
+      "mean": 0.35
+     },
+     "human_questions": {
+      "total": 11,
+      "mean": 0.55
+     },
+     "latency_ms": {
+      "mean": 2.998,
+      "p50": 1.367,
+      "p95": 5.952,
+      "max": 22.155
+     },
+     "per_cause": {
+      "stale_duplicate": {
+       "n": 3,
+       "correct": 3,
+       "top1": 1,
+       "confirmed": 3,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "power_on_default_on": {
+       "n": 3,
+       "correct": 2,
+       "top1": 0.6667,
+       "confirmed": 2,
+       "false_confirmed": 0,
+       "abstained": 1
+      },
+      "wifi_network_changed": {
+       "n": 2,
+       "correct": 1,
+       "top1": 0.5,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 1
+      },
+      "account_link_expired": {
+       "n": 2,
+       "correct": 2,
+       "top1": 1,
+       "confirmed": 0,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "vendor_cloud_outage": {
+       "n": 2,
+       "correct": 2,
+       "top1": 1,
+       "confirmed": 2,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "hub_down": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "radio_link_weak": {
+       "n": 2,
+       "correct": 2,
+       "top1": 1,
+       "confirmed": 2,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "name_collision": {
+       "n": 2,
+       "correct": 1,
+       "top1": 0.5,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 1
+      },
+      "dead_trigger": {
+       "n": 2,
+       "correct": 1,
+       "top1": 0.5,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 1
+      },
+      "device_power_lost": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 0
+      }
+     },
+     "fixwright": {
+      "tools": {
+       "diagnose": 18,
+       "explain_event": 2
+      },
+      "permission_questions": 0,
+      "error_codes": {
+       "ambiguous_device": 1
+      }
+     }
+    }
+   }
+  }
+ },
+ "kill_switch": {
+  "rule": "A baseline matches Fixwright on a metric when its 95% Wilson interval overlaps Fixwright's on the same scenarios, or when it is at least as good. The kill switch fires if B1 or B2 matches on both top1 and the false_confirmed rate.",
+  "evaluated": false,
+  "conclusive": false,
+  "fires": null,
+  "provisional_fires": null,
+  "comparisons": [],
+  "note": "Not evaluated: this run has no baseline (B1 or B2) next to Fixwright."
+ },
+ "cases": [
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-01-cant-find-then-works",
+   "set": "incidents",
+   "expected": "stale_duplicate",
+   "got": "stale_duplicate",
+   "level": "confirmed",
+   "confidence": 0.935,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 7,
+   "disruptive_probes": 1,
+   "human_questions": 1,
+   "latency_ms": 22.155,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-01-cant-find-then-works",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "stale_duplicate",
+     "level": "confirmed",
+     "confidence": 0.935,
+     "label": "Name points at an old copy"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "light.living_room_lights",
+     "name": "Living Room Lights",
+     "guided": false
+    },
+    "probes_used": 7,
+    "disruptive_probes": 1,
+    "questions": 1,
+    "consent_questions": 0,
+    "probe_ids": [
+     "entity_availability",
+     "integration_state",
+     "duplicate_name_scan",
+     "hub_reachable",
+     "link_quality",
+     "cloud_status",
+     "flash_test",
+     "confirm_flash"
+    ],
+    "exchanges": [
+     {
+      "probe_id": "confirm_flash",
+      "kind": "observe",
+      "text": "I'll flash the living room lights twice. Did it blink?",
+      "answer": "yes"
+     }
+    ],
+    "hypotheses": [
+     {
+      "cause_id": "stale_duplicate",
+      "p": 0.935
+     },
+     {
+      "cause_id": "device_power_lost",
+      "p": 0.047
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.009
+     }
+    ],
+    "turns": 1
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-02-hue-readded-six-times",
+   "set": "incidents",
+   "expected": "stale_duplicate",
+   "got": "stale_duplicate",
+   "level": "confirmed",
+   "confidence": 0.936,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 7,
+   "disruptive_probes": 1,
+   "human_questions": 1,
+   "latency_ms": 4.71,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-02-hue-readded-six-times",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "stale_duplicate",
+     "level": "confirmed",
+     "confidence": 0.936,
+     "label": "Name points at an old copy"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "light.office_lamp",
+     "name": "Office Lamp",
+     "guided": false
+    },
+    "probes_used": 7,
+    "disruptive_probes": 1,
+    "questions": 1,
+    "consent_questions": 0,
+    "probe_ids": [
+     "integration_state",
+     "entity_availability",
+     "duplicate_name_scan",
+     "hub_reachable",
+     "link_quality",
+     "cloud_status",
+     "flash_test",
+     "confirm_flash"
+    ],
+    "exchanges": [
+     {
+      "probe_id": "confirm_flash",
+      "kind": "observe",
+      "text": "I'll flash the office lamp twice. Did it blink?",
+      "answer": "yes"
+     }
+    ],
+    "hypotheses": [
+     {
+      "cause_id": "stale_duplicate",
+      "p": 0.936
+     },
+     {
+      "cause_id": "device_power_lost",
+      "p": 0.047
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.009
+     }
+    ],
+    "turns": 1
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-03-deleted-hue-lights-rediscovered",
+   "set": "incidents",
+   "expected": "stale_duplicate",
+   "got": "stale_duplicate",
+   "level": "confirmed",
+   "confidence": 0.936,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 7,
+   "disruptive_probes": 1,
+   "human_questions": 1,
+   "latency_ms": 3.365,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-03-deleted-hue-lights-rediscovered",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "stale_duplicate",
+     "level": "confirmed",
+     "confidence": 0.936,
+     "label": "Name points at an old copy"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "light.kitchen_recessed_light",
+     "name": "Kitchen Recessed Light",
+     "guided": false
+    },
+    "probes_used": 7,
+    "disruptive_probes": 1,
+    "questions": 1,
+    "consent_questions": 0,
+    "probe_ids": [
+     "integration_state",
+     "entity_availability",
+     "duplicate_name_scan",
+     "hub_reachable",
+     "link_quality",
+     "cloud_status",
+     "flash_test",
+     "confirm_flash"
+    ],
+    "exchanges": [
+     {
+      "probe_id": "confirm_flash",
+      "kind": "observe",
+      "text": "I'll flash the kitchen recessed light twice. Did it blink?",
+      "answer": "yes"
+     }
+    ],
+    "hypotheses": [
+     {
+      "cause_id": "stale_duplicate",
+      "p": 0.936
+     },
+     {
+      "cause_id": "device_power_lost",
+      "p": 0.047
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.009
+     }
+    ],
+    "turns": 1
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-04-all-plugs-turned-on",
+   "set": "incidents",
+   "expected": "power_on_default_on",
+   "got": "power_on_default_on",
+   "level": "confirmed",
+   "confidence": 0.99,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 0,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 3.825,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-04-all-plugs-turned-on",
+    "tool": "explain_event",
+    "verdict": {
+     "cause_id": "power_on_default_on",
+     "level": "confirmed",
+     "confidence": 0.99,
+     "label": "Power came back on"
+    },
+    "error_code": null,
+    "target": null,
+    "probes_used": 0,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [],
+    "exchanges": [],
+    "hypotheses": [],
+    "turns": 0,
+    "explain_cause": "power_restore"
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-05-bedroom-lamps-after-brief-outages",
+   "set": "incidents",
+   "expected": "power_on_default_on",
+   "got": "power_on_default_on",
+   "level": "confirmed",
+   "confidence": 0.99,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 0,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 1.61,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-05-bedroom-lamps-after-brief-outages",
+    "tool": "explain_event",
+    "verdict": {
+     "cause_id": "power_on_default_on",
+     "level": "confirmed",
+     "confidence": 0.99,
+     "label": "Power came back on"
+    },
+    "error_code": null,
+    "target": null,
+    "probes_used": 0,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [],
+    "exchanges": [],
+    "hypotheses": [],
+    "turns": 0,
+    "explain_cause": "power_restore"
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-06-lights-on-after-power-restored",
+   "set": "incidents",
+   "expected": "power_on_default_on",
+   "got": "ambiguous_device",
+   "level": "cant_tell",
+   "confidence": null,
+   "correct": false,
+   "false_confirmed": false,
+   "abstained": true,
+   "probes_used": 0,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 1.015,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": "ambiguous_device",
+   "fixwright": {
+    "scenario_id": "inc-06-lights-on-after-power-restored",
+    "tool": "diagnose",
+    "verdict": null,
+    "error_code": "ambiguous_device",
+    "target": null,
+    "probes_used": 0,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [],
+    "exchanges": [],
+    "hypotheses": [],
+    "turns": 0
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-07-new-router-plugs-dead",
+   "set": "incidents",
+   "expected": "wifi_network_changed",
+   "got": "wifi_network_changed",
+   "level": "confirmed",
+   "confidence": 0.943,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 8,
+   "disruptive_probes": 0,
+   "human_questions": 1,
+   "latency_ms": 3.131,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-07-new-router-plugs-dead",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "wifi_network_changed",
+     "level": "confirmed",
+     "confidence": 0.943,
+     "label": "Wi-Fi network changed"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "switch.lamp_plug",
+     "name": "Lamp Plug",
+     "guided": false
+    },
+    "probes_used": 8,
+    "disruptive_probes": 0,
+    "questions": 1,
+    "consent_questions": 0,
+    "probe_ids": [
+     "entity_availability",
+     "duplicate_name_scan",
+     "wifi_peers",
+     "cloud_status",
+     "link_quality",
+     "integration_state",
+     "registry_scan",
+     "hub_reachable",
+     "router_changed"
+    ],
+    "exchanges": [
+     {
+      "probe_id": "router_changed",
+      "kind": "observe",
+      "text": "Did your Wi-Fi router or its name change recently?",
+      "answer": "yes"
+     }
+    ],
+    "hypotheses": [
+     {
+      "cause_id": "wifi_network_changed",
+      "p": 0.943
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.029
+     },
+     {
+      "cause_id": "device_power_lost",
+      "p": 0.023
+     }
+    ],
+    "turns": 1
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-08-strip-stuck-on-old-network",
+   "set": "incidents",
+   "expected": "wifi_network_changed",
+   "got": "wifi_network_changed",
+   "level": "cant_tell",
+   "confidence": 0.521,
+   "correct": false,
+   "false_confirmed": false,
+   "abstained": true,
+   "probes_used": 8,
+   "disruptive_probes": 0,
+   "human_questions": 2,
+   "latency_ms": 5.952,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-08-strip-stuck-on-old-network",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "wifi_network_changed",
+     "level": "cant_tell",
+     "confidence": 0.521,
+     "label": "Wi-Fi network changed"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "switch.strip_outlet_1",
+     "name": "Strip Outlet 1",
+     "guided": false
+    },
+    "probes_used": 8,
+    "disruptive_probes": 0,
+    "questions": 2,
+    "consent_questions": 0,
+    "probe_ids": [
+     "entity_availability",
+     "duplicate_name_scan",
+     "wifi_peers",
+     "cloud_status",
+     "link_quality",
+     "integration_state",
+     "registry_scan",
+     "hub_reachable",
+     "power_switch_check",
+     "router_changed"
+    ],
+    "exchanges": [
+     {
+      "probe_id": "power_switch_check",
+      "kind": "observe",
+      "text": "Is strip outlet 1 plugged in and switched on at the wall?",
+      "answer": "yes"
+     },
+     {
+      "probe_id": "router_changed",
+      "kind": "observe",
+      "text": "Did your Wi-Fi router or its name change recently?",
+      "answer": "yes"
+     }
+    ],
+    "hypotheses": [
+     {
+      "cause_id": "wifi_network_changed",
+      "p": 0.521
+     },
+     {
+      "cause_id": "device_power_lost",
+      "p": 0.171
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.162
+     }
+    ],
+    "turns": 2
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-09-harmony-skill-disabled",
+   "set": "incidents",
+   "expected": "account_link_expired",
+   "got": "account_link_expired",
+   "level": "likely",
+   "confidence": 0.641,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 6,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 1.212,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-09-harmony-skill-disabled",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "account_link_expired",
+     "level": "likely",
+     "confidence": 0.641,
+     "label": "Account link expired"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "switch.watch_tv",
+     "name": "Watch TV",
+     "guided": false
+    },
+    "probes_used": 6,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [
+     "cloud_status",
+     "duplicate_name_scan",
+     "integration_state",
+     "registry_scan",
+     "entity_availability",
+     "hub_reachable"
+    ],
+    "exchanges": [],
+    "hypotheses": [
+     {
+      "cause_id": "account_link_expired",
+      "p": 0.641
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.236
+     },
+     {
+      "cause_id": "vendor_cloud_outage",
+      "p": 0.121
+     }
+    ],
+    "turns": 0
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-10-skills-broke-after-app-update",
+   "set": "incidents",
+   "expected": "account_link_expired",
+   "got": "account_link_expired",
+   "level": "likely",
+   "confidence": 0.641,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 6,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 0.951,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-10-skills-broke-after-app-update",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "account_link_expired",
+     "level": "likely",
+     "confidence": 0.641,
+     "label": "Account link expired"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "switch.bedroom_plug",
+     "name": "Bedroom Plug",
+     "guided": false
+    },
+    "probes_used": 6,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [
+     "cloud_status",
+     "duplicate_name_scan",
+     "integration_state",
+     "registry_scan",
+     "entity_availability",
+     "hub_reachable"
+    ],
+    "exchanges": [],
+    "hypotheses": [
+     {
+      "cause_id": "account_link_expired",
+      "p": 0.641
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.236
+     },
+     {
+      "cause_id": "vendor_cloud_outage",
+      "p": 0.121
+     }
+    ],
+    "turns": 0
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-11-hue-server-unresponsive",
+   "set": "incidents",
+   "expected": "vendor_cloud_outage",
+   "got": "vendor_cloud_outage",
+   "level": "confirmed",
+   "confidence": 0.961,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 6,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 1.545,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-11-hue-server-unresponsive",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "vendor_cloud_outage",
+     "level": "confirmed",
+     "confidence": 0.961,
+     "label": "Maker's cloud is down"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "light.lounge_lamp",
+     "name": "Lounge Lamp",
+     "guided": false
+    },
+    "probes_used": 6,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [
+     "cloud_status",
+     "duplicate_name_scan",
+     "integration_state",
+     "registry_scan",
+     "entity_availability",
+     "hub_reachable"
+    ],
+    "exchanges": [],
+    "hypotheses": [
+     {
+      "cause_id": "vendor_cloud_outage",
+      "p": 0.961
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.037
+     },
+     {
+      "cause_id": "stale_duplicate",
+      "p": 0
+     }
+    ],
+    "turns": 0
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-12-tuya-ac-unresponsive",
+   "set": "incidents",
+   "expected": "vendor_cloud_outage",
+   "got": "vendor_cloud_outage",
+   "level": "confirmed",
+   "confidence": 0.995,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 6,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 1.062,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-12-tuya-ac-unresponsive",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "vendor_cloud_outage",
+     "level": "confirmed",
+     "confidence": 0.995,
+     "label": "Maker's cloud is down"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "climate.bedroom_ac",
+     "name": "Bedroom AC",
+     "guided": false
+    },
+    "probes_used": 6,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [
+     "cloud_status",
+     "duplicate_name_scan",
+     "integration_state",
+     "registry_scan",
+     "entity_availability",
+     "hub_reachable"
+    ],
+    "exchanges": [],
+    "hypotheses": [
+     {
+      "cause_id": "vendor_cloud_outage",
+      "p": 0.995
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.003
+     },
+     {
+      "cause_id": "stale_duplicate",
+      "p": 0
+     }
+    ],
+    "turns": 0
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-13-hue-lost-after-powercut",
+   "set": "incidents",
+   "expected": "hub_down",
+   "got": "hub_down",
+   "level": "confirmed",
+   "confidence": 0.97,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 7,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 1.367,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-13-hue-lost-after-powercut",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "hub_down",
+     "level": "confirmed",
+     "confidence": 0.97,
+     "label": "Hub or bridge offline"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "light.sofa_lamp",
+     "name": "Sofa Lamp",
+     "guided": false
+    },
+    "probes_used": 7,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [
+     "entity_availability",
+     "integration_state",
+     "hub_reachable",
+     "duplicate_name_scan",
+     "cloud_status",
+     "registry_scan",
+     "link_quality"
+    ],
+    "exchanges": [],
+    "hypotheses": [
+     {
+      "cause_id": "hub_down",
+      "p": 0.97
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.011
+     },
+     {
+      "cause_id": "device_power_lost",
+      "p": 0.01
+     }
+    ],
+    "turns": 0
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-14-wifi-bulbs-keep-disconnecting",
+   "set": "incidents",
+   "expected": "radio_link_weak",
+   "got": "radio_link_weak",
+   "level": "confirmed",
+   "confidence": 0.971,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 8,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 1.044,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-14-wifi-bulbs-keep-disconnecting",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "radio_link_weak",
+     "level": "confirmed",
+     "confidence": 0.971,
+     "label": "Weak radio link"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "light.den_lamp",
+     "name": "Den Lamp",
+     "guided": false
+    },
+    "probes_used": 8,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [
+     "entity_availability",
+     "link_quality",
+     "duplicate_name_scan",
+     "cloud_status",
+     "wifi_peers",
+     "integration_state",
+     "registry_scan",
+     "hub_reachable"
+    ],
+    "exchanges": [],
+    "hypotheses": [
+     {
+      "cause_id": "radio_link_weak",
+      "p": 0.971
+     },
+     {
+      "cause_id": "device_power_lost",
+      "p": 0.018
+     },
+     {
+      "cause_id": "vendor_cloud_outage",
+      "p": 0.006
+     }
+    ],
+    "turns": 0
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-15-hardwired-switch-keeps-going-offline",
+   "set": "incidents",
+   "expected": "radio_link_weak",
+   "got": "radio_link_weak",
+   "level": "confirmed",
+   "confidence": 0.971,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 8,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 0.971,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-15-hardwired-switch-keeps-going-offline",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "radio_link_weak",
+     "level": "confirmed",
+     "confidence": 0.971,
+     "label": "Weak radio link"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "light.dining_dimmer",
+     "name": "Dining Dimmer",
+     "guided": false
+    },
+    "probes_used": 8,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [
+     "entity_availability",
+     "link_quality",
+     "cloud_status",
+     "duplicate_name_scan",
+     "wifi_peers",
+     "integration_state",
+     "registry_scan",
+     "hub_reachable"
+    ],
+    "exchanges": [],
+    "hypotheses": [
+     {
+      "cause_id": "radio_link_weak",
+      "p": 0.971
+     },
+     {
+      "cause_id": "device_power_lost",
+      "p": 0.018
+     },
+     {
+      "cause_id": "vendor_cloud_outage",
+      "p": 0.006
+     }
+    ],
+    "turns": 0
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-16-more-than-one-office-light",
+   "set": "incidents",
+   "expected": "name_collision",
+   "got": "unknown",
+   "level": "cant_tell",
+   "confidence": 0.338,
+   "correct": false,
+   "false_confirmed": false,
+   "abstained": true,
+   "probes_used": 9,
+   "disruptive_probes": 2,
+   "human_questions": 3,
+   "latency_ms": 2.174,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-16-more-than-one-office-light",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "unknown",
+     "level": "cant_tell",
+     "confidence": 0.338,
+     "label": "Can't tell yet"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "light.office_light",
+     "name": "Office light",
+     "guided": false
+    },
+    "probes_used": 9,
+    "disruptive_probes": 2,
+    "questions": 3,
+    "consent_questions": 0,
+    "probe_ids": [
+     "entity_availability",
+     "duplicate_name_scan",
+     "integration_state",
+     "link_quality",
+     "registry_scan",
+     "cloud_status",
+     "hub_reachable",
+     "flash_test",
+     "flash_test",
+     "confirm_flash",
+     "power_switch_check"
+    ],
+    "exchanges": [
+     {
+      "probe_id": "confirm_flash",
+      "kind": "observe",
+      "text": "I'll flash the office light twice. Did it blink?",
+      "answer": "not sure"
+     },
+     {
+      "probe_id": "confirm_flash",
+      "kind": "observe",
+      "text": "I flashed it again. Just yes or no, did the office light blink?",
+      "answer": "not sure"
+     },
+     {
+      "probe_id": "power_switch_check",
+      "kind": "observe",
+      "text": "Is the light's wall switch on?",
+      "answer": "no"
+     }
+    ],
+    "hypotheses": [
+     {
+      "cause_id": "device_power_lost",
+      "p": 0.445
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.338
+     },
+     {
+      "cause_id": "radio_link_weak",
+      "p": 0.147
+     }
+    ],
+    "turns": 3
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-17-two-devices-same-name-openhab",
+   "set": "incidents",
+   "expected": "name_collision",
+   "got": "name_collision",
+   "level": "confirmed",
+   "confidence": 0.901,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 5,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 0.867,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-17-two-devices-same-name-openhab",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "name_collision",
+     "level": "confirmed",
+     "confidence": 0.901,
+     "label": "Two devices share a name"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "light.lamp",
+     "name": "Lamp",
+     "guided": false
+    },
+    "probes_used": 5,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [
+     "duplicate_name_scan",
+     "entity_availability",
+     "integration_state",
+     "cloud_status",
+     "hub_reachable"
+    ],
+    "exchanges": [],
+    "hypotheses": [
+     {
+      "cause_id": "name_collision",
+      "p": 0.901
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.087
+     },
+     {
+      "cause_id": "stale_duplicate",
+      "p": 0.006
+     }
+    ],
+    "turns": 0
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-18-presence-routine-after-sensor-readded",
+   "set": "incidents",
+   "expected": "dead_trigger",
+   "got": "vendor_cloud_outage",
+   "level": "cant_tell",
+   "confidence": 0.497,
+   "correct": false,
+   "false_confirmed": false,
+   "abstained": true,
+   "probes_used": 8,
+   "disruptive_probes": 2,
+   "human_questions": 2,
+   "latency_ms": 1.368,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-18-presence-routine-after-sensor-readded",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "vendor_cloud_outage",
+     "level": "cant_tell",
+     "confidence": 0.497,
+     "label": "Maker's cloud is down"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "light.hallway_light",
+     "name": "Hallway Light",
+     "guided": false
+    },
+    "probes_used": 8,
+    "disruptive_probes": 2,
+    "questions": 2,
+    "consent_questions": 0,
+    "probe_ids": [
+     "registry_scan",
+     "cloud_status",
+     "duplicate_name_scan",
+     "integration_state",
+     "entity_availability",
+     "hub_reachable",
+     "flash_test",
+     "flash_test",
+     "confirm_flash"
+    ],
+    "exchanges": [
+     {
+      "probe_id": "confirm_flash",
+      "kind": "observe",
+      "text": "I'll flash the hallway light twice. Did it blink?",
+      "answer": "not sure"
+     },
+     {
+      "probe_id": "confirm_flash",
+      "kind": "observe",
+      "text": "I flashed it again. Just yes or no, did the hallway light blink?",
+      "answer": "not sure"
+     }
+    ],
+    "hypotheses": [
+     {
+      "cause_id": "vendor_cloud_outage",
+      "p": 0.497
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.281
+     },
+     {
+      "cause_id": "dead_trigger",
+      "p": 0.164
+     }
+    ],
+    "turns": 2
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-19-grow-light-schedule-broken",
+   "set": "incidents",
+   "expected": "dead_trigger",
+   "got": "dead_trigger",
+   "level": "confirmed",
+   "confidence": 0.956,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 2,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 0.683,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-19-grow-light-schedule-broken",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "dead_trigger",
+     "level": "confirmed",
+     "confidence": 0.956,
+     "label": "Automation uses a removed device"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "automation.grow_light_schedule",
+     "name": "Grow light schedule",
+     "guided": false
+    },
+    "probes_used": 2,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [
+     "registry_scan",
+     "integration_state"
+    ],
+    "exchanges": [],
+    "hypotheses": [
+     {
+      "cause_id": "dead_trigger",
+      "p": 0.956
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.043
+     }
+    ],
+    "turns": 0
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "inc-20-switched-off-at-the-wall",
+   "set": "incidents",
+   "expected": "device_power_lost",
+   "got": "device_power_lost",
+   "level": "confirmed",
+   "confidence": 0.921,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 7,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 0.947,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "inc-20-switched-off-at-the-wall",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "device_power_lost",
+     "level": "confirmed",
+     "confidence": 0.921,
+     "label": "Device has no power"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "light.nightstand",
+     "name": "Nightstand",
+     "guided": false
+    },
+    "probes_used": 7,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [
+     "entity_availability",
+     "hub_reachable",
+     "duplicate_name_scan",
+     "link_quality",
+     "cloud_status",
+     "integration_state",
+     "registry_scan"
+    ],
+    "exchanges": [],
+    "hypotheses": [
+     {
+      "cause_id": "device_power_lost",
+      "p": 0.921
+     },
+     {
+      "cause_id": "vendor_cloud_outage",
+      "p": 0.035
+     },
+     {
+      "cause_id": "radio_link_weak",
+      "p": 0.021
+     }
+    ],
+    "turns": 0
+   }
+  }
+ ]
+}

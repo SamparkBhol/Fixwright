@@ -1,0 +1,19 @@
+# 2026-10-17 wrangler 4.144.0 deploy --dry-run --outdir <dir> --metafile <dir>/meta.json (wrangler.jsonc: minify true)
+before (14:14 UTC, start of the hardening pass): Total Upload: 1834.23 KiB / gzip: 522.58 KiB
+after  (14:36 UTC, end of the hardening pass):   Total Upload: 1854.15 KiB / gzip: 530.36 KiB
+index.js before 679734 bytes, gzip -9 205491; after 693690 bytes, gzip -9 210524
+stepper.html before 396643 bytes, gzip -9 108555; after 398792 bytes, gzip -9 109491 (apps/views rebuilt it in between)
+repair-card.html before 396368 bytes, gzip -9 108436; after 398517 bytes, gzip -9 109394 (apps/views rebuilt it in between)
+carousel.html before 405503 bytes, gzip -9 110677; after 407652 bytes, gzip -9 111709 (apps/views rebuilt it in between)
+index.js by contributor (bytesInOutput from the esbuild metafile), before -> after (engine and router changed in other modules meanwhile):
+  @modelcontextprotocol/server 209315 -> 209315
+  packages/engine 140004 -> 141526
+  zod 112738 -> 112738
+  packages/homefault 62526 -> 62526
+  apps/server/src 44854 -> 55505
+  packages/adapter-ha 39538 -> 39538
+  packages/protocol 34379 -> 34379
+  packages/router 19051 -> 20834
+  @modelcontextprotocol/core 16560 -> 16560
+  @modelcontextprotocol/ext-apps 348 -> 348
+not in the bundle: ajv (the SDK workerd shim picks its @cfworker/json-schema provider, 22,449 bytes), homefault incidents, generator, scenario and bench code (tree shaken)

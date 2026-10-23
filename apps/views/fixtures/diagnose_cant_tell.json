@@ -1,0 +1,82 @@
+{
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "speech": "I can't tell yet. I can't see the porch plug from here. If your Wi-Fi router changed recently, that would explain it.",
+  "status": "ok",
+  "view": "stepper",
+  "ids": {
+    "diagnosis_id": "dx_01m50bmse007fxk3wm"
+  },
+  "diagnosis_id": "dx_01m50bmse007fxk3wm",
+  "target": {
+    "name": "Porch Plug",
+    "guided": true
+  },
+  "probes": [
+    {
+      "probe_id": "hub_reachable",
+      "label": "Hub",
+      "outcome": "pass",
+      "detail": "Your hub answered right away.",
+      "evidence": [
+        1401
+      ],
+      "disruptive": false,
+      "at": "2026-10-15T18:02:00.300Z"
+    },
+    {
+      "probe_id": "entity_availability",
+      "label": "Porch Plug",
+      "outcome": "unknown",
+      "detail": "This plug is not connected to anything I can see.",
+      "evidence": [
+        1402
+      ],
+      "disruptive": false,
+      "at": "2026-10-15T18:02:00.500Z"
+    },
+    {
+      "probe_id": "router_changed",
+      "label": "Router change",
+      "outcome": "unknown",
+      "detail": "You weren't sure if the router changed.",
+      "evidence": [
+        1403
+      ],
+      "disruptive": false,
+      "at": "2026-10-15T18:02:14.000Z"
+    }
+  ],
+  "hypotheses": [
+    {
+      "cause_id": "wifi_network_changed",
+      "label": "Wi-Fi network changed",
+      "p": 0.45
+    },
+    {
+      "cause_id": "device_power_lost",
+      "label": "Device has no power",
+      "p": 0.3
+    },
+    {
+      "cause_id": "radio_link_weak",
+      "label": "Weak radio link",
+      "p": 0.15
+    }
+  ],
+  "verdict": {
+    "level": "cant_tell",
+    "cause_id": "wifi_network_changed",
+    "label": "Wi-Fi network changed",
+    "confidence": 0.45,
+    "claims": [
+      {
+        "text": "Checking the router name on the plug label would settle it.",
+        "evidence": []
+      }
+    ],
+    "fix_available": false
+  }
+}

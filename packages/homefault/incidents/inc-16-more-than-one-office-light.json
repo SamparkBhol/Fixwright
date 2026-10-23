@@ -1,0 +1,291 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-16-more-than-one-office-light",
+  "title": "\"There is more than one device named Office light\"",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/alexa/comments/1lpzsqw/",
+    "date": "2025-07-02",
+    "publisher": "Reddit r/alexa",
+    "quote": "There is more than one device named Office light."
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "The second \"Office Light\" is modelled as a Hue room imported as a light alongside the office wall switch; both work.",
+    "Time zone US Central is assumed."
+  ],
+  "tz": "America/Chicago",
+  "now": "2025-07-02T16:00:00.000Z",
+  "symptom": {
+    "text": "When I say turn on the office light, she says there is more than one device named Office light, or that she cannot find it.",
+    "device": "Office Light"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "light.bedroom_lamp",
+        "name": "Bedroom Lamp",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_bedroom_lamp",
+        "integration": "hue",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Bedroom Lamp"
+        },
+        "lastChanged": "2025-07-02T04:10:00.040Z",
+        "lastUpdated": "2025-07-02T04:10:00.040Z",
+        "area": "bedroom",
+        "vendor": "Signify"
+      },
+      {
+        "entityId": "light.office_light",
+        "name": "Office light",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_hue_room_office",
+        "integration": "hue",
+        "transport": "zigbee",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Office light",
+          "is_hue_group": true
+        },
+        "lastChanged": "2025-07-02T13:40:00.040Z",
+        "lastUpdated": "2025-07-02T13:40:00.040Z",
+        "area": "office",
+        "vendor": "Signify"
+      },
+      {
+        "entityId": "switch.office_light",
+        "name": "Office Light",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_office_light",
+        "integration": "kasa",
+        "transport": "wifi",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Office Light"
+        },
+        "lastChanged": "2025-07-02T13:40:50.040Z",
+        "lastUpdated": "2025-07-02T13:40:50.040Z",
+        "area": "office",
+        "vendor": "TP-Link",
+        "model": "Kasa HS200"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "hue",
+        "state": "loaded",
+        "entryId": "entry_hue"
+      },
+      {
+        "integration": "kasa",
+        "state": "loaded",
+        "entryId": "entry_kasa"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [],
+    "signals": {
+      "switch.office_light": {
+        "rssi": -51,
+        "lastSeen": "2025-07-02T16:00:00.000Z"
+      },
+      "light.office_light": {
+        "lastSeen": "2025-07-02T16:00:00.000Z"
+      },
+      "light.bedroom_lamp": {
+        "lastSeen": "2025-07-02T16:00:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "call_service",
+      "when": "2025-07-01T13:30:00.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.office_light"
+      ],
+      "context": {
+        "id": "ctx_i16_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-07-01T13:30:00.040Z",
+      "entity_id": "switch.office_light",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i16_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2025-07-01T22:45:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.office_light"
+      ],
+      "context": {
+        "id": "ctx_i16_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2025-07-01T22:46:10.000Z",
+      "domain": "switch",
+      "service": "turn_off",
+      "entity_ids": [
+        "switch.office_light"
+      ],
+      "context": {
+        "id": "ctx_i16_3",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-07-01T22:46:10.040Z",
+      "entity_id": "switch.office_light",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i16_3",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2025-07-02T03:00:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.bedroom_lamp"
+      ],
+      "context": {
+        "id": "ctx_i16_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-07-02T03:00:00.040Z",
+      "entity_id": "light.bedroom_lamp",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i16_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2025-07-02T04:10:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.bedroom_lamp"
+      ],
+      "context": {
+        "id": "ctx_i16_5",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-07-02T04:10:00.040Z",
+      "entity_id": "light.bedroom_lamp",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i16_5",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2025-07-02T13:40:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.office_light"
+      ],
+      "context": {
+        "id": "ctx_i16_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-07-02T13:40:00.040Z",
+      "entity_id": "light.office_light",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i16_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2025-07-02T13:40:50.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.office_light"
+      ],
+      "context": {
+        "id": "ctx_i16_7",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-07-02T13:40:50.040Z",
+      "entity_id": "switch.office_light",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i16_7",
+        "user_id": "user_resident"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "name_collision",
+    "entity_ids": [
+      "switch.office_light",
+      "light.office_light"
+    ],
+    "explanation": "A wall switch and a Hue room are both called Office Light."
+  },
+  "human_truth": {
+    "power_switch_check": "yes"
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "name_collision"
+  ]
+}

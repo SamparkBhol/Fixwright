@@ -1,0 +1,631 @@
+/* Fixwright host simulator: a hallway wall that follows the house clock,
+   the device on a shelf, a plan of the house under it, and the console on paper. Lamplight is the one
+   accent and only ever means on or lit. Inside the device the Alexa+ design guide tokens apply. */
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/atkinson-hyperlegible-next-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./fonts/atkinson-hyperlegible-next-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./fonts/atkinson-hyperlegible-next-latin-700-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/atkinson-hyperlegible-mono-latin-400-normal.woff2') format('woff2');
+}
+
+:root {
+  --wall-day: #cbd5d3;
+  --wall-night: #1b2433;
+  --lamplight: #ffb547;
+  --ink: #1c2228;
+  --paper: #eef2f1;
+  --fault: #c8463d;
+  --sound: #3f8c6e;
+
+  --ink-2: color-mix(in srgb, var(--ink) 72%, var(--paper));
+  --rule: color-mix(in srgb, var(--ink) 15%, var(--paper));
+  --paper-sunk: color-mix(in srgb, var(--ink) 5%, var(--paper));
+  --night-ink: #e3e9e7;
+
+  /* Inside the device: the Alexa+ MCP add-on design guide. */
+  --primary: #2d415e;
+  --screen-bg: #14181e;
+  --screen-inner: #1b2028;
+  --screen-text: #eef2f6;
+  --screen-text-2: #9aa5b3;
+  --screen-pass: #5dd39e;
+  --screen-info: #8eb8ff;
+  /* The views' own face, so the idle clock and the host's sheets match the cards they sit beside. */
+  --device-font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  --sans: 'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mono: 'Atkinson Hyperlegible Mono', ui-monospace, 'SF Mono', 'DejaVu Sans Mono', monospace;
+  color-scheme: light;
+}
+
+:root[data-theme='light'] {
+  --screen-bg: #eef1f5;
+  --screen-inner: #ffffff;
+  --screen-text: #121821;
+  --screen-text-2: #5a6574;
+  --screen-pass: #13703f;
+  --screen-info: #2358b5;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+  background: var(--paper);
+  color: var(--ink);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; }
+button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+[hidden] { display: none !important; }
+:root[data-test] *, :root[data-test] *::before, :root[data-test] *::after { animation: none !important; transition: none !important; }
+
+/* Top bar */
+.topbar {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 0 24px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+  z-index: 2;
+}
+.wordmark { flex: none; font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+.banner { flex: 1; min-width: 0; margin: 0; font-size: 16px; color: var(--ink-2); }
+/* The URL is the point of the banner: it wraps as a whole and is never cut short. */
+.banner-url { font-family: inherit; font-weight: 500; color: var(--ink); white-space: nowrap; }
+.banner-proto { white-space: nowrap; }
+.top-actions { flex: none; display: flex; align-items: center; gap: 20px; }
+.conn { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-2); }
+.conn::before { content: ''; width: 8px; height: 8px; border-radius: 999px; border: 1.5px solid var(--ink-2); }
+.conn[data-status='ready']::before { background: var(--sound); border-color: var(--sound); }
+.conn[data-status='error']::before { background: var(--fault); border-color: var(--fault); }
+.about-link { padding: 8px 2px; border: 0; background: none; font-size: 16px; font-weight: 500; cursor: pointer; text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 4px; }
+.about-link:hover { text-decoration-color: currentColor; }
+
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) clamp(440px, 31vw, 500px); height: calc(100vh - 56px); }
+p, li { text-wrap: pretty; }
+
+/* The wall */
+.stage {
+  --wall: var(--wall-day);
+  --on-wall: var(--ink);
+  --on-wall-2: color-mix(in srgb, var(--ink) 76%, var(--wall-day));
+  --wall-line: color-mix(in srgb, var(--ink) 40%, var(--wall-day));
+  --gutter: 32px;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 14px var(--gutter) 18px;
+  background: var(--wall);
+  color: var(--on-wall);
+  overflow: hidden;
+}
+/* The wall fades only once it has been painted from house time, so a page load never plays a night. */
+.stage[data-wall-ready='true'] { transition: background-color 1200ms ease, color 1200ms ease; }
+.stage[data-wall='night'] {
+  --wall: var(--wall-night);
+  --on-wall: var(--night-ink);
+  --on-wall-2: color-mix(in srgb, var(--night-ink) 74%, var(--wall-night));
+  --wall-line: color-mix(in srgb, var(--night-ink) 38%, var(--wall-night));
+}
+/* The morning push lands: the wall comes out of the night slowly, the way daylight does. */
+.stage[data-wall-ready='true'][data-morning='true'] { transition-duration: 2400ms; }
+
+.stage-top { flex: none; display: flex; align-items: center; gap: 20px; min-height: 48px; }
+.switcher { position: relative; display: flex; flex: none; }
+.switcher::after { content: ''; position: absolute; left: 6px; right: 6px; bottom: 9px; height: 1.5px; background: var(--wall-line); pointer-events: none; }
+.switch { width: 56px; height: 48px; display: grid; place-items: end center; padding: 0 0 10px; border: 0; border-radius: 12px; background: none; color: var(--on-wall); cursor: pointer; }
+.silhouette { display: block; overflow: visible; }
+.silhouette path { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; opacity: 0.55; transition: opacity 120ms ease; }
+.switch:hover .silhouette path { opacity: 1; }
+.switch[aria-selected='true'] .silhouette path { fill: currentColor; opacity: 1; }
+.device-line { margin: 0; min-width: 0; display: flex; align-items: center; gap: 14px; font-size: 16px; color: var(--on-wall-2); white-space: nowrap; }
+.device-name { color: var(--on-wall); font-weight: 500; overflow: hidden; text-overflow: ellipsis; }
+.ring-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--on-wall-2); }
+.ring-label:empty { display: none; }
+.ring-label::before { content: ''; width: 8px; height: 8px; border-radius: 999px; border: 1.5px solid currentColor; }
+.ring-label[data-state='speaking']::before, .ring-label[data-state='listening']::before { background: currentColor; }
+.house-time { margin-left: auto; flex: none; font-size: 16px; color: var(--on-wall-2); font-variant-numeric: tabular-nums; }
+
+/* The device on its shelf */
+.stage-canvas { position: relative; flex: 1; width: 100%; min-height: 0; }
+.scaler { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%) scale(var(--scale, 0.5)); transform-origin: 50% 100%; }
+.shelf {
+  position: absolute; left: calc(-1 * var(--gutter)); right: calc(-1 * var(--gutter)); bottom: 0; height: 14px;
+  background: color-mix(in srgb, var(--on-wall) 9%, var(--wall));
+  border-top: 2px solid color-mix(in srgb, var(--on-wall) 30%, var(--wall));
+}
+
+.device { --bezel: 22px; --screen-w: 1280px; --screen-h: 800px; }
+.device-body { display: flex; flex-direction: column; align-items: center; }
+.bezel {
+  position: relative;
+  padding: var(--bezel);
+  border-radius: 28px;
+  background: #16191d;
+  box-shadow:
+    inset 0 0 0 1px #2a2f36,
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 34px 60px -30px rgba(12, 16, 20, 0.6),
+    0 10px 18px -12px rgba(12, 16, 20, 0.45);
+}
+.stage[data-wall='night'] .bezel { box-shadow: inset 0 0 0 1px #3a414b, inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 34px 60px -30px rgba(0, 0, 0, 0.7); }
+.stage[data-wall='night'] .stand { background: #262b31; }
+.camera { position: absolute; top: calc(var(--bezel) / 2 - 3px); left: 50%; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: #23282f; box-shadow: inset 0 0 0 1px #2f353d; }
+.stand { width: 30%; height: 56px; margin-top: -2px; background: #1f2328; clip-path: polygon(36% 0, 64% 0, 100% 100%, 0 100%); border-radius: 0 0 10px 10px; }
+.screen {
+  position: relative; overflow: hidden;
+  width: var(--screen-w); height: var(--screen-h);
+  border-radius: 8px;
+  background: var(--screen-bg);
+  color: var(--screen-text);
+  font-family: var(--device-font);
+  --fs: calc(var(--screen-h) / 30);
+}
+.device[data-device='small'] .screen { --fs: calc(var(--screen-h) / 24); }
+.device[data-device='phone'] .bezel { border-radius: 58px; }
+.device[data-device='phone'] .screen { border-radius: 46px; display: flex; flex-direction: column; --fs: 15px; }
+.device[data-device='phone'] .stand { display: none; }
+.device[data-device='phone'] .camera { top: 26px; width: 10px; height: 10px; margin-left: -5px; z-index: 3; background: #07090b; }
+
+/* Idle screen */
+.idle {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 7% 7.5% 6.5%;
+  background: var(--screen-bg);
+  transition: opacity 160ms ease 130ms;
+}
+.screen[data-has-view='true'] .idle, .screen[data-has-card='true'] .idle { opacity: 0; transition: opacity 120ms ease; }
+.idle-clock { display: flex; flex-direction: column; gap: calc(var(--fs) * 0.35); }
+.idle-time { font-size: calc(var(--fs) * 5.4); font-weight: 300; letter-spacing: -0.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+.idle-date { font-size: calc(var(--fs) * 1.15); color: var(--screen-text-2); }
+.idle-hint { align-self: flex-start; display: flex; flex-direction: column; gap: calc(var(--fs) * 0.25); padding: calc(var(--fs) * 0.8) calc(var(--fs) * 1.1); border-radius: calc(var(--fs) * 0.6); background: var(--screen-inner); }
+.idle-label { font-size: calc(var(--fs) * 0.8); color: var(--screen-text-2); }
+.idle-try { font-size: calc(var(--fs) * 1.05); font-weight: 500; }
+.device[data-device='phone'] .idle { display: none; }
+
+/* Views. A card change fades out the old card first and only then fades in the new one, so two cards
+   are never on screen together. */
+.view-slot { position: absolute; inset: 0; }
+.view-frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: transparent; opacity: 0; transition: opacity 120ms ease; }
+.view-frame.active { opacity: 1; transition: opacity 160ms ease 130ms; }
+.view-frame.leaving { opacity: 0; transition: opacity 120ms ease; }
+
+/* A turn without a view of its own (switching or protecting a device) answers in words on the screen. */
+.reply-card {
+  position: absolute; inset: 0; z-index: 1;
+  display: flex; flex-direction: column; justify-content: center; gap: calc(var(--fs) * 0.9);
+  padding: 7% 8%;
+  background: var(--screen-bg); color: var(--screen-text);
+}
+.reply-head { display: flex; align-items: center; justify-content: space-between; gap: 1em; font-size: calc(var(--fs) * 0.95); }
+.reply-app { color: var(--screen-text-2); font-weight: 500; }
+.reply-tag { --tone: var(--screen-pass); display: inline-flex; align-items: center; gap: 0.4em; padding: 0.35em 0.9em 0.35em 0.7em; border-radius: 999px; background: color-mix(in srgb, var(--tone) 14%, var(--screen-inner)); color: var(--tone); font-weight: 700; white-space: nowrap; }
+.reply-card[data-tone='protect'] .reply-tag { --tone: var(--screen-info); }
+.reply-tag-icon { display: grid; }
+.reply-tag-icon svg { width: 1.1em; height: 1.1em; stroke-width: 2.4; }
+.reply-text { margin: 0; max-width: 30ch; font-size: calc(var(--fs) * 1.9); font-weight: 600; line-height: 1.22; letter-spacing: -0.01em; text-wrap: pretty; }
+.reply-detail { margin: 0; padding-top: calc(var(--fs) * 0.8); border-top: 1px solid color-mix(in srgb, var(--screen-text) 12%, transparent); font-size: calc(var(--fs) * 1.1); color: var(--screen-text-2); }
+.device[data-device='phone'] .reply-card { display: none; }
+.device[data-device='phone'] .view-slot { position: relative; inset: auto; flex: none; height: var(--view-height, 440px); margin: 4px 16px 22px; border-radius: 22px; overflow: hidden; transition: height 220ms ease; }
+.device[data-device='phone'] .screen[data-has-view='false'] .view-slot { height: 0; margin: 0; }
+
+/* Phone chrome */
+.phone-top, .phone-chat { display: none; }
+.device[data-device='phone'] .phone-top { display: block; flex: none; }
+.device[data-device='phone'] .phone-chat { display: flex; }
+.phone-status { display: flex; justify-content: space-between; align-items: center; padding: 18px 34px 0; height: 54px; font-size: 15px; font-weight: 700; }
+.phone-icons { display: flex; gap: 5px; align-items: flex-end; }
+.phone-icons i { width: 4px; border-radius: 1px; background: var(--screen-text); }
+.phone-icons i:nth-child(1) { height: 6px; } .phone-icons i:nth-child(2) { height: 9px; } .phone-icons i:nth-child(3) { height: 12px; }
+.phone-app { display: flex; flex-direction: column; align-items: center; padding: 10px 0 12px; border-bottom: 1px solid color-mix(in srgb, var(--screen-text) 10%, transparent); }
+.phone-app-name { font-size: 16px; font-weight: 700; }
+.phone-app-sub { font-size: 13px; color: var(--screen-text-2); }
+.phone-chat {
+  flex: 1; min-height: 0; flex-direction: column; justify-content: flex-end; gap: 8px; padding: 12px 16px; overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 36px);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 36px);
+}
+.bubble { max-width: 84%; padding: 10px 14px; font-size: 15px; line-height: 1.4; border-radius: 18px; flex: none; overflow-wrap: anywhere; }
+.bubble.user { align-self: flex-end; background: var(--primary); color: #fff; border-bottom-right-radius: 5px; }
+.bubble.assistant { align-self: flex-start; background: var(--screen-inner); border-bottom-left-radius: 5px; }
+/* The phone before the first turn: the same invitation the displays show on their idle screen. */
+.phone-hint { flex: none; align-self: stretch; display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border-radius: 18px; background: var(--screen-inner); }
+.phone-hint .idle-label { font-size: 13px; }
+.phone-hint .idle-try { font-size: 16px; line-height: 1.35; }
+
+/* What the host is doing while a tool runs */
+.activity {
+  position: absolute; left: 50%; top: calc(var(--fs) * 1.1); z-index: 2;
+  transform: translateX(-50%); opacity: 0; pointer-events: none;
+  display: flex; align-items: center; gap: calc(var(--fs) * 0.5);
+  padding: calc(var(--fs) * 0.45) calc(var(--fs) * 0.9);
+  border-radius: 999px; font-size: calc(var(--fs) * 0.8); font-weight: 500; white-space: nowrap;
+  background: rgba(20, 24, 30, 0.92); color: #eef2f6;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: opacity 180ms ease;
+}
+.activity::before { content: ''; width: 0.8em; height: 0.8em; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; animation: spin 0.8s linear infinite; }
+.activity[data-on='true'] { opacity: 1; }
+.device[data-device='phone'] .activity { top: 120px; font-size: 13px; }
+
+/* Approval sheet, host chrome above the view. Far field type: at least as large as the view text behind it
+   (the views draw a 768 by 480 canvas at 1.667 times). */
+.approval { position: absolute; inset: 0; z-index: 4; display: flex; align-items: center; justify-content: center; background: rgba(8, 10, 13, 0.74); }
+.approval-card {
+  width: min(74%, 1000px); font-size: calc(var(--fs) * 1.2);
+  padding: calc(var(--fs) * 1.3) calc(var(--fs) * 1.5);
+  border-radius: calc(var(--fs) * 0.9);
+  background: var(--screen-bg); color: var(--screen-text);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+:root[data-theme='light'] .approval-card { border-color: rgba(18, 24, 33, 0.12); }
+.approval-eyebrow { display: flex; align-items: center; gap: 0.4em; color: var(--screen-text-2); font-size: 0.7em; font-weight: 500; }
+.approval-eyebrow svg { width: 1.1em; height: 1.1em; }
+.approval-title { margin: 0.3em 0 0.45em; font-size: 1.5em; line-height: 1.15; letter-spacing: -0.01em; }
+.approval-lines { margin: 0; padding-left: 1.05em; display: flex; flex-direction: column; gap: 0.3em; line-height: 1.3; }
+/* The small print is still read from across the room: at least 0.78 of the sheet's type. */
+.approval-note { margin: 0.8em 0 0; font-size: 0.78em; line-height: 1.4; color: var(--screen-text-2); }
+/* When a view's message asked for the change, say so plainly: the person decides, not the screen. */
+.approval-source { display: inline-flex; align-items: center; gap: 0.5em; margin: 0.8em 0 0; padding: 0.35em 0.75em; border-radius: 0.5em; font-size: 0.78em; color: var(--screen-text); background: var(--screen-inner); border: 1px dashed color-mix(in srgb, var(--screen-text) 40%, transparent); }
+.approval-actions { display: flex; justify-content: flex-end; gap: 0.5em; margin-top: 1em; }
+.approval .btn { min-height: max(48px, 2.2em); height: auto; padding: 0 1.1em; font-size: 0.9em; border-radius: 999px; }
+/* Small display and phone: the two answers share their own row as equal full width targets. */
+.device[data-device='small'] .approval-card { width: 84%; font-size: calc(var(--fs) * 1.02); padding: calc(var(--fs) * 0.95) calc(var(--fs) * 1.25) calc(var(--fs) * 1.15); }
+.device[data-device='small'] .approval-title { margin-bottom: 0.35em; }
+.device[data-device='small'] .approval-note { font-size: 0.82em; margin-top: 0.7em; }
+.device[data-device='small'] .approval-actions,
+.device[data-device='phone'] .approval-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6em; margin-top: 0.85em; padding-top: 0.85em; border-top: 1px solid color-mix(in srgb, var(--screen-text) 12%, transparent); }
+.device[data-device='small'] .approval .btn,
+.device[data-device='phone'] .approval .btn { width: 100%; justify-content: center; }
+.device[data-device='phone'] .approval { align-items: flex-end; }
+.device[data-device='phone'] .approval-card { width: 100%; border-radius: 26px 26px 46px 46px; font-size: 18px; padding: 22px 22px 36px; }
+.device[data-device='phone'] .approval-title { margin-bottom: 0.4em; }
+.device[data-device='phone'] .approval-note { font-size: 15px; margin-top: 14px; }
+.device[data-device='phone'] .approval-actions { margin-top: 16px; padding-top: 16px; }
+.device[data-device='phone'] .approval .btn { min-height: 52px; font-size: 16px; }
+
+/* Push notification. It never sits on a view: on a display it takes the caption band under the device, on
+   the phone the top of the screen over the chat, and with no screen it sits above the speaker. The card
+   body is one button that opens the repair the push is about. */
+.push-toast {
+  position: absolute; z-index: 3;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 0.6em; align-items: start;
+  padding: 0.6em 0.7em 0.65em 0.9em; border-radius: 12px;
+  background: var(--paper); color: var(--ink);
+  border: 1px solid var(--rule);
+  text-align: left;
+  animation: toast-in 260ms ease both;
+}
+.toast-open { grid-column: 1; display: grid; min-width: 0; margin: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; border-radius: 8px; }
+.toast-app { display: flex; align-items: center; gap: 0.5em; font-size: 13px; color: var(--ink-2); }
+.toast-app time { margin-left: 0.25em; }
+.toast-icon { width: 20px; height: 20px; border-radius: 999px; display: grid; place-items: center; background: var(--ink); color: var(--paper); }
+.toast-icon svg { width: 12px; height: 12px; }
+.toast-title { display: block; margin-top: 0.3em; font-size: 1em; font-weight: 700; line-height: 1.25; }
+.toast-message { display: block; margin: 0.15em 0 0; font-size: 0.9em; line-height: 1.4; }
+.toast-close { grid-column: 2; align-self: start; width: 32px; height: 32px; display: grid; place-items: center; border: 0; border-radius: 999px; background: var(--paper-sunk); color: var(--ink); cursor: pointer; }
+.caption-toast { position: relative; width: min(720px, 100%); font-size: 16px; }
+.caption-toast .toast-message { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* A phone shows system banners across its top, over the app header and the chat. */
+.phone-toast { left: 12px; right: 12px; top: 58px; font-size: 15px; border-radius: 22px; background: #232931; color: #f1f4f7; border-color: rgba(255, 255, 255, 0.14); }
+.phone-toast .toast-app { color: #a9b3bf; font-size: 12px; }
+.phone-toast .toast-icon { background: var(--primary); color: #fff; }
+.phone-toast .toast-close { background: rgba(255, 255, 255, 0.08); color: #c6ced8; }
+.voice-toast { left: 50%; top: 2px; transform: translateX(-50%); width: min(460px, 92%); font-size: 15px; animation: none; }
+@keyframes toast-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* Speaker */
+.speaker { display: none; position: relative; width: 360px; height: 360px; }
+.device[data-device='voice'] .device-body { display: none; }
+.device[data-device='voice'] .speaker { display: block; }
+.speaker-body { position: absolute; inset: 0; border-radius: 50%; background: #16191d; box-shadow: inset 0 0 0 1px #2c3139, 0 34px 60px -26px rgba(12, 16, 20, 0.65); }
+.ring {
+  position: absolute; inset: 7px; border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(238, 242, 247, 0.06), rgba(238, 242, 247, 0.98) 22%, rgba(238, 242, 247, 0.12) 46%, rgba(238, 242, 247, 0.98) 72%, rgba(238, 242, 247, 0.06));
+  -webkit-mask: radial-gradient(circle, transparent 64.5%, #000 66%, #000 69%, transparent 70.5%);
+  mask: radial-gradient(circle, transparent 64.5%, #000 66%, #000 69%, transparent 70.5%);
+  opacity: 0.14; transition: opacity 260ms ease;
+}
+.ring[data-state='speaking'] { opacity: 1; animation: spin 2.6s linear infinite; }
+.ring[data-state='thinking'] { opacity: 0.85; animation: spin 0.9s linear infinite; }
+.ring[data-state='listening'] { opacity: 1; background: rgba(238, 242, 247, 0.95); animation: pulse 1.3s ease-in-out infinite; }
+.speaker-top { position: absolute; inset: 15%; border-radius: 50%; background: #1d2126; box-shadow: inset 0 -16px 28px rgba(0, 0, 0, 0.45); }
+.speaker-mesh { position: absolute; inset: 12%; border-radius: 50%; background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1.1px, transparent 1.4px); background-size: 9px 9px; }
+
+/* Under the shelf: the house, the captions and the composer */
+.floor { flex: none; display: flex; flex-direction: column; gap: 12px; width: 100%; }
+
+.house { width: 100%; }
+.plan { display: flex; min-height: 68px; border: 2px solid var(--wall-line); }
+.room { position: relative; flex: var(--weight, 1) 1 0; min-width: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 6px; padding: 6px 12px 9px; border-left: 1.5px solid var(--wall-line); }
+.room:first-child { border-left: 0; }
+/* A doorway in each shared wall, so the strip reads as a floor plan rather than a row of boxes. */
+.room + .room::before { content: ''; position: absolute; left: -1.5px; top: 38%; width: 1.5px; height: 18px; background: var(--wall); }
+.stage[data-wall-ready='true'] .room + .room::before { transition: background-color 1200ms ease; }
+.room-name { font-size: 13px; color: var(--on-wall-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.room[data-focus='true'] .room-name { color: var(--on-wall); font-weight: 700; }
+.room-dots { display: flex; flex-wrap: wrap; gap: 6px 8px; }
+.dot {
+  display: inline-block; flex: none; width: 13px; height: 13px; border-radius: 999px;
+  border: 1.5px solid var(--on-wall); background: transparent;
+  transition: background-color 90ms linear, border-color 90ms linear, box-shadow 90ms linear;
+}
+.dot[data-state='on'] { background: var(--lamplight); border-color: var(--lamplight); box-shadow: 0 0 10px 1px color-mix(in srgb, var(--lamplight) 75%, transparent); }
+.dot[data-state='unavailable'] { background: var(--fault); border-color: var(--fault); }
+.dot[data-answered='true'] { outline: 2px solid var(--sound); outline-offset: 2px; }
+.dot[data-changed='true'] { outline: 2px dashed var(--on-wall); outline-offset: 2px; }
+/* The flashed lamp is the one dot the viewer must find in a full frame: larger, with a wider glow. */
+.plan .dot[data-focus='true'] { transform: scale(1.45); margin-inline: 3px; }
+.plan .dot[data-focus='true'][data-state='on'] { box-shadow: 0 0 16px 5px color-mix(in srgb, var(--lamplight) 80%, transparent); }
+.stage[data-wall='night'] .dot[data-answered='true'] { outline-color: color-mix(in srgb, var(--sound) 60%, var(--night-ink)); }
+/* Two lines are always kept for the moment's words, so a long line never shrinks the device mid demo. */
+.house-foot { display: flex; align-items: baseline; gap: 20px; margin-top: 8px; height: 45px; }
+.house-line { flex: 1; min-width: 0; margin: 0; font-size: 16px; line-height: 1.4; color: var(--on-wall); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.legend { flex: none; margin: 0; display: flex; gap: 16px; font-size: 13px; color: var(--on-wall-2); }
+.legend-item { display: inline-flex; align-items: center; gap: 7px; }
+.legend .dot { width: 10px; height: 10px; box-shadow: none; }
+.legend .dot[data-answered='true'], .legend .dot[data-changed='true'] { outline-offset: 1px; outline-width: 1.5px; }
+
+/* Captions. A fixed height (and the chips' below) keeps the canvas the same size on every turn, so the
+   device holds still while the conversation changes. */
+.captions { flex: none; width: 100%; height: var(--captions-h, 92px); overflow: hidden; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.cap { margin: 0; max-width: min(70ch, 100%); }
+.cap::before { margin-right: 10px; font-size: 13px; font-weight: 500; color: var(--on-wall-2); }
+.cap-user { font-size: 16px; color: var(--on-wall-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cap-user::before { content: 'You'; }
+.cap-user[data-via='view']::before { content: 'Sent by the view'; color: var(--on-wall); text-decoration: underline dashed; text-underline-offset: 3px; }
+.cap-user[data-via='tap']::before { content: 'You tapped'; }
+.cap-reply { font-size: 20px; line-height: 1.4; font-weight: 500; color: var(--on-wall); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: var(--reply-lines, 2); overflow: hidden; }
+.cap-reply::before { content: 'Fixwright'; }
+.cap-reply[data-kind='push']::before { content: 'Fixwright push'; }
+.stage[data-device='voice'] { --captions-h: 150px; --reply-lines: 4; }
+.stage[data-device='voice'] .cap-reply { font-size: 25px; }
+.stage[data-device='phone'] .captions { display: none; }
+
+/* Composer */
+.dock { flex: none; width: min(860px, 100%); display: flex; flex-direction: column; gap: 10px; }
+.composer { display: flex; align-items: center; gap: 6px; padding: 5px; border-radius: 12px; background: var(--paper); color: var(--ink); border: 1px solid color-mix(in srgb, var(--ink) 22%, var(--paper)); }
+.composer:focus-within { border-color: var(--ink); }
+.mic, .send { height: 44px; flex: none; display: grid; place-items: center; border: 0; border-radius: 999px; cursor: pointer; }
+.mic { width: 44px; background: transparent; color: var(--ink); }
+.mic:hover { background: var(--paper-sunk); }
+.mic:disabled { color: var(--ink-2); cursor: not-allowed; background: transparent; }
+.mic[data-listening='true'] { background: var(--ink); color: var(--paper); }
+.send { padding: 0 22px; background: var(--ink); color: var(--paper); font-weight: 700; }
+.composer-input { flex: 1; min-width: 0; height: 44px; padding: 0 6px; border: 0; outline: none; background: transparent; color: var(--ink); font: inherit; font-size: 16px; }
+.composer-input::placeholder { color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; align-content: flex-start; gap: 8px; height: 72px; overflow: hidden; }
+.chip { display: inline-flex; align-items: center; height: 32px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--wall-line); background: transparent; color: var(--on-wall); font-size: 13px; white-space: nowrap; cursor: pointer; }
+.chip:hover { border-color: var(--on-wall); }
+.chip-note { margin-left: 8px; padding-left: 8px; border-left: 1px solid var(--wall-line); color: var(--on-wall-2); }
+
+/* Console, on paper */
+.console { display: flex; flex-direction: column; min-height: 0; background: var(--paper); border-left: 1px solid var(--rule); }
+.tabs { flex: none; display: flex; gap: 18px; padding: 0 24px; border-bottom: 1px solid var(--rule); overflow-x: auto; scrollbar-width: none; }
+.tab { position: relative; display: inline-flex; align-items: baseline; padding: 15px 0 13px; border: 0; background: none; color: var(--ink-2); font-size: 16px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+.tab:hover { color: var(--ink); }
+.tab[aria-selected='true'] { color: var(--ink); }
+.tab[aria-selected='true']::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--ink); }
+.trace-count { color: var(--ink); font-variant-numeric: tabular-nums; }
+.tab-short { display: none; }
+.panel { flex: 1; min-height: 0; overflow: auto; padding: 20px 24px 28px; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; }
+.panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+.panel-head.stacked { flex-direction: column; align-items: flex-start; gap: 12px; }
+.panel-head h3, .section { margin: 0; font-size: 16px; font-weight: 700; line-height: 1.4; color: var(--ink); }
+.section { margin: 28px 0 10px; }
+.section.first { margin-top: 0; }
+.muted { margin: 4px 0 0; font-size: 13px; color: var(--ink-2); }
+.empty { margin: 0; font-size: 16px; color: var(--ink-2); max-width: 44ch; }
+.seg { display: inline-flex; flex: none; gap: 2px; padding: 2px; border-radius: 999px; border: 1px solid var(--rule); }
+.seg button { border: 0; background: none; padding: 4px 10px; border-radius: 999px; font-size: 13px; color: var(--ink-2); cursor: pointer; white-space: nowrap; }
+.seg button[aria-pressed='true'] { background: var(--ink); color: var(--paper); }
+.theme-seg { margin-top: 10px; }
+.theme-seg button { padding: 6px 16px; font-size: 16px; }
+
+/* Conversation */
+.conv { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 18px; }
+.turn { padding-left: 14px; border-left: 2px solid var(--rule); }
+.turn.assistant { border-left-color: var(--ink); }
+.turn[data-via='view'] { border-left-style: dashed; border-left-color: var(--ink-2); }
+.turn-who { margin-bottom: 2px; font-size: 13px; font-weight: 700; color: var(--ink-2); }
+.turn-text { margin: 0; font-size: 16px; line-height: 1.5; max-width: 60ch; }
+.turn-meta { margin-top: 4px; font-size: 13px; color: var(--ink-2); }
+.tool-chip { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-top: 8px; padding: 2px 12px; border-radius: 999px; border: 1px solid var(--rule); font-size: 13px; color: var(--ink-2); }
+.tool-chip code { font-family: inherit; font-weight: 700; color: var(--ink); }
+.tool-chip.err .tool-status { color: var(--fault); }
+
+/* Visual Trace: the one place for monospace, because the content is code */
+.trace { list-style: none; margin: 0 -24px; padding: 0; font-family: var(--mono); font-size: 13px; border-top: 1px solid var(--rule); }
+.trace[data-filter='mcp'] .tr.bridge, .trace[data-filter='bridge'] .tr.mcp { display: none; }
+/* The method keeps its full name on the first line: when it and the badges do not fit there, the badges
+   move under it. 140 px is the time, arrow and lane columns with their gaps. */
+.tr-head { width: 100%; display: flex; flex-wrap: wrap; align-items: center; column-gap: 8px; row-gap: 2px; padding: 6px 24px; border: 0; border-bottom: 1px solid var(--rule); background: none; text-align: left; cursor: pointer; color: var(--ink-2); font: inherit; }
+.tr-head:hover, .tr-head[aria-expanded='true'] { background: var(--paper-sunk); }
+.tr-meta { margin-left: auto; display: inline-flex; align-items: center; justify-content: flex-end; gap: 6px; }
+.tr-t { flex: none; width: 62px; font-variant-numeric: tabular-nums; }
+.tr-dir { flex: none; width: 14px; }
+.tr-lane { flex: none; width: 40px; }
+.tr-dir { color: var(--ink); }
+.tr-lane { text-align: center; color: var(--ink-2); }
+.tr.bridge .tr-lane { color: var(--ink); text-decoration: underline dashed; text-underline-offset: 3px; }
+.tr-method { flex: 1 0 auto; max-width: calc(100% - 140px); color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tr.response .tr-method, .tr.notification .tr-method { color: var(--ink-2); }
+.tr.error .tr-method { color: var(--fault); }
+.tr-id, .tr-ms, .tr-size { white-space: nowrap; }
+.tr-badge { padding: 0 7px; border-radius: 999px; border: 1px solid var(--rule); color: var(--ink); white-space: nowrap; }
+.tr-body { padding: 10px 24px 14px 40px; background: var(--paper-sunk); border-bottom: 1px solid var(--rule); max-height: 420px; overflow: auto; }
+.json { margin: 0; white-space: pre-wrap; word-break: break-word; font-family: var(--mono); font-size: 13px; line-height: 1.5; color: var(--ink-2); }
+.json .jl { display: block; padding-left: calc((var(--depth, 0) + 2) * 1ch); text-indent: -2ch; }
+.j-k, .j-n, .j-b { color: var(--ink); }
+
+/* Latency */
+.lat-row { display: grid; grid-template-columns: minmax(0, 1fr) 30px 66px 66px 72px; gap: 10px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--rule); font-size: 13px; }
+.lat-method { display: flex; flex-direction: column; min-width: 0; }
+.lat-family { font-size: 13px; color: var(--ink-2); }
+.lat-headrow { padding-top: 0; color: var(--ink-2); }
+.lat-headrow span:nth-child(2), .lat-headrow span:nth-child(3), .lat-headrow span:nth-child(4) { text-align: right; }
+.lat-row code { font-family: inherit; font-size: 16px; font-weight: 500; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.num { text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; }
+.lat-bar { position: relative; height: 8px; border-radius: 999px; background: var(--paper-sunk); overflow: hidden; }
+.lat-bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; }
+.lat-bar .p95 { background: color-mix(in srgb, var(--ink) 26%, var(--paper)); }
+.lat-bar .p50 { background: var(--ink); }
+
+/* Break my house */
+.callout { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 12px; background: var(--paper-sunk); font-size: 13px; color: var(--ink); }
+.callout svg { flex: none; margin-top: 2px; }
+.callout p { margin: 0; }
+.card { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 14px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--rule); }
+.card.time { flex-direction: column; align-items: stretch; }
+.card-label { margin-bottom: 2px; font-size: 16px; font-weight: 700; }
+.hh-token { display: block; font-family: inherit; font-size: 13px; color: var(--ink); }
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.row.end { justify-content: flex-end; margin-top: 14px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 36px; padding: 0 16px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--ink) 40%, var(--paper)); background: transparent; color: var(--ink); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.btn:hover { border-color: var(--ink); }
+.btn.small { height: 32px; padding: 0 14px; }
+.btn.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+.approval .btn.ghost { color: var(--screen-text); border-color: color-mix(in srgb, var(--screen-text) 30%, transparent); }
+.faults { display: flex; flex-direction: column; }
+.fault { display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; gap: 12px; align-items: start; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.fault-code { margin-top: 1px; padding: 1px 0; border-radius: 999px; border: 1px solid var(--rule); font-size: 13px; text-align: center; color: var(--ink-2); }
+.fault-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.fault-text strong { font-size: 16px; font-weight: 700; line-height: 1.35; }
+.fault-text > span { font-size: 13px; line-height: 1.45; color: var(--ink-2); }
+.fault-src { display: inline-flex; gap: 5px; align-items: center; margin-top: 3px; font-size: 13px; color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
+.fault-src:hover { color: var(--ink); text-decoration-color: currentColor; }
+.active-faults { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 12px; }
+.active-label { width: 100%; font-size: 13px; color: var(--ink-2); }
+.active-chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px 2px 4px; border-radius: 999px; border: 1px solid var(--rule); font-size: 13px; }
+.active-chip b { padding: 0 6px; border-radius: 999px; background: var(--ink); color: var(--paper); font-weight: 500; }
+.pushes { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+.pushes:empty { display: none; }
+.push { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--rule); }
+.push-app { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; font-size: 13px; color: var(--ink-2); }
+.push-app time { margin-left: auto; }
+.push strong { font-size: 16px; }
+.push p { margin: 2px 0 0; font-size: 13px; color: var(--ink); }
+.house-log { list-style: none; margin: 0; padding: 0; font-size: 13px; }
+.house-log li { display: flex; flex-direction: column; gap: 1px; padding: 8px 0; border-bottom: 1px solid var(--rule); }
+.house-log li span:first-child { color: var(--ink); font-weight: 500; }
+.house-log li.err span:first-child { color: var(--fault); }
+.house-log .muted { margin: 0; }
+
+/* About */
+.ticks { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.ticks li { position: relative; padding-left: 24px; font-size: 16px; line-height: 1.5; color: var(--ink); max-width: 62ch; }
+.ticks li::before { content: ''; position: absolute; left: 2px; top: 7px; width: 10px; height: 5px; border-left: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: rotate(-45deg); }
+.ticks.sim li::before { width: 9px; height: 9px; top: 7px; border: 1.5px solid var(--ink); border-radius: 999px; transform: none; }
+.facts { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 8px 14px; margin: 0; font-size: 13px; }
+.facts dt { color: var(--ink-2); }
+.facts dd { margin: 0; color: var(--ink); overflow-wrap: anywhere; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .stage[data-wall-ready='true'], .stage[data-wall-ready='true'] .room + .room::before, .dot, .silhouette path, .view-frame, .view-frame.active, .view-frame.leaving, .idle, .screen[data-has-view='true'] .idle, .screen[data-has-card='true'] .idle { transition: none; }
+  .ring[data-state], .activity::before { animation: none; }
+  .push-toast { animation: none; }
+}
+
+@media (max-width: 1400px) {
+  .banner { font-size: 13px; }
+  .tabs { gap: 14px; padding: 0 16px; }
+  .panel { padding: 18px 16px 26px; }
+  .trace { margin: 0 -16px; }
+  .tr-head { padding: 6px 16px; }
+}
+/* A laptop screen (1280 by 800 and the like): the floor gives up height so the device stays the hero. */
+@media (max-height: 820px) {
+  .caption-toast { padding: 6px 8px 6px 12px; }
+  .caption-toast .toast-app { line-height: 1.3; }
+  .caption-toast .toast-title { margin-top: 1px; }
+  .caption-toast .toast-message { margin-top: 0; }
+  .stage { gap: 8px; padding: 8px var(--gutter) 12px; --gutter: 28px; --captions-h: 72px; }
+  .stage-top { min-height: 44px; }
+  .switch { height: 44px; padding-bottom: 8px; }
+  .switcher::after { bottom: 7px; }
+  .floor, .dock { gap: 8px; }
+  .cap-reply { font-size: 16px; }
+  .plan { min-height: 54px; }
+  .room { gap: 4px; padding: 5px 10px 7px; }
+  .room-dots { gap: 6px 7px; }
+  .house-foot { margin-top: 4px; }
+  .chips { height: 32px; }
+}
+@media (max-width: 1100px) {
+  body { overflow: auto; }
+  .layout { grid-template-columns: minmax(0, 1fr); height: auto; }
+  .stage { height: 86vh; min-height: 640px; }
+  .console { height: 70vh; border-left: 0; border-top: 1px solid var(--rule); }
+}
+@media (max-width: 700px) {
+  .topbar { height: auto; min-height: 56px; flex-wrap: wrap; row-gap: 2px; column-gap: 16px; padding: 8px 16px; }
+  .banner { order: 3; flex-basis: 100%; }
+  .stage { height: auto; min-height: 0; padding: 12px var(--gutter); --gutter: 16px; }
+  .stage-canvas { flex: none; height: 260px; }
+  .stage-top { flex-wrap: wrap; row-gap: 0; }
+  .device-line { display: none; }
+  .house-time { font-size: 13px; }
+  .plan { flex-wrap: wrap; height: auto; }
+  .room { flex: 1 1 33.33%; min-height: 58px; border-top: 1.5px solid var(--wall-line); }
+  .room:nth-child(-n + 3) { border-top: 0; }
+  .room:nth-child(3n + 1) { border-left: 0; }
+  .room:nth-child(3n + 1)::before { display: none; }
+  .house-foot { flex-wrap: wrap; row-gap: 4px; height: auto; }
+  .house-line { flex-basis: 100%; display: block; }
+  .house-line:empty { display: none; }
+  /* The page scrolls at phone width, so the captions show whole sentences instead of a fixed band. */
+  .captions { height: auto; min-height: 0; }
+  .cap-user { white-space: normal; }
+  .cap-reply { display: block; }
+  .tr-head { column-gap: 6px; }
+  .tr-t { width: 54px; }
+  .tr-lane { width: 34px; }
+  .tr-method { max-width: calc(100% - 120px); }
+  .legend { flex-wrap: wrap; row-gap: 4px; }
+  /* Phone width: every suggestion in view (they wrap), and all five tabs in one row with short labels.
+     The long label stays as the tab's accessible name. */
+  .chips { height: auto; overflow: visible; }
+  .tabs { justify-content: space-between; gap: 0; padding: 0 12px; }
+  .tab { padding: 14px 4px 12px; }
+  .tab-long { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .tab-short { display: inline; }
+  .panel { padding: 16px; }
+  .trace { margin: 0 -16px; }
+}

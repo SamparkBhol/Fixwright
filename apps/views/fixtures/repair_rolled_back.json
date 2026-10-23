@@ -1,0 +1,37 @@
+{
+  "speech": "That didn't work, so I put everything back. The old copy wouldn't go away. Nothing is changed.",
+  "status": "ok",
+  "view": "repair_card",
+  "ids": {
+    "diagnosis_id": "dx_01m50980d03sy1gk7c",
+    "plan_id": "pln_01m5098trrwqn6nph9",
+    "repair_id": "rep_01m50991kggcp2zeys"
+  },
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "repair_id": "rep_01m50991kggcp2zeys",
+  "plan_id": "pln_01m5098trrwqn6nph9",
+  "state": "rolled_back",
+  "steps": [
+    {
+      "step": 1,
+      "label": "Give the online lamp the name Hallway Lamp",
+      "status": "rolled_back",
+      "read_back": "Name is back to Hallway Lamp 2"
+    },
+    {
+      "step": 2,
+      "label": "Retire the old copy",
+      "status": "failed",
+      "read_back": "Old copy is still in the device list"
+    },
+    {
+      "step": 3,
+      "label": "Switch it on and off to check it answers",
+      "status": "skipped"
+    }
+  ],
+  "undo_available": false
+}

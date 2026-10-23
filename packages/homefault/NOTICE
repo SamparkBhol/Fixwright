@@ -1,0 +1,23 @@
+homefault
+Copyright (c) 2026 homefault contributors
+
+The homefault code, schema, fixtures and documentation are licensed under the MIT License in LICENSE.
+
+Quoted passages are not covered by that licence.
+
+The twenty incident scenarios in incidents/, their specs in scripts/incidents.ts, the generated
+src/incidents.ts and the README each carry one short verbatim quote from a dated public report: posts on
+Reddit (r/alexa, r/amazonecho, r/homeautomation, r/smarthome) and one review in The Verge. Those
+passages belong to their authors and publishers. They are quoted briefly, each next to a link to its
+source, so a reader can check what the scenario was reconstructed from. The scenarios themselves (the
+devices, timelines, logs and assumptions) are reconstructions written for homefault and are MIT
+licensed like the rest of the repository.
+
+If you reuse homefault, keep the quotes with their links or remove them. If you wrote one of the quoted
+posts and want your words taken out, open an issue and the quote will be replaced with a link alone.
+
+homefault does not ship copies of the posts or reviews themselves, only the short quotes above.
+
+Product and company names (Alexa, Home Assistant, Hue, Zigbee2MQTT, Matter, Kasa, ecobee, Shelly, Tuya)
+are used only to describe what the simulated devices behave like. They belong to their owners, and
+homefault is not affiliated with or endorsed by any of them.

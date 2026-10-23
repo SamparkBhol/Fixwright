@@ -1,0 +1,28 @@
+{
+  "name": "@fixwright/host",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Alexa+-style host simulator (browser app) with a real MCP client.",
+  "license": "MIT",
+  "scripts": {
+    "build": "node scripts/build.ts",
+    "dev": "node scripts/dev.ts",
+    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.node.json",
+    "test": "vitest run",
+    "test:e2e": "node scripts/build.ts && vitest run -c vitest.e2e.config.ts",
+    "check": "tsc -p tsconfig.json && tsc -p tsconfig.node.json && vitest run && npm run test:e2e"
+  },
+  "dependencies": {
+    "@fixwright/protocol": "*",
+    "@fixwright/router": "*",
+    "@modelcontextprotocol/client": "2.2.0",
+    "@modelcontextprotocol/core": "2.2.0",
+    "@modelcontextprotocol/ext-apps": "2.0.3",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@fixwright/sandbox": "0.1.0",
+    "@modelcontextprotocol/server": "2.2.0"
+  }
+}

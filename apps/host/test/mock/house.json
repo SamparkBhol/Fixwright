@@ -1,0 +1,251 @@
+{
+ "source": "Recorded on 2026-10-18 from the local stack (apps/server with SimHome, the five default demo faults): the house's lights, switches and fans as /demo/state lists them before any tool call, and the times their physical.recentActuations show, as offsets in ms. \"flash\" is relative to the flash_test probe's at, \"restore\" to the explanation's \"Power came back\" row (power went out at -2266 ms, the last device came on at 3436 ms).",
+ "entities": [
+  {
+   "entity_id": "light.bedroom_lamp",
+   "name": "Bedroom Lamp",
+   "domain": "light",
+   "area": "bedroom",
+   "state": "off"
+  },
+  {
+   "entity_id": "light.bedside_lamp",
+   "name": "Bedside Lamp",
+   "domain": "light",
+   "area": "bedroom",
+   "state": "off"
+  },
+  {
+   "entity_id": "light.desk_lamp",
+   "name": "Desk Lamp",
+   "domain": "light",
+   "area": "office",
+   "state": "off"
+  },
+  {
+   "entity_id": "light.floor_lamp",
+   "name": "Living Room Light",
+   "domain": "light",
+   "area": "living_room",
+   "state": "off"
+  },
+  {
+   "entity_id": "light.garage_light",
+   "name": "Garage Light",
+   "domain": "light",
+   "area": "garage",
+   "state": "off"
+  },
+  {
+   "entity_id": "light.hallway_lamp",
+   "name": "Hallway Lamp",
+   "domain": "light",
+   "area": "hallway",
+   "state": "unavailable"
+  },
+  {
+   "entity_id": "light.hallway_lamp_2",
+   "name": "Hallway Lamp",
+   "domain": "light",
+   "area": "hallway",
+   "state": "off"
+  },
+  {
+   "entity_id": "light.kitchen_counter",
+   "name": "Kitchen Counter Light",
+   "domain": "light",
+   "area": "kitchen",
+   "state": "off"
+  },
+  {
+   "entity_id": "light.kitchen_pendant",
+   "name": "Kitchen Pendant",
+   "domain": "light",
+   "area": "kitchen",
+   "state": "off"
+  },
+  {
+   "entity_id": "light.living_room_light",
+   "name": "Living Room Light",
+   "domain": "light",
+   "area": "living_room",
+   "state": "off"
+  },
+  {
+   "entity_id": "light.porch_light",
+   "name": "Porch Light",
+   "domain": "light",
+   "area": "hallway",
+   "state": "off"
+  },
+  {
+   "entity_id": "light.tv_backlight",
+   "name": "TV Backlight",
+   "domain": "light",
+   "area": "living_room",
+   "state": "off"
+  },
+  {
+   "entity_id": "switch.aquarium_filter",
+   "name": "Aquarium Filter",
+   "domain": "switch",
+   "area": "living_room",
+   "state": "on"
+  },
+  {
+   "entity_id": "switch.bedroom_fan",
+   "name": "Bedroom Fan",
+   "domain": "switch",
+   "area": "bedroom",
+   "state": "off"
+  },
+  {
+   "entity_id": "switch.grow_light",
+   "name": "Grow Light",
+   "domain": "switch",
+   "area": "garage",
+   "state": "on"
+  },
+  {
+   "entity_id": "switch.kettle_plug",
+   "name": "Kettle Plug",
+   "domain": "switch",
+   "area": "kitchen",
+   "state": "off"
+  },
+  {
+   "entity_id": "switch.kitchen_plug",
+   "name": "Kitchen Plug",
+   "domain": "switch",
+   "area": "kitchen",
+   "state": "off"
+  },
+  {
+   "entity_id": "switch.living_room_power_strip",
+   "name": "Living Room Power Strip",
+   "domain": "switch",
+   "area": "living_room",
+   "state": "on"
+  },
+  {
+   "entity_id": "switch.monitor_plug",
+   "name": "Monitor Plug",
+   "domain": "switch",
+   "area": "office",
+   "state": "off"
+  },
+  {
+   "entity_id": "switch.office_power_strip",
+   "name": "Office Power Strip",
+   "domain": "switch",
+   "area": "office",
+   "state": "on"
+  },
+  {
+   "entity_id": "switch.paper_shredder",
+   "name": "Paper Shredder",
+   "domain": "switch",
+   "area": "office",
+   "state": "off"
+  },
+  {
+   "entity_id": "switch.phone_charger",
+   "name": "Phone Charger",
+   "domain": "switch",
+   "area": "living_room",
+   "state": "on"
+  },
+  {
+   "entity_id": "switch.printer",
+   "name": "Printer",
+   "domain": "switch",
+   "area": "office",
+   "state": "off"
+  },
+  {
+   "entity_id": "switch.reading_lamp",
+   "name": "Reading Lamp",
+   "domain": "switch",
+   "area": "living_room",
+   "state": "on"
+  },
+  {
+   "entity_id": "switch.speakers",
+   "name": "Speakers",
+   "domain": "switch",
+   "area": "office",
+   "state": "on"
+  },
+  {
+   "entity_id": "switch.workbench_plug",
+   "name": "Workbench Plug",
+   "domain": "switch",
+   "area": "garage",
+   "state": "off"
+  }
+ ],
+ "flash": {
+  "light.hallway_lamp_2": [
+   -61,
+   -46,
+   -30,
+   -15
+  ]
+ },
+ "restore": {
+  "light.bedroom_lamp": [
+   142
+  ],
+  "light.bedside_lamp": [
+   1718
+  ],
+  "light.desk_lamp": [
+   102
+  ],
+  "light.floor_lamp": [
+   0
+  ],
+  "light.garage_light": [
+   3104
+  ],
+  "light.hallway_lamp_2": [
+   162
+  ],
+  "light.kitchen_counter": [
+   2072
+  ],
+  "light.kitchen_pendant": [
+   3436
+  ],
+  "light.porch_light": [
+   1043
+  ],
+  "light.tv_backlight": [
+   2407
+  ],
+  "switch.aquarium_filter": [
+   -2322,
+   1315
+  ],
+  "switch.bedroom_fan": [
+   1382
+  ],
+  "switch.kettle_plug": [
+   823
+  ],
+  "switch.monitor_plug": [
+   2750
+  ],
+  "switch.phone_charger": [
+   -2322,
+   1315
+  ],
+  "switch.speakers": [
+   -2322,
+   523
+  ],
+  "switch.workbench_plug": [
+   508
+  ]
+ }
+}

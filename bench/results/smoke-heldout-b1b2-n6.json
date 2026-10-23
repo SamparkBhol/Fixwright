@@ -1,0 +1,2248 @@
+{
+ "format": "hometruth.results/1",
+ "name": "smoke-heldout-b1b2-n6",
+ "started_at": "2026-10-17T12:31:26.540Z",
+ "finished_at": "2026-10-17T12:45:21.018Z",
+ "duration_ms": 834478,
+ "command": [
+  "node",
+  "src/run.ts",
+  "--agents",
+  "fixwright,b1,b2",
+  "--set",
+  "heldout",
+  "--n",
+  "6",
+  "--stratified",
+  "--seed",
+  "1",
+  "--human-reliability",
+  "0.9",
+  "--human-seed",
+  "1",
+  "--out",
+  "smoke-heldout-b1b2-n6"
+ ],
+ "machine": {
+  "start": {
+   "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
+   "vcpus": 16,
+   "total_mem_gib": 48,
+   "node": "v22.22.1",
+   "load_average": [
+    2.02,
+    2.79,
+    2.12
+   ]
+  },
+  "end": {
+   "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
+   "vcpus": 16,
+   "total_mem_gib": 48,
+   "node": "v22.22.1",
+   "load_average": [
+    11.33,
+    11.2,
+    7.86
+   ]
+  }
+ },
+ "config": {
+  "agents": [
+   "fixwright",
+   "b1",
+   "b2"
+  ],
+  "set": "heldout",
+  "n": 6,
+  "stratified": true,
+  "seed": 1,
+  "ids": null,
+  "human_reliability": 0.9,
+  "human_seed": 1,
+  "fixwright_routing": "router",
+  "reuse_identical_requests": true,
+  "resumed_cases": 0
+ },
+ "scenarios": {
+  "set_size": 200,
+  "run": 6,
+  "by_set": {
+   "heldout": 6
+  },
+  "by_cause": {
+   "dead_trigger": 1,
+   "hub_down": 1,
+   "radio_link_weak": 1,
+   "stale_duplicate": 1,
+   "vendor_cloud_outage": 1,
+   "wifi_network_changed": 1
+  },
+  "ids": [
+   "gen-heldout-10009",
+   "gen-heldout-10034",
+   "gen-heldout-10066",
+   "gen-heldout-10110",
+   "gen-heldout-10139",
+   "gen-heldout-10140"
+  ]
+ },
+ "agents": {
+  "fixwright": "@fixwright/engine on scenarioHome(view). The assistant router (@fixwright/router) picks the tool as the live product does: explain_event for questions about something the home did, else the diagnose loop (startDiagnosis, then answerDiagnosis for each question). The simulated person answers its questions; permission questions are granted.",
+  "b1": "LLM only: the rendered logs and the symptom, one call through the Strands Agents SDK; the fetch client only if Strands gets no answer.",
+  "b2": "LLM only: the same as B1 plus the answers the person gave Fixwright in the same scenario (questions as Fixwright asked them)."
+ },
+ "llm": {
+  "endpoint": {
+   "base_url": "http://127.0.0.1:8771/v1",
+   "model": "gpt-oss-20b"
+  },
+  "generation": {
+   "temperature": 0,
+   "maxTokens": 1024,
+   "seed": 42,
+   "reasoningEffort": "low",
+   "timeoutMs": 180000,
+   "cachePrompt": false
+  },
+  "strands_mode": "json_schema",
+  "strands_sdk_version": "1.19.0",
+  "openai_sdk_version": "6.49.0",
+  "one_call_at_a_time": true,
+  "server": {
+   "reachable": true,
+   "build_info": "b11146-7fe450e19",
+   "model_alias": "gpt-oss-20b",
+   "model_file": "gpt-oss-20b-MXFP4.gguf",
+   "model_ftype": "MXFP4 MoE",
+   "total_slots": 1,
+   "n_ctx": 16384,
+   "n_params": 20914757184,
+   "args": [
+    "--model",
+    "$LLM_HOME/models/gpt-oss-20b-MXFP4.gguf",
+    "--alias",
+    "gpt-oss-20b",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "8771",
+    "--ctx-size",
+    "16384",
+    "--parallel",
+    "1",
+    "--threads",
+    "8",
+    "--threads-batch",
+    "10",
+    "--flash-attn",
+    "on",
+    "--load-mode",
+    "none",
+    "--jinja",
+    "--reasoning-format",
+    "auto",
+    "--reasoning-effort",
+    "low",
+    "--cache-ram",
+    "2048",
+    "--metrics",
+    "--no-webui",
+    "--cors-origins",
+    "localhost"
+   ],
+   "cpu_backend": "haswell",
+   "peak_rss_mib": 12061.5
+  },
+  "counters": {
+   "b1": {
+    "prompt_tokens": 36199,
+    "prompt_tokens_cached": 0,
+    "prompt_tok_per_s": 69.28,
+    "predicted_tokens": 800,
+    "predicted_tok_per_s": 8.83
+   },
+   "b2": {
+    "prompt_tokens": 13400,
+    "prompt_tokens_cached": 0,
+    "prompt_tok_per_s": 72.72,
+    "predicted_tokens": 329,
+    "predicted_tok_per_s": 9.23
+   }
+  }
+ },
+ "agent_ms": {
+  "fixwright": 46,
+  "b1": 613783,
+  "b2": 220214
+ },
+ "metrics": {
+  "fixwright": {
+   "all": {
+    "n": 6,
+    "answered": 6,
+    "confirmed": 5,
+    "top1": {
+     "k": 6,
+     "n": 6,
+     "value": 1,
+     "ci95": [
+      0.6097,
+      1
+     ]
+    },
+    "top1_answered": {
+     "k": 6,
+     "n": 6,
+     "value": 1,
+     "ci95": [
+      0.6097,
+      1
+     ]
+    },
+    "false_confirmed": {
+     "count": 0,
+     "rate": {
+      "k": 0,
+      "n": 6,
+      "value": 0,
+      "ci95": [
+       0,
+       0.3903
+      ]
+     }
+    },
+    "abstention": {
+     "k": 0,
+     "n": 6,
+     "value": 0,
+     "ci95": [
+      0,
+      0.3903
+     ]
+    },
+    "confirmed_precision": {
+     "k": 5,
+     "n": 5,
+     "value": 1,
+     "ci95": [
+      0.5655,
+      1
+     ]
+    },
+    "invalid_outputs": {
+     "count": 0,
+     "rate": {
+      "k": 0,
+      "n": 6,
+      "value": 0,
+      "ci95": [
+       0,
+       0.3903
+      ]
+     }
+    },
+    "infra_errors": 0,
+    "errors": 0,
+    "probes_used": {
+     "total": 38,
+     "mean": 6.3333
+    },
+    "disruptive_probes": {
+     "total": 1,
+     "mean": 0.1667
+    },
+    "human_questions": {
+     "total": 3,
+     "mean": 0.5
+    },
+    "latency_ms": {
+     "mean": 7.221,
+     "p50": 3.732,
+     "p95": 23.294,
+     "max": 23.294
+    },
+    "per_cause": {
+     "stale_duplicate": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "dead_trigger": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "radio_link_weak": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "hub_down": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "wifi_network_changed": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 0,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "vendor_cloud_outage": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 0
+     }
+    },
+    "fixwright": {
+     "tools": {
+      "diagnose": 6
+     },
+     "permission_questions": 0,
+     "error_codes": {}
+    }
+   },
+   "sets": {
+    "heldout": {
+     "n": 6,
+     "answered": 6,
+     "confirmed": 5,
+     "top1": {
+      "k": 6,
+      "n": 6,
+      "value": 1,
+      "ci95": [
+       0.6097,
+       1
+      ]
+     },
+     "top1_answered": {
+      "k": 6,
+      "n": 6,
+      "value": 1,
+      "ci95": [
+       0.6097,
+       1
+      ]
+     },
+     "false_confirmed": {
+      "count": 0,
+      "rate": {
+       "k": 0,
+       "n": 6,
+       "value": 0,
+       "ci95": [
+        0,
+        0.3903
+       ]
+      }
+     },
+     "abstention": {
+      "k": 0,
+      "n": 6,
+      "value": 0,
+      "ci95": [
+       0,
+       0.3903
+      ]
+     },
+     "confirmed_precision": {
+      "k": 5,
+      "n": 5,
+      "value": 1,
+      "ci95": [
+       0.5655,
+       1
+      ]
+     },
+     "invalid_outputs": {
+      "count": 0,
+      "rate": {
+       "k": 0,
+       "n": 6,
+       "value": 0,
+       "ci95": [
+        0,
+        0.3903
+       ]
+      }
+     },
+     "infra_errors": 0,
+     "errors": 0,
+     "probes_used": {
+      "total": 38,
+      "mean": 6.3333
+     },
+     "disruptive_probes": {
+      "total": 1,
+      "mean": 0.1667
+     },
+     "human_questions": {
+      "total": 3,
+      "mean": 0.5
+     },
+     "latency_ms": {
+      "mean": 7.221,
+      "p50": 3.732,
+      "p95": 23.294,
+      "max": 23.294
+     },
+     "per_cause": {
+      "stale_duplicate": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "dead_trigger": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "radio_link_weak": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "hub_down": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "wifi_network_changed": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 0,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "vendor_cloud_outage": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 0
+      }
+     },
+     "fixwright": {
+      "tools": {
+       "diagnose": 6
+      },
+      "permission_questions": 0,
+      "error_codes": {}
+     }
+    }
+   }
+  },
+  "b1": {
+   "all": {
+    "n": 6,
+    "answered": 6,
+    "confirmed": 5,
+    "top1": {
+     "k": 3,
+     "n": 6,
+     "value": 0.5,
+     "ci95": [
+      0.1876,
+      0.8124
+     ]
+    },
+    "top1_answered": {
+     "k": 3,
+     "n": 6,
+     "value": 0.5,
+     "ci95": [
+      0.1876,
+      0.8124
+     ]
+    },
+    "false_confirmed": {
+     "count": 2,
+     "rate": {
+      "k": 2,
+      "n": 6,
+      "value": 0.3333,
+      "ci95": [
+       0.0968,
+       0.7
+      ]
+     }
+    },
+    "abstention": {
+     "k": 0,
+     "n": 6,
+     "value": 0,
+     "ci95": [
+      0,
+      0.3903
+     ]
+    },
+    "confirmed_precision": {
+     "k": 3,
+     "n": 5,
+     "value": 0.6,
+     "ci95": [
+      0.2307,
+      0.8824
+     ]
+    },
+    "invalid_outputs": {
+     "count": 0,
+     "rate": {
+      "k": 0,
+      "n": 6,
+      "value": 0,
+      "ci95": [
+       0,
+       0.3903
+      ]
+     }
+    },
+    "infra_errors": 0,
+    "errors": 0,
+    "probes_used": {
+     "total": 0,
+     "mean": 0
+    },
+    "disruptive_probes": {
+     "total": 0,
+     "mean": 0
+    },
+    "human_questions": {
+     "total": 0,
+     "mean": 0
+    },
+    "latency_ms": {
+     "mean": 102296.446,
+     "p50": 87756.294,
+     "p95": 135271.849,
+     "max": 135271.849
+    },
+    "per_cause": {
+     "stale_duplicate": {
+      "n": 1,
+      "correct": 0,
+      "top1": 0,
+      "confirmed": 1,
+      "false_confirmed": 1,
+      "abstained": 0
+     },
+     "dead_trigger": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "radio_link_weak": {
+      "n": 1,
+      "correct": 0,
+      "top1": 0,
+      "confirmed": 0,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "hub_down": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "wifi_network_changed": {
+      "n": 1,
+      "correct": 0,
+      "top1": 0,
+      "confirmed": 1,
+      "false_confirmed": 1,
+      "abstained": 0
+     },
+     "vendor_cloud_outage": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 0
+     }
+    },
+    "llm": {
+     "paths": {
+      "strands": 6,
+      "fetch_fallback": 0,
+      "reused": 0,
+      "failed": 0
+     },
+     "outcomes": {
+      "answer": 6,
+      "unknown": 0,
+      "invalid_output": 0,
+      "max_tokens": 0,
+      "infra_error": 0
+     },
+     "prompt_tokens": {
+      "mean": 6033.1667,
+      "max": 8054
+     },
+     "completion_tokens": {
+      "mean": 133.3333,
+      "max": 215
+     },
+     "call_ms": {
+      "mean": 102290.5,
+      "p50": 87747,
+      "p95": 135267,
+      "max": 135267,
+      "total": 613743
+     },
+     "with_human_answers": 0
+    }
+   },
+   "sets": {
+    "heldout": {
+     "n": 6,
+     "answered": 6,
+     "confirmed": 5,
+     "top1": {
+      "k": 3,
+      "n": 6,
+      "value": 0.5,
+      "ci95": [
+       0.1876,
+       0.8124
+      ]
+     },
+     "top1_answered": {
+      "k": 3,
+      "n": 6,
+      "value": 0.5,
+      "ci95": [
+       0.1876,
+       0.8124
+      ]
+     },
+     "false_confirmed": {
+      "count": 2,
+      "rate": {
+       "k": 2,
+       "n": 6,
+       "value": 0.3333,
+       "ci95": [
+        0.0968,
+        0.7
+       ]
+      }
+     },
+     "abstention": {
+      "k": 0,
+      "n": 6,
+      "value": 0,
+      "ci95": [
+       0,
+       0.3903
+      ]
+     },
+     "confirmed_precision": {
+      "k": 3,
+      "n": 5,
+      "value": 0.6,
+      "ci95": [
+       0.2307,
+       0.8824
+      ]
+     },
+     "invalid_outputs": {
+      "count": 0,
+      "rate": {
+       "k": 0,
+       "n": 6,
+       "value": 0,
+       "ci95": [
+        0,
+        0.3903
+       ]
+      }
+     },
+     "infra_errors": 0,
+     "errors": 0,
+     "probes_used": {
+      "total": 0,
+      "mean": 0
+     },
+     "disruptive_probes": {
+      "total": 0,
+      "mean": 0
+     },
+     "human_questions": {
+      "total": 0,
+      "mean": 0
+     },
+     "latency_ms": {
+      "mean": 102296.446,
+      "p50": 87756.294,
+      "p95": 135271.849,
+      "max": 135271.849
+     },
+     "per_cause": {
+      "stale_duplicate": {
+       "n": 1,
+       "correct": 0,
+       "top1": 0,
+       "confirmed": 1,
+       "false_confirmed": 1,
+       "abstained": 0
+      },
+      "dead_trigger": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "radio_link_weak": {
+       "n": 1,
+       "correct": 0,
+       "top1": 0,
+       "confirmed": 0,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "hub_down": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "wifi_network_changed": {
+       "n": 1,
+       "correct": 0,
+       "top1": 0,
+       "confirmed": 1,
+       "false_confirmed": 1,
+       "abstained": 0
+      },
+      "vendor_cloud_outage": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 0
+      }
+     },
+     "llm": {
+      "paths": {
+       "strands": 6,
+       "fetch_fallback": 0,
+       "reused": 0,
+       "failed": 0
+      },
+      "outcomes": {
+       "answer": 6,
+       "unknown": 0,
+       "invalid_output": 0,
+       "max_tokens": 0,
+       "infra_error": 0
+      },
+      "prompt_tokens": {
+       "mean": 6033.1667,
+       "max": 8054
+      },
+      "completion_tokens": {
+       "mean": 133.3333,
+       "max": 215
+      },
+      "call_ms": {
+       "mean": 102290.5,
+       "p50": 87747,
+       "p95": 135267,
+       "max": 135267,
+       "total": 613743
+      },
+      "with_human_answers": 0
+     }
+    }
+   }
+  },
+  "b2": {
+   "all": {
+    "n": 6,
+    "answered": 6,
+    "confirmed": 5,
+    "top1": {
+     "k": 5,
+     "n": 6,
+     "value": 0.8333,
+     "ci95": [
+      0.4365,
+      0.9699
+     ]
+    },
+    "top1_answered": {
+     "k": 5,
+     "n": 6,
+     "value": 0.8333,
+     "ci95": [
+      0.4365,
+      0.9699
+     ]
+    },
+    "false_confirmed": {
+     "count": 0,
+     "rate": {
+      "k": 0,
+      "n": 6,
+      "value": 0,
+      "ci95": [
+       0,
+       0.3903
+      ]
+     }
+    },
+    "abstention": {
+     "k": 0,
+     "n": 6,
+     "value": 0,
+     "ci95": [
+      0,
+      0.3903
+     ]
+    },
+    "confirmed_precision": {
+     "k": 5,
+     "n": 5,
+     "value": 1,
+     "ci95": [
+      0.5655,
+      1
+     ]
+    },
+    "invalid_outputs": {
+     "count": 0,
+     "rate": {
+      "k": 0,
+      "n": 6,
+      "value": 0,
+      "ci95": [
+       0,
+       0.3903
+      ]
+     }
+    },
+    "infra_errors": 0,
+    "errors": 0,
+    "probes_used": {
+     "total": 0,
+     "mean": 0
+    },
+    "disruptive_probes": {
+     "total": 0,
+     "mean": 0
+    },
+    "human_questions": {
+     "total": 0,
+     "mean": 0
+    },
+    "latency_ms": {
+     "mean": 103219.459,
+     "p50": 91083,
+     "p95": 135267,
+     "max": 135267
+    },
+    "per_cause": {
+     "stale_duplicate": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "dead_trigger": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "radio_link_weak": {
+      "n": 1,
+      "correct": 0,
+      "top1": 0,
+      "confirmed": 0,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "hub_down": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "wifi_network_changed": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 0
+     },
+     "vendor_cloud_outage": {
+      "n": 1,
+      "correct": 1,
+      "top1": 1,
+      "confirmed": 1,
+      "false_confirmed": 0,
+      "abstained": 0
+     }
+    },
+    "llm": {
+     "paths": {
+      "strands": 2,
+      "fetch_fallback": 0,
+      "reused": 4,
+      "failed": 0
+     },
+     "outcomes": {
+      "answer": 6,
+      "unknown": 0,
+      "invalid_output": 0,
+      "max_tokens": 0,
+      "infra_error": 0
+     },
+     "prompt_tokens": {
+      "mean": 6700,
+      "max": 8096
+     },
+     "completion_tokens": {
+      "mean": 164.5,
+      "max": 217
+     },
+     "call_ms": {
+      "mean": 110094.5,
+      "p50": 92552,
+      "p95": 127637,
+      "max": 127637,
+      "total": 220189
+     },
+     "with_human_answers": 2
+    }
+   },
+   "sets": {
+    "heldout": {
+     "n": 6,
+     "answered": 6,
+     "confirmed": 5,
+     "top1": {
+      "k": 5,
+      "n": 6,
+      "value": 0.8333,
+      "ci95": [
+       0.4365,
+       0.9699
+      ]
+     },
+     "top1_answered": {
+      "k": 5,
+      "n": 6,
+      "value": 0.8333,
+      "ci95": [
+       0.4365,
+       0.9699
+      ]
+     },
+     "false_confirmed": {
+      "count": 0,
+      "rate": {
+       "k": 0,
+       "n": 6,
+       "value": 0,
+       "ci95": [
+        0,
+        0.3903
+       ]
+      }
+     },
+     "abstention": {
+      "k": 0,
+      "n": 6,
+      "value": 0,
+      "ci95": [
+       0,
+       0.3903
+      ]
+     },
+     "confirmed_precision": {
+      "k": 5,
+      "n": 5,
+      "value": 1,
+      "ci95": [
+       0.5655,
+       1
+      ]
+     },
+     "invalid_outputs": {
+      "count": 0,
+      "rate": {
+       "k": 0,
+       "n": 6,
+       "value": 0,
+       "ci95": [
+        0,
+        0.3903
+       ]
+      }
+     },
+     "infra_errors": 0,
+     "errors": 0,
+     "probes_used": {
+      "total": 0,
+      "mean": 0
+     },
+     "disruptive_probes": {
+      "total": 0,
+      "mean": 0
+     },
+     "human_questions": {
+      "total": 0,
+      "mean": 0
+     },
+     "latency_ms": {
+      "mean": 103219.459,
+      "p50": 91083,
+      "p95": 135267,
+      "max": 135267
+     },
+     "per_cause": {
+      "stale_duplicate": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "dead_trigger": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "radio_link_weak": {
+       "n": 1,
+       "correct": 0,
+       "top1": 0,
+       "confirmed": 0,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "hub_down": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "wifi_network_changed": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 0
+      },
+      "vendor_cloud_outage": {
+       "n": 1,
+       "correct": 1,
+       "top1": 1,
+       "confirmed": 1,
+       "false_confirmed": 0,
+       "abstained": 0
+      }
+     },
+     "llm": {
+      "paths": {
+       "strands": 2,
+       "fetch_fallback": 0,
+       "reused": 4,
+       "failed": 0
+      },
+      "outcomes": {
+       "answer": 6,
+       "unknown": 0,
+       "invalid_output": 0,
+       "max_tokens": 0,
+       "infra_error": 0
+      },
+      "prompt_tokens": {
+       "mean": 6700,
+       "max": 8096
+      },
+      "completion_tokens": {
+       "mean": 164.5,
+       "max": 217
+      },
+      "call_ms": {
+       "mean": 110094.5,
+       "p50": 92552,
+       "p95": 127637,
+       "max": 127637,
+       "total": 220189
+      },
+      "with_human_answers": 2
+     }
+    }
+   }
+  }
+ },
+ "kill_switch": {
+  "rule": "A baseline matches Fixwright on a metric when its 95% Wilson interval overlaps Fixwright's on the same scenarios, or when it is at least as good. The kill switch fires if B1 or B2 matches on both top1 and the false_confirmed rate.",
+  "evaluated": true,
+  "conclusive": false,
+  "fires": null,
+  "provisional_fires": true,
+  "comparisons": [
+   {
+    "baseline": "b1",
+    "n": 6,
+    "conclusive": false,
+    "top1": {
+     "fixwright": {
+      "k": 6,
+      "n": 6,
+      "value": 1,
+      "ci95": [
+       0.6097,
+       1
+      ]
+     },
+     "baseline": {
+      "k": 3,
+      "n": 6,
+      "value": 0.5,
+      "ci95": [
+       0.1876,
+       0.8124
+      ]
+     },
+     "match": true,
+     "paired": {
+      "b": 3,
+      "c": 0,
+      "p_mcnemar": 0.25
+     }
+    },
+    "false_confirmed": {
+     "fixwright": {
+      "k": 0,
+      "n": 6,
+      "value": 0,
+      "ci95": [
+       0,
+       0.3903
+      ]
+     },
+     "baseline": {
+      "k": 2,
+      "n": 6,
+      "value": 0.3333,
+      "ci95": [
+       0.0968,
+       0.7
+      ]
+     },
+     "match": true,
+     "paired": {
+      "b": 0,
+      "c": 2,
+      "p_mcnemar": 0.5
+     }
+    },
+    "matches": true
+   },
+   {
+    "baseline": "b2",
+    "n": 6,
+    "conclusive": false,
+    "top1": {
+     "fixwright": {
+      "k": 6,
+      "n": 6,
+      "value": 1,
+      "ci95": [
+       0.6097,
+       1
+      ]
+     },
+     "baseline": {
+      "k": 5,
+      "n": 6,
+      "value": 0.8333,
+      "ci95": [
+       0.4365,
+       0.9699
+      ]
+     },
+     "match": true,
+     "paired": {
+      "b": 1,
+      "c": 0,
+      "p_mcnemar": 1
+     }
+    },
+    "false_confirmed": {
+     "fixwright": {
+      "k": 0,
+      "n": 6,
+      "value": 0,
+      "ci95": [
+       0,
+       0.3903
+      ]
+     },
+     "baseline": {
+      "k": 0,
+      "n": 6,
+      "value": 0,
+      "ci95": [
+       0,
+       0.3903
+      ]
+     },
+     "match": true,
+     "paired": {
+      "b": 0,
+      "c": 0,
+      "p_mcnemar": 1
+     }
+    },
+    "matches": true
+   }
+  ],
+  "note": "Not conclusive: only 6 paired scenarios (at least 30 needed), so the intervals are too wide to tell the agents apart. This run checks the pipeline, not the headline."
+ },
+ "cases": [
+  {
+   "agent": "fixwright",
+   "scenario_id": "gen-heldout-10009",
+   "set": "heldout",
+   "expected": "stale_duplicate",
+   "got": "stale_duplicate",
+   "level": "confirmed",
+   "confidence": 0.935,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 7,
+   "disruptive_probes": 1,
+   "human_questions": 1,
+   "latency_ms": 23.294,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "gen-heldout-10009",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "stale_duplicate",
+     "level": "confirmed",
+     "confidence": 0.935,
+     "label": "Name points at an old copy"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "switch.patio_kettle",
+     "name": "Patio  Kettle",
+     "guided": false
+    },
+    "probes_used": 7,
+    "disruptive_probes": 1,
+    "questions": 1,
+    "consent_questions": 0,
+    "probe_ids": [
+     "entity_availability",
+     "hub_reachable",
+     "duplicate_name_scan",
+     "link_quality",
+     "cloud_status",
+     "integration_state",
+     "flash_test",
+     "confirm_flash"
+    ],
+    "exchanges": [
+     {
+      "probe_id": "confirm_flash",
+      "kind": "observe",
+      "text": "I'll switch the patio  kettle on and off twice. Did you hear it click?",
+      "answer": "yes"
+     }
+    ],
+    "hypotheses": [
+     {
+      "cause_id": "stale_duplicate",
+      "p": 0.935
+     },
+     {
+      "cause_id": "device_power_lost",
+      "p": 0.047
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.01
+     }
+    ],
+    "turns": 1
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "gen-heldout-10034",
+   "set": "heldout",
+   "expected": "dead_trigger",
+   "got": "dead_trigger",
+   "level": "confirmed",
+   "confidence": 0.956,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 2,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 4.196,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "gen-heldout-10034",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "dead_trigger",
+     "level": "confirmed",
+     "confidence": 0.956,
+     "label": "Automation uses a removed device"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "automation.fountain_timer",
+     "name": "Fountain timer",
+     "guided": false
+    },
+    "probes_used": 2,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [
+     "registry_scan",
+     "integration_state"
+    ],
+    "exchanges": [],
+    "hypotheses": [
+     {
+      "cause_id": "dead_trigger",
+      "p": 0.956
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.043
+     }
+    ],
+    "turns": 0
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "gen-heldout-10066",
+   "set": "heldout",
+   "expected": "radio_link_weak",
+   "got": "radio_link_weak",
+   "level": "confirmed",
+   "confidence": 0.964,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 8,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 3.382,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "gen-heldout-10066",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "radio_link_weak",
+     "level": "confirmed",
+     "confidence": 0.964,
+     "label": "Weak radio link"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "switch.bathroom_fountain",
+     "name": "Bathroom Fountain",
+     "guided": false
+    },
+    "probes_used": 8,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [
+     "entity_availability",
+     "link_quality",
+     "cloud_status",
+     "duplicate_name_scan",
+     "wifi_peers",
+     "integration_state",
+     "registry_scan",
+     "hub_reachable"
+    ],
+    "exchanges": [],
+    "hypotheses": [
+     {
+      "cause_id": "radio_link_weak",
+      "p": 0.964
+     },
+     {
+      "cause_id": "device_power_lost",
+      "p": 0.018
+     },
+     {
+      "cause_id": "wifi_network_changed",
+      "p": 0.008
+     }
+    ],
+    "turns": 0
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "gen-heldout-10110",
+   "set": "heldout",
+   "expected": "hub_down",
+   "got": "hub_down",
+   "level": "confirmed",
+   "confidence": 0.97,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 7,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 3.732,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "gen-heldout-10110",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "hub_down",
+     "level": "confirmed",
+     "confidence": 0.97,
+     "label": "Hub or bridge offline"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "light.living_room_light",
+     "name": "Living Room Light",
+     "guided": false
+    },
+    "probes_used": 7,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [
+     "integration_state",
+     "hub_reachable",
+     "entity_availability",
+     "duplicate_name_scan",
+     "cloud_status",
+     "registry_scan",
+     "link_quality"
+    ],
+    "exchanges": [],
+    "hypotheses": [
+     {
+      "cause_id": "hub_down",
+      "p": 0.97
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.011
+     },
+     {
+      "cause_id": "device_power_lost",
+      "p": 0.01
+     }
+    ],
+    "turns": 0
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "gen-heldout-10139",
+   "set": "heldout",
+   "expected": "wifi_network_changed",
+   "got": "wifi_network_changed",
+   "level": "likely",
+   "confidence": 0.613,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 8,
+   "disruptive_probes": 0,
+   "human_questions": 2,
+   "latency_ms": 6.125,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "gen-heldout-10139",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "wifi_network_changed",
+     "level": "likely",
+     "confidence": 0.613,
+     "label": "Wi-Fi network changed"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "switch.nursery_speaker",
+     "name": "Nursery Speaker",
+     "guided": false
+    },
+    "probes_used": 8,
+    "disruptive_probes": 0,
+    "questions": 2,
+    "consent_questions": 0,
+    "probe_ids": [
+     "entity_availability",
+     "duplicate_name_scan",
+     "wifi_peers",
+     "cloud_status",
+     "link_quality",
+     "integration_state",
+     "registry_scan",
+     "hub_reachable",
+     "power_switch_check",
+     "router_changed"
+    ],
+    "exchanges": [
+     {
+      "probe_id": "power_switch_check",
+      "kind": "observe",
+      "text": "Is the nursery speaker plugged in and switched on at the wall?",
+      "answer": "yes"
+     },
+     {
+      "probe_id": "router_changed",
+      "kind": "observe",
+      "text": "Did your Wi-Fi router or its name change recently?",
+      "answer": "yes"
+     }
+    ],
+    "hypotheses": [
+     {
+      "cause_id": "wifi_network_changed",
+      "p": 0.613
+     },
+     {
+      "cause_id": "device_power_lost",
+      "p": 0.201
+     },
+     {
+      "cause_id": "vendor_cloud_outage",
+      "p": 0.129
+     }
+    ],
+    "turns": 2
+   }
+  },
+  {
+   "agent": "fixwright",
+   "scenario_id": "gen-heldout-10140",
+   "set": "heldout",
+   "expected": "vendor_cloud_outage",
+   "got": "vendor_cloud_outage",
+   "level": "confirmed",
+   "confidence": 0.975,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 6,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 2.598,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "fixwright": {
+    "scenario_id": "gen-heldout-10140",
+    "tool": "diagnose",
+    "verdict": {
+     "cause_id": "vendor_cloud_outage",
+     "level": "confirmed",
+     "confidence": 0.975,
+     "label": "Maker's cloud is down"
+    },
+    "error_code": null,
+    "target": {
+     "entity_id": "climate.living_room_thermostat",
+     "name": "Living Room Thermostat",
+     "guided": false
+    },
+    "probes_used": 6,
+    "disruptive_probes": 0,
+    "questions": 0,
+    "consent_questions": 0,
+    "probe_ids": [
+     "duplicate_name_scan",
+     "cloud_status",
+     "integration_state",
+     "registry_scan",
+     "entity_availability",
+     "hub_reachable"
+    ],
+    "exchanges": [],
+    "hypotheses": [
+     {
+      "cause_id": "vendor_cloud_outage",
+      "p": 0.975
+     },
+     {
+      "cause_id": "unknown",
+      "p": 0.022
+     },
+     {
+      "cause_id": "name_collision",
+      "p": 0.001
+     }
+    ],
+    "turns": 0
+   }
+  },
+  {
+   "agent": "b1",
+   "scenario_id": "gen-heldout-10009",
+   "set": "heldout",
+   "expected": "stale_duplicate",
+   "got": "name_collision",
+   "level": "confirmed",
+   "confidence": 0.95,
+   "correct": false,
+   "false_confirmed": true,
+   "abstained": false,
+   "probes_used": 0,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 87756.294,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "llm": {
+    "scenario_id": "gen-heldout-10009",
+    "variant": "b1",
+    "prompt_sha256": "4a1e4e9016d41cae9375f191d30adad98a9c089d74fc9833fbec8d2885258475",
+    "prompt_chars": 18429,
+    "human_answers": 0,
+    "path": "strands",
+    "outcome": "answer",
+    "verdict": {
+     "cause_id": "name_collision",
+     "confidence": 0.95,
+     "explanation": "The log shows two entities with the spoken name \"Patio Kettle\": switch.patio_kettle (unavailable since 2026‑02‑12) and switch.patio_kettle_2 (currently on). This indicates a name collision where two different devices answer to the same spoken name."
+    },
+    "scored": {
+     "cause_id": "name_collision",
+     "level": "confirmed",
+     "confidence": 0.95
+    },
+    "attempts": [
+     {
+      "client": "strands",
+      "ok": true,
+      "wall_ms": 87747
+     }
+    ],
+    "error": null,
+    "prompt_tokens": 5276,
+    "completion_tokens": 124,
+    "llm_wall_ms": 87747,
+    "text": "{\"cause_id\":\"name_collision\",\"confidence\":0.95,\"explanation\":\"The log shows two entities with the spoken name \\\"Patio Kettle\\\": switch.patio_kettle (unavailable since 2026‑02‑12) and switch.patio_kettle_2 (currently on). This indicates a name collision where two different devices answer to the same spoken name.\"}"
+   }
+  },
+  {
+   "agent": "b1",
+   "scenario_id": "gen-heldout-10034",
+   "set": "heldout",
+   "expected": "dead_trigger",
+   "got": "dead_trigger",
+   "level": "confirmed",
+   "confidence": 0.95,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 0,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 91087.736,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "llm": {
+    "scenario_id": "gen-heldout-10034",
+    "variant": "b1",
+    "prompt_sha256": "5cc979c27cc7450c1b020acbfc87dcb01cd437509fab1225f0a3842edaa9c8e6",
+    "prompt_chars": 18635,
+    "human_answers": 0,
+    "path": "strands",
+    "outcome": "answer",
+    "verdict": {
+     "cause_id": "dead_trigger",
+     "confidence": 0.95,
+     "explanation": "The fountain_timer automation references light.den_floor_lamp, but the entity was removed on 2026-07-25 and is missing from the current entity list, causing the automation to error each time it triggers."
+    },
+    "scored": {
+     "cause_id": "dead_trigger",
+     "level": "confirmed",
+     "confidence": 0.95
+    },
+    "attempts": [
+     {
+      "client": "strands",
+      "ok": true,
+      "wall_ms": 91083
+     }
+    ],
+    "error": null,
+    "prompt_tokens": 5363,
+    "completion_tokens": 125,
+    "llm_wall_ms": 91083,
+    "text": "{\"cause_id\":\"dead_trigger\",\"confidence\":0.95,\"explanation\":\"The fountain_timer automation references light.den_floor_lamp, but the entity was removed on 2026-07-25 and is missing from the current entity list, causing the automation to error each time it triggers.\"}"
+   }
+  },
+  {
+   "agent": "b1",
+   "scenario_id": "gen-heldout-10066",
+   "set": "heldout",
+   "expected": "radio_link_weak",
+   "got": "device_power_lost",
+   "level": "likely",
+   "confidence": 0.6,
+   "correct": false,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 0,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 85595.977,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "llm": {
+    "scenario_id": "gen-heldout-10066",
+    "variant": "b1",
+    "prompt_sha256": "7fd3bde1b67925570f139671bca8eb425af74dd4c957b1cb079209e802f7b721",
+    "prompt_chars": 15702,
+    "human_answers": 0,
+    "path": "strands",
+    "outcome": "answer",
+    "verdict": {
+     "cause_id": "device_power_lost",
+     "confidence": 0.6,
+     "explanation": "The log shows the Shelly switch repeatedly transitioning to \"unavailable\" and back to \"off\" throughout the day (e.g., 2026-08-17 01:42:55, 07:19:58, 09:58:51), indicating the device is often offline while other devices remain online. This pattern is typical of a device losing power or connectivity, rather than a hub or network-wide issue."
+    },
+    "scored": {
+     "cause_id": "device_power_lost",
+     "level": "likely",
+     "confidence": 0.6
+    },
+    "attempts": [
+     {
+      "client": "strands",
+      "ok": true,
+      "wall_ms": 85592
+     }
+    ],
+    "error": null,
+    "prompt_tokens": 4438,
+    "completion_tokens": 215,
+    "llm_wall_ms": 85592,
+    "text": "{\"cause_id\":\"device_power_lost\",\"confidence\":0.6,\"explanation\":\"The log shows the Shelly switch repeatedly transitioning to \\\"unavailable\\\" and back to \\\"off\\\" throughout the day (e.g., 2026-08-17 01:42:55, 07:19:58, 09:58:51), indicating the device is often offline while other devices remain online. This pattern is typical of a device losing power or connectivity, rather than a hub or network-wide issue.\"}"
+   }
+  },
+  {
+   "agent": "b1",
+   "scenario_id": "gen-heldout-10110",
+   "set": "heldout",
+   "expected": "hub_down",
+   "got": "hub_down",
+   "level": "confirmed",
+   "confidence": 0.92,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 0,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 135271.849,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "llm": {
+    "scenario_id": "gen-heldout-10110",
+    "variant": "b1",
+    "prompt_sha256": "96c3dce1b648725f18372c87c76637340fa961ce6d7aa26dbe849315f019e446",
+    "prompt_chars": 28411,
+    "human_answers": 0,
+    "path": "strands",
+    "outcome": "answer",
+    "verdict": {
+     "cause_id": "hub_down",
+     "confidence": 0.92,
+     "explanation": "The Hue integration reports `setup_retry` with reason \"Cannot reach the Hue bridge\" and the Living Room Light (a Hue bulb) is in state `unavailable`. This indicates the Hue bridge, which acts as the hub for those devices, is unreachable."
+    },
+    "scored": {
+     "cause_id": "hub_down",
+     "level": "confirmed",
+     "confidence": 0.92
+    },
+    "attempts": [
+     {
+      "client": "strands",
+      "ok": true,
+      "wall_ms": 135267
+     }
+    ],
+    "error": null,
+    "prompt_tokens": 7764,
+    "completion_tokens": 120,
+    "llm_wall_ms": 135267,
+    "text": "{\"cause_id\":\"hub_down\",\"confidence\":0.92,\"explanation\":\"The Hue integration reports `setup_retry` with reason \\\"Cannot reach the Hue bridge\\\" and the Living Room Light (a Hue bulb) is in state `unavailable`. This indicates the Hue bridge, which acts as the hub for those devices, is unreachable.\"}"
+   }
+  },
+  {
+   "agent": "b1",
+   "scenario_id": "gen-heldout-10139",
+   "set": "heldout",
+   "expected": "wifi_network_changed",
+   "got": "device_power_lost",
+   "level": "confirmed",
+   "confidence": 0.9,
+   "correct": false,
+   "false_confirmed": true,
+   "abstained": false,
+   "probes_used": 0,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 126884.575,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "llm": {
+    "scenario_id": "gen-heldout-10139",
+    "variant": "b1",
+    "prompt_sha256": "0a8e2f8d7c2a35a79b5b786e35835e3a4876d3e6f67e6e03450ca65fd45a6cde",
+    "prompt_chars": 29057,
+    "human_answers": 0,
+    "path": "strands",
+    "outcome": "answer",
+    "verdict": {
+     "cause_id": "device_power_lost",
+     "confidence": 0.9,
+     "explanation": "The Nursery Speaker (switch.nursery_speaker) has been in the unavailable state since 2026‑02‑06 22:49:37 with no recent activity or reconnection attempts, indicating it has lost power while other devices remain online."
+    },
+    "scored": {
+     "cause_id": "device_power_lost",
+     "level": "confirmed",
+     "confidence": 0.9
+    },
+    "attempts": [
+     {
+      "client": "strands",
+      "ok": true,
+      "wall_ms": 126877
+     }
+    ],
+    "error": null,
+    "prompt_tokens": 8054,
+    "completion_tokens": 126,
+    "llm_wall_ms": 126877,
+    "text": "{\"cause_id\":\"device_power_lost\",\"confidence\":0.9,\"explanation\":\"The Nursery Speaker (switch.nursery_speaker) has been in the unavailable state since 2026‑02‑06 22:49:37 with no recent activity or reconnection attempts, indicating it has lost power while other devices remain online.\"}"
+   }
+  },
+  {
+   "agent": "b1",
+   "scenario_id": "gen-heldout-10140",
+   "set": "heldout",
+   "expected": "vendor_cloud_outage",
+   "got": "vendor_cloud_outage",
+   "level": "confirmed",
+   "confidence": 0.92,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 0,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 87182.244,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "llm": {
+    "scenario_id": "gen-heldout-10140",
+    "variant": "b1",
+    "prompt_sha256": "1c964095476abcb21834b50e8dfa3bf69ff0838a9e3e2139ceeb24643e20ed83",
+    "prompt_chars": 18202,
+    "human_answers": 0,
+    "path": "strands",
+    "outcome": "answer",
+    "verdict": {
+     "cause_id": "vendor_cloud_outage",
+     "confidence": 0.92,
+     "explanation": "The log shows the ecobee integration is loaded but the vendor cloud status is degraded at the time of the user’s request, which explains why the thermostat will not change temperature."
+    },
+    "scored": {
+     "cause_id": "vendor_cloud_outage",
+     "level": "confirmed",
+     "confidence": 0.92
+    },
+    "attempts": [
+     {
+      "client": "strands",
+      "ok": true,
+      "wall_ms": 87177
+     }
+    ],
+    "error": null,
+    "prompt_tokens": 5304,
+    "completion_tokens": 90,
+    "llm_wall_ms": 87177,
+    "text": "{\"cause_id\":\"vendor_cloud_outage\",\"confidence\":0.92,\"explanation\":\"The log shows the ecobee integration is loaded but the vendor cloud status is degraded at the time of the user’s request, which explains why the thermostat will not change temperature.\"}"
+   }
+  },
+  {
+   "agent": "b2",
+   "scenario_id": "gen-heldout-10009",
+   "set": "heldout",
+   "expected": "stale_duplicate",
+   "got": "stale_duplicate",
+   "level": "confirmed",
+   "confidence": 0.95,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 0,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 92555.452,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "llm": {
+    "scenario_id": "gen-heldout-10009",
+    "variant": "b2",
+    "prompt_sha256": "49d24292170330168aa39334c3cd9090651fd8836d2951cc2d5482164d8a420f",
+    "prompt_chars": 18541,
+    "human_answers": 1,
+    "path": "strands",
+    "outcome": "answer",
+    "verdict": {
+     "cause_id": "stale_duplicate",
+     "confidence": 0.95,
+     "explanation": "The log shows two entities named \"Patio Kettle\": switch.patio_kettle is unavailable since 2026‑02‑12, while switch.patio_kettle_2 is active. The spoken name likely resolves to the old, offline copy, causing the unresponsive behavior."
+    },
+    "scored": {
+     "cause_id": "stale_duplicate",
+     "level": "confirmed",
+     "confidence": 0.95
+    },
+    "attempts": [
+     {
+      "client": "strands",
+      "ok": true,
+      "wall_ms": 92552
+     }
+    ],
+    "error": null,
+    "prompt_tokens": 5304,
+    "completion_tokens": 217,
+    "llm_wall_ms": 92552,
+    "text": "{\"cause_id\":\"stale_duplicate\",\"confidence\":0.95,\"explanation\":\"The log shows two entities named \\\"Patio Kettle\\\": switch.patio_kettle is unavailable since 2026‑02‑12, while switch.patio_kettle_2 is active. The spoken name likely resolves to the old, offline copy, causing the unresponsive behavior.\"}"
+   }
+  },
+  {
+   "agent": "b2",
+   "scenario_id": "gen-heldout-10034",
+   "set": "heldout",
+   "expected": "dead_trigger",
+   "got": "dead_trigger",
+   "level": "confirmed",
+   "confidence": 0.95,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 0,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 91083,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "llm": {
+    "scenario_id": "gen-heldout-10034",
+    "variant": "b2",
+    "prompt_sha256": "5cc979c27cc7450c1b020acbfc87dcb01cd437509fab1225f0a3842edaa9c8e6",
+    "prompt_chars": 18635,
+    "human_answers": 0,
+    "path": "reused",
+    "outcome": "answer",
+    "verdict": {
+     "cause_id": "dead_trigger",
+     "confidence": 0.95,
+     "explanation": "The fountain_timer automation references light.den_floor_lamp, but the entity was removed on 2026-07-25 and is missing from the current entity list, causing the automation to error each time it triggers."
+    },
+    "scored": {
+     "cause_id": "dead_trigger",
+     "level": "confirmed",
+     "confidence": 0.95
+    },
+    "attempts": [],
+    "error": null,
+    "prompt_tokens": 5363,
+    "completion_tokens": 125,
+    "llm_wall_ms": 91083,
+    "text": "{\"cause_id\":\"dead_trigger\",\"confidence\":0.95,\"explanation\":\"The fountain_timer automation references light.den_floor_lamp, but the entity was removed on 2026-07-25 and is missing from the current entity list, causing the automation to error each time it triggers.\"}",
+    "reused_from": "b1"
+   }
+  },
+  {
+   "agent": "b2",
+   "scenario_id": "gen-heldout-10066",
+   "set": "heldout",
+   "expected": "radio_link_weak",
+   "got": "device_power_lost",
+   "level": "likely",
+   "confidence": 0.6,
+   "correct": false,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 0,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 85592,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "llm": {
+    "scenario_id": "gen-heldout-10066",
+    "variant": "b2",
+    "prompt_sha256": "7fd3bde1b67925570f139671bca8eb425af74dd4c957b1cb079209e802f7b721",
+    "prompt_chars": 15702,
+    "human_answers": 0,
+    "path": "reused",
+    "outcome": "answer",
+    "verdict": {
+     "cause_id": "device_power_lost",
+     "confidence": 0.6,
+     "explanation": "The log shows the Shelly switch repeatedly transitioning to \"unavailable\" and back to \"off\" throughout the day (e.g., 2026-08-17 01:42:55, 07:19:58, 09:58:51), indicating the device is often offline while other devices remain online. This pattern is typical of a device losing power or connectivity, rather than a hub or network-wide issue."
+    },
+    "scored": {
+     "cause_id": "device_power_lost",
+     "level": "likely",
+     "confidence": 0.6
+    },
+    "attempts": [],
+    "error": null,
+    "prompt_tokens": 4438,
+    "completion_tokens": 215,
+    "llm_wall_ms": 85592,
+    "text": "{\"cause_id\":\"device_power_lost\",\"confidence\":0.6,\"explanation\":\"The log shows the Shelly switch repeatedly transitioning to \\\"unavailable\\\" and back to \\\"off\\\" throughout the day (e.g., 2026-08-17 01:42:55, 07:19:58, 09:58:51), indicating the device is often offline while other devices remain online. This pattern is typical of a device losing power or connectivity, rather than a hub or network-wide issue.\"}",
+    "reused_from": "b1"
+   }
+  },
+  {
+   "agent": "b2",
+   "scenario_id": "gen-heldout-10110",
+   "set": "heldout",
+   "expected": "hub_down",
+   "got": "hub_down",
+   "level": "confirmed",
+   "confidence": 0.92,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 0,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 135267,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "llm": {
+    "scenario_id": "gen-heldout-10110",
+    "variant": "b2",
+    "prompt_sha256": "96c3dce1b648725f18372c87c76637340fa961ce6d7aa26dbe849315f019e446",
+    "prompt_chars": 28411,
+    "human_answers": 0,
+    "path": "reused",
+    "outcome": "answer",
+    "verdict": {
+     "cause_id": "hub_down",
+     "confidence": 0.92,
+     "explanation": "The Hue integration reports `setup_retry` with reason \"Cannot reach the Hue bridge\" and the Living Room Light (a Hue bulb) is in state `unavailable`. This indicates the Hue bridge, which acts as the hub for those devices, is unreachable."
+    },
+    "scored": {
+     "cause_id": "hub_down",
+     "level": "confirmed",
+     "confidence": 0.92
+    },
+    "attempts": [],
+    "error": null,
+    "prompt_tokens": 7764,
+    "completion_tokens": 120,
+    "llm_wall_ms": 135267,
+    "text": "{\"cause_id\":\"hub_down\",\"confidence\":0.92,\"explanation\":\"The Hue integration reports `setup_retry` with reason \\\"Cannot reach the Hue bridge\\\" and the Living Room Light (a Hue bulb) is in state `unavailable`. This indicates the Hue bridge, which acts as the hub for those devices, is unreachable.\"}",
+    "reused_from": "b1"
+   }
+  },
+  {
+   "agent": "b2",
+   "scenario_id": "gen-heldout-10139",
+   "set": "heldout",
+   "expected": "wifi_network_changed",
+   "got": "wifi_network_changed",
+   "level": "confirmed",
+   "confidence": 0.92,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 0,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 127642.299,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "llm": {
+    "scenario_id": "gen-heldout-10139",
+    "variant": "b2",
+    "prompt_sha256": "d2164037842892dac7fc22062403c0707e6621e49b156369cbb489270dc40668",
+    "prompt_chars": 29225,
+    "human_answers": 2,
+    "path": "strands",
+    "outcome": "answer",
+    "verdict": {
+     "cause_id": "wifi_network_changed",
+     "confidence": 0.92,
+     "explanation": "The Nursery Speaker entity was unavailable until 2026‑02‑08 16:14:48 when the user turned it on, indicating it was offline after a Wi‑Fi change. The user confirmed the router or its name changed recently, matching the wifi_network_changed cause."
+    },
+    "scored": {
+     "cause_id": "wifi_network_changed",
+     "level": "confirmed",
+     "confidence": 0.92
+    },
+    "attempts": [
+     {
+      "client": "strands",
+      "ok": true,
+      "wall_ms": 127637
+     }
+    ],
+    "error": null,
+    "prompt_tokens": 8096,
+    "completion_tokens": 112,
+    "llm_wall_ms": 127637,
+    "text": "{\"cause_id\":\"wifi_network_changed\",\"confidence\":0.92,\"explanation\":\"The Nursery Speaker entity was unavailable until 2026‑02‑08 16:14:48 when the user turned it on, indicating it was offline after a Wi‑Fi change. The user confirmed the router or its name changed recently, matching the wifi_network_changed cause.\"}"
+   }
+  },
+  {
+   "agent": "b2",
+   "scenario_id": "gen-heldout-10140",
+   "set": "heldout",
+   "expected": "vendor_cloud_outage",
+   "got": "vendor_cloud_outage",
+   "level": "confirmed",
+   "confidence": 0.92,
+   "correct": true,
+   "false_confirmed": false,
+   "abstained": false,
+   "probes_used": 0,
+   "disruptive_probes": 0,
+   "human_questions": 0,
+   "latency_ms": 87177,
+   "invalid_output": false,
+   "infra_error": false,
+   "error": null,
+   "llm": {
+    "scenario_id": "gen-heldout-10140",
+    "variant": "b2",
+    "prompt_sha256": "1c964095476abcb21834b50e8dfa3bf69ff0838a9e3e2139ceeb24643e20ed83",
+    "prompt_chars": 18202,
+    "human_answers": 0,
+    "path": "reused",
+    "outcome": "answer",
+    "verdict": {
+     "cause_id": "vendor_cloud_outage",
+     "confidence": 0.92,
+     "explanation": "The log shows the ecobee integration is loaded but the vendor cloud status is degraded at the time of the user’s request, which explains why the thermostat will not change temperature."
+    },
+    "scored": {
+     "cause_id": "vendor_cloud_outage",
+     "level": "confirmed",
+     "confidence": 0.92
+    },
+    "attempts": [],
+    "error": null,
+    "prompt_tokens": 5304,
+    "completion_tokens": 90,
+    "llm_wall_ms": 87177,
+    "text": "{\"cause_id\":\"vendor_cloud_outage\",\"confidence\":0.92,\"explanation\":\"The log shows the ecobee integration is loaded but the vendor cloud status is degraded at the time of the user’s request, which explains why the thermostat will not change temperature.\"}",
+    "reused_from": "b1"
+   }
+  }
+ ]
+}

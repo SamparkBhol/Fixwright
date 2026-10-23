@@ -1,0 +1,35 @@
+# Mains power on the hallway circuit, as the devices see it.
+# A time pattern trigger samples the breaker once a second. That gives every power change a fresh
+# context with no user, service or automation behind it, so the devices that drop off and come back
+# look exactly like real hardware after a power cut (F2 shape). Cost: up to one second of delay.
+- trigger:
+    - trigger: time_pattern
+      seconds: "/1"
+  binary_sensor:
+    - name: Hallway Mains Power
+      unique_id: fixwright_hallway_mains_power
+      default_entity_id: binary_sensor.hallway_mains_power
+      device_class: power
+      state: "{{ is_state('input_boolean.hallway_mains', 'on') }}"
+      attributes:
+        # When the breaker last came back on (unix seconds). Read by the simulated firmware.
+        on_since: >-
+          {{ as_timestamp(states.input_boolean.hallway_mains.last_changed, 0)
+             if is_state('input_boolean.hallway_mains', 'on') else 0 }}
+
+# The smart plug's uptime, the way Wi-Fi plugs report it: seconds since the plug last got power.
+# After a power cut it starts again from zero, which the adapter reports as an uptime reset
+# (data.uptime_reset), which counts as restart evidence. Sampled once a second like the mains.
+- trigger:
+    - trigger: time_pattern
+      seconds: "/1"
+  sensor:
+    - name: Hallway Smart Plug Uptime
+      unique_id: fixwright_hallway_smart_plug_uptime
+      default_entity_id: sensor.hallway_smart_plug_uptime
+      device_class: duration
+      unit_of_measurement: s
+      state_class: measurement
+      availability: "{{ is_state('binary_sensor.hallway_mains_power', 'on') }}"
+      state: >-
+        {{ (as_timestamp(now()) - (state_attr('binary_sensor.hallway_mains_power', 'on_since') | float(0))) | int(0) }}

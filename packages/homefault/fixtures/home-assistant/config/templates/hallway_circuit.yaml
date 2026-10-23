@@ -1,0 +1,179 @@
+# The simulated hallway circuit: six devices on one breaker, each with a power on behavior select.
+# Availability follows binary_sensor.hallway_mains_power, so a power cut makes Home Assistant itself
+# compute "unavailable" (the same code path as a device dropping off the network), not a forced state.
+# Device state comes from the simulated firmware in custom_templates/bulb_firmware.jinja.
+# Signal attributes mirror what Zigbee2MQTT (linkquality) and Wi-Fi plugs (rssi) report.
+- light:
+    - name: Hallway Lamp
+      unique_id: homefault_hallway_lamp
+      default_entity_id: light.hallway_lamp
+      availability: "{{ not is_state('binary_sensor.hallway_mains_power', 'off') }}"
+      state: >-
+        {% from 'bulb_firmware.jinja' import device_on %}
+        {{ device_on('input_text.hallway_lamp_command', 'input_select.hallway_lamp_power_on_behavior_store', this.state) }}
+      attributes:
+        linkquality: "{{ 148 }}"
+      turn_on:
+        - action: input_text.set_value
+          target: { entity_id: input_text.hallway_lamp_command }
+          data: { value: "on {{ now().timestamp() }}" }
+      turn_off:
+        - action: input_text.set_value
+          target: { entity_id: input_text.hallway_lamp_command }
+          data: { value: "off {{ now().timestamp() }}" }
+    - name: Porch Light
+      unique_id: homefault_porch_light
+      default_entity_id: light.porch_light
+      # Also needs its radio link: input_boolean.porch_light_link off means the bulb left the mesh.
+      availability: "{{ not is_state('binary_sensor.hallway_mains_power', 'off') and is_state('input_boolean.porch_light_link', 'on') }}"
+      state: >-
+        {% from 'bulb_firmware.jinja' import device_on %}
+        {{ device_on('input_text.porch_light_command', 'input_select.porch_light_power_on_behavior_store', this.state) }}
+      attributes:
+        linkquality: "{{ 38 }}"
+      turn_on:
+        - action: input_text.set_value
+          target: { entity_id: input_text.porch_light_command }
+          data: { value: "on {{ now().timestamp() }}" }
+      turn_off:
+        - action: input_text.set_value
+          target: { entity_id: input_text.porch_light_command }
+          data: { value: "off {{ now().timestamp() }}" }
+    - name: Landing Light
+      unique_id: homefault_landing_light
+      default_entity_id: light.landing_light
+      availability: "{{ not is_state('binary_sensor.hallway_mains_power', 'off') }}"
+      state: >-
+        {% from 'bulb_firmware.jinja' import device_on %}
+        {{ device_on('input_text.landing_light_command', 'input_select.landing_light_power_on_behavior_store', this.state) }}
+      attributes:
+        linkquality: "{{ 132 }}"
+      turn_on:
+        - action: input_text.set_value
+          target: { entity_id: input_text.landing_light_command }
+          data: { value: "on {{ now().timestamp() }}" }
+      turn_off:
+        - action: input_text.set_value
+          target: { entity_id: input_text.landing_light_command }
+          data: { value: "off {{ now().timestamp() }}" }
+    - name: Stair Light
+      unique_id: homefault_stair_light
+      default_entity_id: light.stair_light
+      availability: "{{ not is_state('binary_sensor.hallway_mains_power', 'off') }}"
+      state: >-
+        {% from 'bulb_firmware.jinja' import device_on %}
+        {{ device_on('input_text.stair_light_command', 'input_select.stair_light_power_on_behavior_store', this.state) }}
+      attributes:
+        linkquality: "{{ 117 }}"
+      turn_on:
+        - action: input_text.set_value
+          target: { entity_id: input_text.stair_light_command }
+          data: { value: "on {{ now().timestamp() }}" }
+      turn_off:
+        - action: input_text.set_value
+          target: { entity_id: input_text.stair_light_command }
+          data: { value: "off {{ now().timestamp() }}" }
+    - name: Entry Light
+      unique_id: homefault_entry_light
+      default_entity_id: light.entry_light
+      availability: "{{ not is_state('binary_sensor.hallway_mains_power', 'off') }}"
+      state: >-
+        {% from 'bulb_firmware.jinja' import device_on %}
+        {{ device_on('input_text.entry_light_command', 'input_select.entry_light_power_on_behavior_store', this.state) }}
+      attributes:
+        linkquality: "{{ 140 }}"
+      turn_on:
+        - action: input_text.set_value
+          target: { entity_id: input_text.entry_light_command }
+          data: { value: "on {{ now().timestamp() }}" }
+      turn_off:
+        - action: input_text.set_value
+          target: { entity_id: input_text.entry_light_command }
+          data: { value: "off {{ now().timestamp() }}" }
+
+- switch:
+    - name: Hallway Smart Plug
+      unique_id: homefault_hallway_smart_plug
+      default_entity_id: switch.hallway_smart_plug
+      availability: "{{ not is_state('binary_sensor.hallway_mains_power', 'off') }}"
+      state: >-
+        {% from 'bulb_firmware.jinja' import device_on %}
+        {{ device_on('input_text.hallway_smart_plug_command', 'input_select.hallway_smart_plug_power_on_behavior_store', this.state) }}
+      attributes:
+        rssi: "{{ -61 }}"
+      turn_on:
+        - action: input_text.set_value
+          target: { entity_id: input_text.hallway_smart_plug_command }
+          data: { value: "on {{ now().timestamp() }}" }
+      turn_off:
+        - action: input_text.set_value
+          target: { entity_id: input_text.hallway_smart_plug_command }
+          data: { value: "off {{ now().timestamp() }}" }
+
+- sensor:
+    - name: Hallway Plug Power
+      unique_id: homefault_hallway_plug_power
+      default_entity_id: sensor.hallway_plug_power
+      unit_of_measurement: W
+      device_class: power
+      state_class: measurement
+      state: "{{ 7.5 if is_state('switch.hallway_smart_plug', 'on') else 0.4 }}"
+      availability: "{{ not is_state('binary_sensor.hallway_mains_power', 'off') }}"
+
+# Power on behavior selects, shaped like Zigbee2MQTT's select.<device>_power_on_behavior.
+# They read and write the device memory above, so a change is a real select_option with a read-back.
+- select:
+    - name: Hallway Lamp Power On Behavior
+      unique_id: homefault_hallway_lamp_power_on_behavior
+      default_entity_id: select.hallway_lamp_power_on_behavior
+      options: "{{ state_attr('input_select.hallway_lamp_power_on_behavior_store', 'options') }}"
+      state: "{{ states('input_select.hallway_lamp_power_on_behavior_store') }}"
+      select_option:
+        - action: input_select.select_option
+          target: { entity_id: input_select.hallway_lamp_power_on_behavior_store }
+          data: { option: "{{ option }}" }
+    - name: Porch Light Power On Behavior
+      unique_id: homefault_porch_light_power_on_behavior
+      default_entity_id: select.porch_light_power_on_behavior
+      options: "{{ state_attr('input_select.porch_light_power_on_behavior_store', 'options') }}"
+      state: "{{ states('input_select.porch_light_power_on_behavior_store') }}"
+      select_option:
+        - action: input_select.select_option
+          target: { entity_id: input_select.porch_light_power_on_behavior_store }
+          data: { option: "{{ option }}" }
+    - name: Landing Light Power On Behavior
+      unique_id: homefault_landing_light_power_on_behavior
+      default_entity_id: select.landing_light_power_on_behavior
+      options: "{{ state_attr('input_select.landing_light_power_on_behavior_store', 'options') }}"
+      state: "{{ states('input_select.landing_light_power_on_behavior_store') }}"
+      select_option:
+        - action: input_select.select_option
+          target: { entity_id: input_select.landing_light_power_on_behavior_store }
+          data: { option: "{{ option }}" }
+    - name: Stair Light Power On Behavior
+      unique_id: homefault_stair_light_power_on_behavior
+      default_entity_id: select.stair_light_power_on_behavior
+      options: "{{ state_attr('input_select.stair_light_power_on_behavior_store', 'options') }}"
+      state: "{{ states('input_select.stair_light_power_on_behavior_store') }}"
+      select_option:
+        - action: input_select.select_option
+          target: { entity_id: input_select.stair_light_power_on_behavior_store }
+          data: { option: "{{ option }}" }
+    - name: Entry Light Power On Behavior
+      unique_id: homefault_entry_light_power_on_behavior
+      default_entity_id: select.entry_light_power_on_behavior
+      options: "{{ state_attr('input_select.entry_light_power_on_behavior_store', 'options') }}"
+      state: "{{ states('input_select.entry_light_power_on_behavior_store') }}"
+      select_option:
+        - action: input_select.select_option
+          target: { entity_id: input_select.entry_light_power_on_behavior_store }
+          data: { option: "{{ option }}" }
+    - name: Hallway Smart Plug Power On Behavior
+      unique_id: homefault_hallway_smart_plug_power_on_behavior
+      default_entity_id: select.hallway_smart_plug_power_on_behavior
+      options: "{{ state_attr('input_select.hallway_smart_plug_power_on_behavior_store', 'options') }}"
+      state: "{{ states('input_select.hallway_smart_plug_power_on_behavior_store') }}"
+      select_option:
+        - action: input_select.select_option
+          target: { entity_id: input_select.hallway_smart_plug_power_on_behavior_store }
+          data: { option: "{{ option }}" }

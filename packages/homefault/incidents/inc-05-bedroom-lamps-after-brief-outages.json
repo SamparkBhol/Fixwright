@@ -1,0 +1,452 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-05-bedroom-lamps-after-brief-outages",
+  "title": "Bedroom lamps come on at full brightness after brief outages",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/smarthome/comments/1wi4rlf/",
+    "date": "2026-09-16",
+    "publisher": "Reddit r/smarthome",
+    "quote": "when the power comes back on, the lights all turn on, even though they were off"
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "The post reports outages of under five minutes, two to three times a month. We model one of 3 minutes 35 seconds at 01:38.",
+    "Brands are not named beyond \"a few different brands\"; Zigbee and Matter bulbs and plugs are assumed. Time zone US Central is assumed."
+  ],
+  "tz": "America/Chicago",
+  "now": "2026-09-16T17:55:00.000Z",
+  "symptom": {
+    "text": "Why did all the bedroom lamps come on in the middle of the night?"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "light.bedroom_ceiling",
+        "name": "Bedroom Ceiling",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_bedroom_ceiling",
+        "integration": "matter",
+        "transport": "thread",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Bedroom Ceiling"
+        },
+        "lastChanged": "2026-09-16T06:44:41.040Z",
+        "lastUpdated": "2026-09-16T06:44:41.040Z",
+        "area": "bedroom",
+        "vendor": "Nanoleaf"
+      },
+      {
+        "entityId": "light.bedroom_lamp_left",
+        "name": "Bedroom Lamp Left",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_bedroom_lamp_left",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Bedroom Lamp Left"
+        },
+        "lastChanged": "2026-09-16T06:44:30.040Z",
+        "lastUpdated": "2026-09-16T06:44:30.040Z",
+        "area": "bedroom",
+        "vendor": "Innr"
+      },
+      {
+        "entityId": "light.bedroom_lamp_right",
+        "name": "Bedroom Lamp Right",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_bedroom_lamp_right",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Bedroom Lamp Right"
+        },
+        "lastChanged": "2026-09-16T06:44:35.040Z",
+        "lastUpdated": "2026-09-16T06:44:35.040Z",
+        "area": "bedroom",
+        "vendor": "Innr"
+      },
+      {
+        "entityId": "light.reading_light",
+        "name": "Reading Light",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_reading_light",
+        "integration": "matter",
+        "transport": "thread",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Reading Light"
+        },
+        "lastChanged": "2026-09-16T06:41:43.000Z",
+        "lastUpdated": "2026-09-16T06:41:43.000Z",
+        "area": "living_room",
+        "vendor": "Nanoleaf"
+      },
+      {
+        "entityId": "switch.fan",
+        "name": "Fan",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_fan",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Fan"
+        },
+        "lastChanged": "2026-09-16T06:41:44.000Z",
+        "lastUpdated": "2026-09-16T06:41:44.000Z",
+        "area": "living_room",
+        "vendor": "IKEA"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "matter",
+        "state": "loaded",
+        "entryId": "entry_matter"
+      },
+      {
+        "integration": "zigbee2mqtt",
+        "state": "loaded",
+        "entryId": "entry_zigbee2mqtt"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [],
+    "signals": {
+      "light.bedroom_lamp_left": {
+        "linkQuality": 190,
+        "powerOnBehavior": "on",
+        "lastSeen": "2026-09-16T17:55:00.000Z"
+      },
+      "light.bedroom_lamp_right": {
+        "linkQuality": 176,
+        "powerOnBehavior": "on",
+        "lastSeen": "2026-09-16T17:55:00.000Z"
+      },
+      "light.bedroom_ceiling": {
+        "powerOnBehavior": "on",
+        "lastSeen": "2026-09-16T17:55:00.000Z"
+      },
+      "light.reading_light": {
+        "powerOnBehavior": "on",
+        "lastSeen": "2026-09-16T17:55:00.000Z"
+      },
+      "switch.fan": {
+        "linkQuality": 155,
+        "powerOnBehavior": "previous",
+        "lastSeen": "2026-09-16T17:55:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "call_service",
+      "when": "2026-09-16T02:30:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.bedroom_lamp_left"
+      ],
+      "context": {
+        "id": "ctx_i05_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T02:30:00.040Z",
+      "entity_id": "light.bedroom_lamp_left",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i05_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-16T02:30:05.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.bedroom_lamp_right"
+      ],
+      "context": {
+        "id": "ctx_i05_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T02:30:05.040Z",
+      "entity_id": "light.bedroom_lamp_right",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i05_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-16T04:05:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.bedroom_lamp_left"
+      ],
+      "context": {
+        "id": "ctx_i05_3",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T04:05:00.040Z",
+      "entity_id": "light.bedroom_lamp_left",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i05_3",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-16T04:05:04.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.bedroom_lamp_right"
+      ],
+      "context": {
+        "id": "ctx_i05_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T04:05:04.040Z",
+      "entity_id": "light.bedroom_lamp_right",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i05_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T06:38:05.000Z",
+      "entity_id": "light.bedroom_lamp_left",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T06:38:05.000Z",
+      "entity_id": "light.bedroom_lamp_right",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T06:38:05.000Z",
+      "entity_id": "light.bedroom_ceiling",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T06:38:06.000Z",
+      "entity_id": "light.reading_light",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T06:38:06.000Z",
+      "entity_id": "switch.fan",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "device_event",
+      "when": "2026-09-16T06:41:41.000Z",
+      "entity_id": "light.bedroom_ceiling",
+      "event": "boot_reason",
+      "data": {
+        "reason": "PowerOnReboot"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T06:41:42.000Z",
+      "entity_id": "light.bedroom_lamp_left",
+      "state": "on",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i05_5"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T06:41:42.000Z",
+      "entity_id": "light.bedroom_lamp_right",
+      "state": "on",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i05_6"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T06:41:42.000Z",
+      "entity_id": "light.bedroom_ceiling",
+      "state": "on",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i05_7"
+      }
+    },
+    {
+      "type": "device_event",
+      "when": "2026-09-16T06:41:43.000Z",
+      "entity_id": "light.reading_light",
+      "event": "boot_reason",
+      "data": {
+        "reason": "PowerOnReboot"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T06:41:43.000Z",
+      "entity_id": "light.reading_light",
+      "state": "on",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i05_8"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T06:41:44.000Z",
+      "entity_id": "switch.fan",
+      "state": "off",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i05_9"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-16T06:44:30.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.bedroom_lamp_left"
+      ],
+      "context": {
+        "id": "ctx_i05_a",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T06:44:30.040Z",
+      "entity_id": "light.bedroom_lamp_left",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i05_a",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-16T06:44:35.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.bedroom_lamp_right"
+      ],
+      "context": {
+        "id": "ctx_i05_b",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T06:44:35.040Z",
+      "entity_id": "light.bedroom_lamp_right",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i05_b",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-16T06:44:41.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.bedroom_ceiling"
+      ],
+      "context": {
+        "id": "ctx_i05_c",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-16T06:44:41.040Z",
+      "entity_id": "light.bedroom_ceiling",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i05_c",
+        "user_id": "user_resident"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "power_on_default_on",
+    "entity_ids": [
+      "light.bedroom_ceiling",
+      "light.bedroom_lamp_left",
+      "light.bedroom_lamp_right",
+      "light.reading_light"
+    ],
+    "explanation": "A brief outage restarted the bulbs, which are set to start on."
+  },
+  "human_truth": {
+    "power_switch_check": "yes",
+    "notes": "The bedroom lamps came on at full brightness at 1:41."
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "power_on_default_on"
+  ]
+}

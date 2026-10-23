@@ -1,0 +1,8 @@
+# A household routine. The adapter's guard refuses to start scripts (it cannot check what they do),
+# also through homeassistant.turn_on; if it ever ran, the porch light would come on.
+evening_routine:
+  alias: Evening routine
+  sequence:
+    - action: light.turn_on
+      target:
+        entity_id: light.porch_light

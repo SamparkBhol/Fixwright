@@ -1,0 +1,134 @@
+# homefault Home Assistant fixture: a small house with a simulated hallway circuit.
+# Copied fresh into .runtime/config for every test session
+# (scripts/ha-local.sh) and bind mounted into the official container in CI. Port 8741 (range 8741 to 8749).
+# Everything here is simulated hardware. Nothing talks to a real device or a cloud.
+homeassistant:
+  name: homefault lab
+  unit_system: metric
+  time_zone: UTC
+  latitude: 48.137
+  longitude: 11.575
+  elevation: 520
+  currency: EUR
+  country: DE
+  internal_url: "http://127.0.0.1:8741"
+
+http:
+  server_host: 127.0.0.1
+  server_port: 8741
+
+logger:
+  default: warning
+  logs:
+    homeassistant.bootstrap: info
+    homeassistant.components.onboarding: info
+
+api:
+websocket_api:
+
+recorder:
+  # History and logbook reads right after a change need the row on disk within about a second.
+  commit_interval: 1
+  purge_keep_days: 2
+
+history:
+logbook:
+# search/related lists the entities each automation refers to (the adapter's attributes.references).
+search:
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+# 72 simulated entities with devices and a config entry: used for registry mapping and for a real
+# config entry reload (reloadIntegration).
+demo:
+
+# A simulated bridge with its own config entry (custom_components/homefault_bridge): its lights go
+# unavailable for real when input_boolean.homefault_bridge_link drops and only come back with a config
+# entry reload; set up while the link is down, the entry sits in setup_retry (the hub_down shape).
+homefault_bridge:
+
+input_boolean:
+  # The hallway circuit breaker. A person (or the fault injector) flips it.
+  hallway_mains:
+    name: Hallway circuit breaker
+    icon: mdi:transmission-tower
+    initial: true
+  # Radio link of the porch bulb. Off means the bulb fell off the mesh (real HA unavailability).
+  porch_light_link:
+    name: Porch light radio link
+    initial: true
+  hall_motion_detected:
+    name: Hall motion detected (simulated)
+    initial: false
+  # Network link of the simulated bridge. Off means the bridge stopped answering.
+  homefault_bridge_link:
+    name: Hallway bridge network link
+    initial: true
+
+# Last command each device received, as "<on|off> <unix seconds>". A command always writes a new
+# value, so the simulated firmware can tell whether power came back after the last command.
+input_text:
+  hallway_lamp_command: { name: Hallway lamp last command, initial: "off 0", max: 64 }
+  porch_light_command: { name: Porch light last command, initial: "off 0", max: 64 }
+  landing_light_command: { name: Landing light last command, initial: "off 0", max: 64 }
+  stair_light_command: { name: Stair light last command, initial: "off 0", max: 64 }
+  entry_light_command: { name: Entry light last command, initial: "off 0", max: 64 }
+  hallway_smart_plug_command: { name: Hallway smart plug last command, initial: "off 0", max: 64 }
+
+# The power on behavior each device keeps in its own memory (Zigbee2MQTT power_on_behavior options).
+# Factory default "on" is the classic "every lamp turned on after a power cut" fault (F2).
+input_select:
+  hallway_lamp_power_on_behavior_store:
+    name: Hallway lamp power on behavior (device memory)
+    options: ["off", "on", "toggle", "previous"]
+    initial: "on"
+  porch_light_power_on_behavior_store:
+    name: Porch light power on behavior (device memory)
+    options: ["off", "on", "toggle", "previous"]
+    initial: "on"
+  landing_light_power_on_behavior_store:
+    name: Landing light power on behavior (device memory)
+    options: ["off", "on", "toggle", "previous"]
+    initial: "on"
+  stair_light_power_on_behavior_store:
+    name: Stair light power on behavior (device memory)
+    options: ["off", "on", "toggle", "previous"]
+    initial: "on"
+  entry_light_power_on_behavior_store:
+    name: Entry light power on behavior (device memory)
+    options: ["off", "on", "toggle", "previous"]
+    initial: "on"
+  hallway_smart_plug_power_on_behavior_store:
+    name: Hallway smart plug power on behavior (device memory)
+    options: ["off", "on", "toggle", "previous"]
+    initial: "on"
+
+input_number:
+  hall_motion_battery_level:
+    name: Hall motion sensor battery (simulated)
+    min: 0
+    max: 100
+    step: 1
+    initial: 64
+    unit_of_measurement: "%"
+
+input_datetime:
+  hallway_last_power_restore:
+    name: Hallway last power restore
+    has_date: true
+    has_time: true
+
+template: !include_dir_merge_list templates
+
+light:
+  # A second integration on the same circuit: a light group is unavailable only when every member is.
+  - platform: group
+    name: Hallway Lights
+    unique_id: homefault_hallway_lights
+    entities:
+      - light.hallway_lamp
+      - light.porch_light
+      - light.landing_light
+      - light.stair_light
+      - light.entry_light

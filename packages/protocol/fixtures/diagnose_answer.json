@@ -1,0 +1,141 @@
+{
+  "speech": "The lamp works. The name Hallway Lamp still points at an old copy of it that went offline on October 3. Want me to fix that?",
+  "status": "ok",
+  "view": "stepper",
+  "ids": {
+    "diagnosis_id": "dx_01m50980d03sy1gk7c"
+  },
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "diagnosis_id": "dx_01m50980d03sy1gk7c",
+  "target": {
+    "entity_id": "light.hallway_lamp",
+    "name": "Hallway Lamp",
+    "guided": false
+  },
+  "probes": [
+    {
+      "probe_id": "hub_reachable",
+      "label": "Hub",
+      "outcome": "pass",
+      "detail": "The Zigbee hub answered right away.",
+      "evidence": [
+        1201
+      ],
+      "disruptive": false,
+      "at": "2026-10-15T17:20:04.180Z"
+    },
+    {
+      "probe_id": "link_quality",
+      "label": "Signal",
+      "outcome": "pass",
+      "detail": "The lamp that is online has a strong signal.",
+      "evidence": [
+        1202
+      ],
+      "disruptive": false,
+      "at": "2026-10-15T17:20:04.260Z"
+    },
+    {
+      "probe_id": "cloud_status",
+      "label": "Hue cloud",
+      "outcome": "pass",
+      "detail": "Hue reports no problems.",
+      "evidence": [
+        1203
+      ],
+      "disruptive": false,
+      "at": "2026-10-15T17:20:04.900Z"
+    },
+    {
+      "probe_id": "entity_availability",
+      "label": "Availability",
+      "outcome": "fail",
+      "detail": "The device named Hallway Lamp has been offline since October 3.",
+      "evidence": [
+        112,
+        1204
+      ],
+      "disruptive": false,
+      "at": "2026-10-15T17:20:05.010Z"
+    },
+    {
+      "probe_id": "duplicate_name_scan",
+      "label": "Names",
+      "outcome": "fail",
+      "detail": "A second copy of the lamp, Hallway Lamp 2, is online.",
+      "evidence": [
+        113,
+        1205
+      ],
+      "disruptive": false,
+      "at": "2026-10-15T17:20:05.090Z"
+    },
+    {
+      "probe_id": "flash_test",
+      "label": "Flash test",
+      "outcome": "pass",
+      "detail": "Flashed the online copy twice. It answered both times.",
+      "evidence": [
+        1206
+      ],
+      "disruptive": true,
+      "at": "2026-10-15T17:20:07.100Z"
+    },
+    {
+      "probe_id": "confirm_flash",
+      "label": "You saw it blink",
+      "outcome": "pass",
+      "detail": "You said yes, it blinked.",
+      "evidence": [
+        1207,
+        1208
+      ],
+      "disruptive": false,
+      "at": "2026-10-15T17:20:19.400Z"
+    }
+  ],
+  "hypotheses": [
+    {
+      "cause_id": "stale_duplicate",
+      "label": "Name points at an old copy",
+      "p": 0.94
+    },
+    {
+      "cause_id": "device_power_lost",
+      "label": "Device has no power",
+      "p": 0.03
+    },
+    {
+      "cause_id": "name_collision",
+      "label": "Two devices share a name",
+      "p": 0.02
+    }
+  ],
+  "verdict": {
+    "level": "confirmed",
+    "cause_id": "stale_duplicate",
+    "label": "Name points at an old copy",
+    "confidence": 0.94,
+    "claims": [
+      {
+        "text": "The lamp works.",
+        "evidence": [
+          1206,
+          1207
+        ]
+      },
+      {
+        "text": "The name Hallway Lamp still points at an old copy of it that went offline on October 3.",
+        "evidence": [
+          112,
+          113,
+          1205
+        ]
+      }
+    ],
+    "fix_available": true
+  }
+}

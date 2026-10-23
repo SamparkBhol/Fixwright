@@ -1,0 +1,157 @@
+NOTE Fixwright demo video script, final cut, 18 October 2026. Hard limit 2:55.
+NOTE Every USER, REPLY and SHOWN line is the live server's answer word for word: record.ts compares each one
+NOTE before it keeps a frame, and a mismatch fails the render. The video names no third party brand in its
+NOTE pictures or its speech (the rules' video clause); the written description keeps the sources and quotes.
+NOTE
+NOTE How to read this file. One instruction per line, a keyword first. Lines that start with NOTE are for
+NOTE people and are ignored. Text after "||" is how the voice says it, when that differs from the screen.
+NOTE   VOICE role voice speed          Kokoro voice per role. Never an imitation of Alexa's voice.
+NOTE   REGION name x y width           a camera region on the 1920 by 1080 host page (height is width x 9/16)
+NOTE   BEAT id title                   a new beat; SCENE host or SCENE card kind sets what is on screen
+NOTE   NARRATOR, USER, REPLY text      speech; USER is typed into the host and sent, REPLY is the answer
+NOTE   SHOWN text                      an answer that stays on screen without a voice (checked like REPLY)
+NOTE   DO verb args                    click selector [name], open-trace tool, trace-top, device name, hold, replay
+NOTE   DO hold                         the next house plan moment waits, showing the house as it was
+NOTE   DO replay sentence seconds      plays that moment from its logged events, starting with the given
+NOTE                                   sentence of the line before, for the given seconds
+NOTE   PAUSE seconds | PAUSE read      hold; "read" allows reading time for the last text shown
+NOTE   LABEL text | LABEL off          an on screen label (used for everything simulated)
+NOTE   CAMERA region [seconds]         move the camera, in 0.7 s or the given seconds; full is the whole page
+NOTE   WITH step                       starts together with the step before it
+NOTE   TITLE SUB LINE HEAD ROW ITEM FOOT CLOSE TERMINAL   card content, shown at that moment
+NOTE Timing comes from the measured length of every spoken sentence (timeline.ts), never from fixed offsets.
+NOTE Benchmark cells are {{HOMETRUTH:key}} values read from bench/results (src/hometruth.ts).
+
+VOICE narrator af_heart 1
+VOICE user am_michael 1
+VOICE reply bm_george 1
+MAX 175
+
+REGION stage 0 125 1420
+REGION stage_tall 0 184 1420
+REGION phone 132 140 1160
+REGION trace_top 1420 100 500
+REGION trace 1420 190 500
+
+BEAT cold_open The problem, in our own words
+SCENE card open
+TITLE Hallway Lamp is not responding.
+PAUSE 0.6
+NARRATOR When a smart home device stops answering, the usual advice is to delete everything and start over.
+PAUSE 0.3
+
+BEAT title Title card
+SCENE card title
+TITLE Fixwright
+SUB A home doctor for Alexa+.
+LINE Live MCP server, spec 2025-11-25, Streamable HTTP. Alexa+ host simulated.
+NARRATOR Alexa+ already tells you when a device is not responding. Fixwright finds out why, proves it, and fixes it.
+PAUSE 0.4
+
+BEAT diagnose Large display, the hallway lamp
+SCENE host
+DO hold
+USER Alexa, ask Fixwright why the hallway lamp keeps saying it's not responding.
+WITH CAMERA stage_tall 4
+CAMERA stage
+REPLY Your hub is reachable, the signal is good and the light maker's cloud is fine. I'll flash the hallway lamp twice. Did it blink?
+WITH DO replay 2 2.6
+NARRATOR It tests the likely causes in order. When no sensor can tell, it asks the person in the room.
+
+BEAT voice Voice only, same conversation
+DO device voice
+USER Yes, it blinked.
+REPLY The lamp works. The name Hallway Lamp still points at an old copy of it that went offline on October 3. Want me to fix that? || The lamp works. The name Hallway Lamp still points at an old copy of it that went offline on October third. Want me to fix that?
+
+BEAT repair Dry run, one yes, read back
+DO device large
+PAUSE 0.3
+USER Yes.
+REPLY Here's the fix. Hallway Lamp will point to the lamp that is online. The old copy, offline since October 3, is retired. Shall I go ahead? || Here's the fix. Hallway Lamp will point to the lamp that is online. The old copy, offline since October third, is retired. Shall I go ahead?
+USER Yes.
+REPLY Done. I switched it on and off, it answered both times. I'll check on it again tomorrow morning.
+NARRATOR Every fix is a dry run, then one yes, then a read back that undoes it if anything is off.
+
+BEAT power The 3 a.m. question
+USER Why did every plug turn on at 3 a.m.? || Why did every plug turn on at three A M?
+REPLY Power came back at 3:12. Fourteen devices restarted within four seconds. None of your automations fired. I can make them remember whether they were on or off. Do it? || Power came back at three twelve. Fourteen devices restarted within four seconds. None of your automations fired. I can make them remember whether they were on or off. Do it?
+NARRATOR Every claim comes from a logged event, or Fixwright says it can't tell.
+USER Yes.
+SHOWN Here's the fix. Fourteen devices will remember whether they were on or off when power comes back. Shall I go ahead?
+PAUSE 1.0
+USER Yes.
+SHOWN Done. I made fourteen changes and checked each one. I'll check on them again tomorrow morning.
+PAUSE 1.2
+
+BEAT checkup Small display, then phone
+DO device small
+USER Give my house a checkup.
+SHOWN I found three things. Two lights answer to Living Room Light. The hall motion sensor battery is at 6%. And the kitchen plug dropped off Wi-Fi 9 times today.
+PAUSE 2.2
+DO device phone
+CAMERA phone
+
+BEAT protect A protected device
+USER Alexa, ask Fixwright to turn off the living room power strip.
+REPLY That strip runs the aquarium filter, which you marked protected. I'll turn off the lamp on it instead.
+
+BEAT morning Next morning, 7:00
+DO device large
+CAMERA stage
+USER Did the fix hold?
+SHOWN The fix is in place and checked. I'll look at it again at 7 in the morning.
+PAUSE 0.6
+LABEL Simulated clock. The push goes to a local receiver.
+NARRATOR Next morning, it checks again, and tells you.
+DO click [data-tab="house"] Break my house
+DO click [data-clock="next_morning"] Next morning 7:00
+PAUSE 2.4
+LABEL off
+
+BEAT trace The Visual Trace
+CAMERA full
+DO click [data-tab="trace"] Visual Trace
+DO click [data-filter="mcp"] MCP server
+DO trace-top
+CAMERA trace_top
+NARRATOR None of this is mocked. The Visual Trace shows the raw JSON-RPC, starting with initialize at spec 2025-11-25. || None of this is mocked. The Visual Trace shows the raw JSON RPC, starting with initialize, at the November 2025 spec.
+DO open-trace diagnose_answer
+CAMERA trace
+NARRATOR And every tool call, with its structured content.
+PAUSE 0.5
+
+BEAT bench HomeTruth benchmark
+SCENE card bench
+TITLE HomeTruth, our open benchmark
+SUB {{HOMETRUTH:heldout.n}} held out home faults, generated from ten causes, with the same logs for every agent. The plain LLM is a free open weights model, called once, with no tools.
+HEAD Right | Said it can't tell | Wrong | Right when it answered
+ROW Plain LLM, logs only | {{HOMETRUTH:heldout.b1.right}} | {{HOMETRUTH:heldout.b1.cant_tell}} | {{HOMETRUTH:heldout.b1.wrong}} | {{HOMETRUTH:heldout.b1.right_when_answered}}
+ROW Plain LLM, plus the answers to Fixwright's questions | {{HOMETRUTH:heldout.b2.right}} | {{HOMETRUTH:heldout.b2.cant_tell}} | {{HOMETRUTH:heldout.b2.wrong}} | {{HOMETRUTH:heldout.b2.right_when_answered}}
+ROW Fixwright | {{HOMETRUTH:heldout.fixwright.right}} | {{HOMETRUTH:heldout.fixwright.cant_tell}} | {{HOMETRUTH:heldout.fixwright.wrong}} | {{HOMETRUTH:heldout.fixwright.right_when_answered}}
+FOOT One stratified sample, one seed. On right answers alone the three cannot be told apart at this size. Fixwright's probes are built for these ten causes. Every number comes from bench/results/HOMETRUTH.txt.
+NARRATOR Fixwright's questions lift a plain LLM from 71 to 83 right out of 100.
+NARRATOR When Fixwright answers, it is right 96 percent of the time. The LLM can't run a probe or fix anything.
+PAUSE 0.8
+
+BEAT terminal One server, any client
+SCENE card terminal
+TERMINAL
+NARRATOR A bare client with no SDK calls the same server. Any assistant that speaks MCP can.
+PAUSE 1.2
+
+BEAT slate Honesty slate
+SCENE card slate
+TITLE What is real, and what is simulated
+ITEM Real | The MCP server, spec 2025-11-25, Streamable HTTP
+ITEM Real | The diagnosis and repair engines
+ITEM Real | The adapter for a real open source home hub, tested against a running hub
+ITEM Real | The push, sent over an open push protocol
+ITEM Simulated, and labeled | The Alexa+ host and its voices
+ITEM Simulated, and labeled | The home twin and its power events
+ITEM Simulated, and labeled | The jump to the next morning
+ITEM Simulated, and labeled | The benchmark's homes and the person answering
+FOOT Fixwright never reads Alexa's own device list.
+PAUSE 3.5
+CLOSE Fixwright. Fix the house, not the user.
+NARRATOR Fixwright. Fix the house, not the user.
+PAUSE 1.0

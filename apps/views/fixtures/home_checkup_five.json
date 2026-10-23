@@ -1,0 +1,77 @@
+{
+  "speech": "I found five things. Two lights answer to Living Room Light, the hall motion sensor battery is at 6%, and the kitchen plug dropped off Wi-Fi 9 times today. There are two smaller ones on screen.",
+  "status": "ok",
+  "view": "carousel",
+  "ids": {
+    "checkup_id": "chk_01m52gb9003bd0kmwn"
+  },
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "checkup_id": "chk_01m52gb9003bd0kmwn",
+  "findings": [
+    {
+      "issue_id": "iss_01m52gb900j5778msk",
+      "kind": "duplicate_name",
+      "severity": "high",
+      "title": "Two lights answer to Living Room Light",
+      "detail": "A Hue group and a Zigbee bulb are both called Living Room Light, so a command can reach the wrong one.",
+      "entity_ids": [
+        "light.living_room_light",
+        "light.living_room_light_2"
+      ],
+      "fixable": true,
+      "action_label": "Rename one"
+    },
+    {
+      "issue_id": "iss_01m52gb9004c6v99nn",
+      "kind": "low_battery",
+      "severity": "high",
+      "title": "Hall motion sensor battery at 6%",
+      "detail": "At 6% it may stop reporting motion soon.",
+      "entity_ids": [
+        "binary_sensor.hall_motion",
+        "sensor.hall_motion_battery"
+      ],
+      "fixable": false
+    },
+    {
+      "issue_id": "iss_01m52gb900zmxytm7w",
+      "kind": "flapping",
+      "severity": "medium",
+      "title": "Kitchen plug dropped off Wi-Fi 9 times today",
+      "detail": "Its Wi-Fi signal is weak, at -82 dBm. Moving the plug or the router closer usually helps.",
+      "entity_ids": [
+        "switch.kitchen_plug"
+      ],
+      "fixable": false,
+      "action_label": "Show me how"
+    },
+    {
+      "issue_id": "iss_01m52gb900ke3bypx6",
+      "kind": "ghost_entity",
+      "severity": "medium",
+      "title": "An old copy of Hallway Lamp is still listed",
+      "detail": "It has been offline since October 3 and can catch commands meant for the real lamp.",
+      "entity_ids": [
+        "light.hallway_lamp"
+      ],
+      "fixable": true,
+      "action_label": "Retire it"
+    },
+    {
+      "issue_id": "iss_01m52g8k20yka0razf",
+      "kind": "power_on_default",
+      "severity": "low",
+      "title": "Fourteen devices turn on after a power cut",
+      "detail": "They are set to switch on whenever power comes back, even if they were off.",
+      "entity_ids": [
+        "switch.kitchen_plug",
+        "light.porch"
+      ],
+      "fixable": true,
+      "action_label": "Make them remember"
+    }
+  ]
+}

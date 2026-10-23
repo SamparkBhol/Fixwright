@@ -1,0 +1,38 @@
+{
+  "name": "fixwright",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Fixwright: the home doctor for Alexa+. Finds the real fault. Proves it. Fixes it.",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "bench",
+    "video"
+  ],
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "prepare": "bash scripts/homefault-submodule.sh",
+    "check": "npm run check --workspaces --if-present && tsc -p e2e/tsconfig.json",
+    "test": "npm run test --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "dev:up": "bash scripts/dev-up.sh",
+    "dev:down": "bash scripts/dev-down.sh",
+    "e2e": "bash scripts/e2e.sh golden",
+    "e2e:ha": "bash scripts/e2e.sh ha",
+    "e2e:latency": "node --no-warnings e2e/latency.ts",
+    "mcp:plain": "node --no-warnings video/src/plain-mcp.ts"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.4",
+    "esbuild": "0.28.2",
+    "playwright": "1.63.0",
+    "typescript": "6.0.3",
+    "vite": "8.3.1",
+    "vitest": "5.0.2",
+    "wrangler": "4.144.0"
+  }
+}

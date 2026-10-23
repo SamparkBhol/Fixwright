@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fixwright views harness</title>
+<style>
+  :root { color-scheme: dark; --bg: #05070a; --fg: #e9edf3; --muted: #9aa5b4; }
+  :root[data-theme="light"] { color-scheme: light; --bg: #e7eaef; --fg: #11151b; --muted: #4a5463; }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.4 system-ui, sans-serif; }
+  #controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 10px 12px; border-bottom: 1px solid #2a313c; }
+  #controls label { color: var(--muted); }
+  #controls select, #controls button { font: inherit; padding: 4px 8px; }
+  #stage { position: relative; overflow: hidden; }
+  #stage iframe { display: block; width: 100%; height: 100%; border: 0; }
+  body.bare #controls { display: none; }
+  body:not(.bare) #stage { margin: 16px; border-radius: 12px; box-shadow: 0 0 0 1px #2a313c; }
+</style>
+</head>
+<body>
+<form id="controls">
+  <label>Scenario
+    <select name="scenario">
+      <option value="stepper|protocol/diagnose|diagnose">Stepper: diagnose (question)</option>
+      <option value="stepper|protocol/diagnose_answer|diagnose_answer">Stepper: confirmed verdict</option>
+      <option value="stepper|views/diagnose_likely|diagnose">Stepper: likely verdict</option>
+      <option value="stepper|views/diagnose_cant_tell|diagnose">Stepper: can't tell</option>
+      <option value="stepper|protocol/explain_event|explain_event">Stepper: explain event</option>
+      <option value="stepper|protocol/repair_plan|repair_plan">Stepper: repair plan</option>
+      <option value="stepper|views/repair_plan_power_on|repair_plan">Stepper: power on plan (14 steps)</option>
+      <option value="stepper|views/repair_plan_protected|repair_plan">Stepper: power on plan, protected device</option>
+      <option value="carousel|protocol/home_checkup|home_checkup">Carousel: checkup (3)</option>
+      <option value="carousel|views/home_checkup_five|home_checkup">Carousel: checkup (5)</option>
+      <option value="repair-card|protocol/repair_apply|repair_apply">Repair card: applied</option>
+      <option value="repair-card|views/repair_apply_power_on|repair_apply">Repair card: power on fix (14 steps)</option>
+      <option value="repair-card|protocol/repair_status|repair_status">Repair card: confirmed</option>
+      <option value="repair-card|views/repair_regressed|repair_status">Repair card: regressed</option>
+      <option value="repair-card|views/repair_rolled_back|repair_apply">Repair card: rolled back</option>
+      <option value="repair-card|protocol/undo|undo">Repair card: undone</option>
+    </select>
+  </label>
+  <label>Theme <select name="theme"><option>dark</option><option>light</option></select></label>
+  <label>Device <select name="device"><option>large</option><option>small</option><option>phone</option><option>voice</option></select></label>
+  <label>Mode <select name="mode"><option>inline</option><option>fullscreen</option></select></label>
+  <label>Container <select name="container"><option value="fixed">fixed</option><option value="flex">flex (host phone, 358 x up to 480)</option></select></label>
+  <label><input type="checkbox" name="approve" checked> Approve fixes</label>
+  <button type="submit">Load</button>
+</form>
+<div id="stage"></div>
+<script>if (new URLSearchParams(location.search).has('bare')) document.body.classList.add('bare');</script>
+<script type="module" src="/harness/host.js"></script>
+</body>
+</html>

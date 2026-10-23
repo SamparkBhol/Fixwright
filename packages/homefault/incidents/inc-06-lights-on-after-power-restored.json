@@ -1,0 +1,332 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-06-lights-on-after-power-restored",
+  "title": "Lights turn on in the middle of the night after power is restored",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/alexa/comments/1ofwcui/",
+    "date": "2025-10-25",
+    "publisher": "Reddit r/alexa",
+    "quote": "How can I prevent the lights being turned on in the middle of the night after power is restored?"
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "The post gives no details beyond the question. We model a 40 second outage at 00:52 and five lights set to start on.",
+    "Time zone US Pacific is assumed."
+  ],
+  "tz": "America/Los_Angeles",
+  "now": "2025-10-25T16:45:00.000Z",
+  "symptom": {
+    "text": "The lights turned on in the middle of the night. Why?"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "light.dining_room",
+        "name": "Dining Room",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_dining_room",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Dining Room"
+        },
+        "lastChanged": "2025-10-25T07:53:12.000Z",
+        "lastUpdated": "2025-10-25T07:53:12.000Z",
+        "area": "dining_room",
+        "vendor": "IKEA"
+      },
+      {
+        "entityId": "light.garage",
+        "name": "Garage",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_garage",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Garage"
+        },
+        "lastChanged": "2025-10-25T07:53:14.000Z",
+        "lastUpdated": "2025-10-25T07:53:14.000Z",
+        "area": "garage",
+        "vendor": "IKEA"
+      },
+      {
+        "entityId": "light.hallway",
+        "name": "Hallway",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_hallway",
+        "integration": "matter",
+        "transport": "thread",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Hallway"
+        },
+        "lastChanged": "2025-10-25T07:53:12.000Z",
+        "lastUpdated": "2025-10-25T07:53:12.000Z",
+        "area": "hallway",
+        "vendor": "Eve"
+      },
+      {
+        "entityId": "light.living_room",
+        "name": "Living Room",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_living_room",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Living Room"
+        },
+        "lastChanged": "2025-10-25T07:53:12.000Z",
+        "lastUpdated": "2025-10-25T07:53:12.000Z",
+        "area": "living_room",
+        "vendor": "IKEA"
+      },
+      {
+        "entityId": "light.office",
+        "name": "Office",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_office",
+        "integration": "matter",
+        "transport": "thread",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Office"
+        },
+        "lastChanged": "2025-10-25T07:53:14.000Z",
+        "lastUpdated": "2025-10-25T07:53:14.000Z",
+        "area": "office",
+        "vendor": "Eve"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "matter",
+        "state": "loaded",
+        "entryId": "entry_matter"
+      },
+      {
+        "integration": "zigbee2mqtt",
+        "state": "loaded",
+        "entryId": "entry_zigbee2mqtt"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [],
+    "signals": {
+      "light.living_room": {
+        "linkQuality": 201,
+        "powerOnBehavior": "on",
+        "lastSeen": "2025-10-25T16:45:00.000Z"
+      },
+      "light.dining_room": {
+        "linkQuality": 188,
+        "powerOnBehavior": "on",
+        "lastSeen": "2025-10-25T16:45:00.000Z"
+      },
+      "light.hallway": {
+        "powerOnBehavior": "on",
+        "lastSeen": "2025-10-25T16:45:00.000Z"
+      },
+      "light.office": {
+        "powerOnBehavior": "on",
+        "lastSeen": "2025-10-25T16:45:00.000Z"
+      },
+      "light.garage": {
+        "linkQuality": 98,
+        "powerOnBehavior": "on",
+        "lastSeen": "2025-10-25T16:45:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "call_service",
+      "when": "2025-10-25T01:00:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.living_room"
+      ],
+      "context": {
+        "id": "ctx_i06_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-10-25T01:00:00.040Z",
+      "entity_id": "light.living_room",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i06_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2025-10-25T05:40:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.living_room"
+      ],
+      "context": {
+        "id": "ctx_i06_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-10-25T05:40:00.040Z",
+      "entity_id": "light.living_room",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i06_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-10-25T07:52:30.000Z",
+      "entity_id": "light.living_room",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2025-10-25T07:52:30.000Z",
+      "entity_id": "light.dining_room",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2025-10-25T07:52:31.000Z",
+      "entity_id": "light.hallway",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2025-10-25T07:52:31.000Z",
+      "entity_id": "light.office",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2025-10-25T07:52:31.000Z",
+      "entity_id": "light.garage",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "device_event",
+      "when": "2025-10-25T07:53:11.000Z",
+      "entity_id": "light.hallway",
+      "event": "boot_reason",
+      "data": {
+        "reason": "PowerOnReboot"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-10-25T07:53:12.000Z",
+      "entity_id": "light.living_room",
+      "state": "on",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i06_3"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-10-25T07:53:12.000Z",
+      "entity_id": "light.dining_room",
+      "state": "on",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i06_4"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-10-25T07:53:12.000Z",
+      "entity_id": "light.hallway",
+      "state": "on",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i06_5"
+      }
+    },
+    {
+      "type": "device_event",
+      "when": "2025-10-25T07:53:13.000Z",
+      "entity_id": "light.office",
+      "event": "boot_reason",
+      "data": {
+        "reason": "PowerOnReboot"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-10-25T07:53:14.000Z",
+      "entity_id": "light.office",
+      "state": "on",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i06_6"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-10-25T07:53:14.000Z",
+      "entity_id": "light.garage",
+      "state": "on",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i06_7"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "power_on_default_on",
+    "entity_ids": [
+      "light.dining_room",
+      "light.garage",
+      "light.hallway",
+      "light.living_room",
+      "light.office"
+    ],
+    "explanation": "Power came back at 00:53 and the lights started on."
+  },
+  "human_truth": {
+    "power_switch_check": "yes"
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "power_on_default_on"
+  ]
+}

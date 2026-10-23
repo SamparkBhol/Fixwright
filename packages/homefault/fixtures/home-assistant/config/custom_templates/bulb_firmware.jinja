@@ -1,0 +1,32 @@
+{#- Simulated bulb and plug firmware for the hallway circuit.
+
+    While a device has power it follows its last command. When power comes back after the last command,
+    it applies its power on behavior the way Zigbee2MQTT exposes power_on_behavior: off, on, toggle or
+    previous. Changing the behavior later does not change the device until the next power cut, just as
+    real firmware only reads it at power up.
+
+    Doing this in an automation would stamp every restore with automation context. Real bulbs
+    report the restore with no context at all, so the firmware lives in the template itself: the restore
+    reaches the devices through binary_sensor.hallway_mains_power, whose time pattern trigger gives it a
+    fresh context with no user, service or automation behind it.
+
+    command:  input_text entity holding "<on|off> <unix seconds>"
+    behavior: input_select entity holding the device's power on behavior
+    current:  the device's own current state (this.state); unknown right after a reload, when the last
+              command is the best guess
+-#}
+{%- macro device_on(command, behavior, current) -%}
+{%- set parts = (states(command) ~ ' 0').split(' ') -%}
+{%- set last_on = parts[0] == 'on' -%}
+{%- set commanded_at = parts[1] | float(0) -%}
+{%- set on_since = state_attr('binary_sensor.hallway_mains_power', 'on_since') | float(0) -%}
+{%- set mode = states(behavior) -%}
+{%- set mode_since = as_timestamp(states[behavior].last_changed, 0) -%}
+{%- if commanded_at >= on_since -%}{{ 'true' if last_on else 'false' }}
+{%- elif mode_since > on_since -%}{{ ('true' if current == 'on' else 'false') if current in ['on', 'off'] else ('true' if last_on else 'false') }}
+{%- elif mode == 'on' -%}true
+{%- elif mode == 'off' -%}false
+{%- elif mode == 'toggle' -%}{{ 'false' if last_on else 'true' }}
+{%- else -%}{{ 'true' if last_on else 'false' }}
+{%- endif -%}
+{%- endmacro -%}

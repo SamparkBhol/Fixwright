@@ -1,0 +1,567 @@
+{
+  "recorded_with": "Home Assistant 2026.9.4",
+  "entries": {
+    "light.hallway_lamp": {
+      "area_id": "hallway",
+      "categories": {},
+      "config_entry_id": null,
+      "config_subentry_id": null,
+      "created_at": 1792068079.430546,
+      "device_id": null,
+      "disabled_by": null,
+      "entity_category": null,
+      "entity_id": "light.hallway_lamp",
+      "has_entity_name": false,
+      "hidden_by": null,
+      "icon": null,
+      "id": "cb94af4c254480f13ee7e0bba0c28452",
+      "labels": [],
+      "modified_at": 1792068081.278787,
+      "name": null,
+      "options": {
+        "conversation": {
+          "should_expose": true
+        }
+      },
+      "original_name": "Hallway Lamp",
+      "platform": "template",
+      "translation_key": null,
+      "unique_id": "fixwright_hallway_lamp",
+      "aliases": [
+        null
+      ],
+      "capabilities": {
+        "supported_color_modes": [
+          "onoff"
+        ]
+      },
+      "device_class": null,
+      "original_device_class": null,
+      "original_icon": null
+    },
+    "light.hallway_lamp_old_pairing": {
+      "area_id": "hallway",
+      "categories": {},
+      "config_entry_id": null,
+      "config_subentry_id": null,
+      "created_at": 1792068079.43321,
+      "device_id": null,
+      "disabled_by": null,
+      "entity_category": null,
+      "entity_id": "light.hallway_lamp_old_pairing",
+      "has_entity_name": false,
+      "hidden_by": null,
+      "icon": null,
+      "id": "a1a5d27e668052769d4f87718afff78a",
+      "labels": [],
+      "modified_at": 1792068081.282574,
+      "name": null,
+      "options": {
+        "conversation": {
+          "should_expose": true
+        }
+      },
+      "original_name": "Hallway Lamp",
+      "platform": "template",
+      "translation_key": null,
+      "unique_id": "fixwright_hallway_lamp_old_pairing",
+      "aliases": [
+        null
+      ],
+      "capabilities": {
+        "supported_color_modes": [
+          "onoff"
+        ]
+      },
+      "device_class": null,
+      "original_device_class": null,
+      "original_icon": null
+    },
+    "light.bed_light": {
+      "area_id": null,
+      "categories": {},
+      "config_entry_id": "01M4ZS9KTK0KSHR2BHBKYFKPQA",
+      "config_subentry_id": null,
+      "created_at": 1792068079.498147,
+      "device_id": "71b8c2d443c76e8b189d7e0de22b91cb",
+      "disabled_by": null,
+      "entity_category": null,
+      "entity_id": "light.bed_light",
+      "has_entity_name": true,
+      "hidden_by": null,
+      "icon": null,
+      "id": "2cfdfd4a6bd38427eaa04f06dc8e56a2",
+      "labels": [],
+      "modified_at": 1792068079.531351,
+      "name": null,
+      "options": {
+        "conversation": {
+          "should_expose": true
+        }
+      },
+      "original_name": null,
+      "platform": "demo",
+      "translation_key": "bed_light",
+      "unique_id": "light_1",
+      "aliases": [
+        null
+      ],
+      "capabilities": {
+        "min_color_temp_kelvin": 2000,
+        "max_color_temp_kelvin": 6535,
+        "effect_list": [
+          "rainbow",
+          "off"
+        ],
+        "supported_color_modes": [
+          "color_temp",
+          "hs"
+        ]
+      },
+      "device_class": null,
+      "original_device_class": null,
+      "original_icon": null
+    },
+    "light.hallway_lights": {
+      "area_id": "hallway",
+      "categories": {},
+      "config_entry_id": null,
+      "config_subentry_id": null,
+      "created_at": 1792068078.592861,
+      "device_id": null,
+      "disabled_by": null,
+      "entity_category": null,
+      "entity_id": "light.hallway_lights",
+      "has_entity_name": false,
+      "hidden_by": null,
+      "icon": null,
+      "id": "38e65e707429fcd726e71f0f76ec903e",
+      "labels": [],
+      "modified_at": 1792068081.282886,
+      "name": null,
+      "options": {
+        "conversation": {
+          "should_expose": true
+        }
+      },
+      "original_name": "Hallway Lights",
+      "platform": "group",
+      "translation_key": "light",
+      "unique_id": "fixwright_hallway_lights",
+      "aliases": [
+        null
+      ],
+      "capabilities": {
+        "supported_color_modes": [
+          "onoff"
+        ]
+      },
+      "device_class": null,
+      "original_device_class": null,
+      "original_icon": null
+    },
+    "select.hallway_lamp_power_on_behavior": {
+      "area_id": "hallway",
+      "categories": {},
+      "config_entry_id": null,
+      "config_subentry_id": null,
+      "created_at": 1792068079.432272,
+      "device_id": null,
+      "disabled_by": null,
+      "entity_category": null,
+      "entity_id": "select.hallway_lamp_power_on_behavior",
+      "has_entity_name": false,
+      "hidden_by": null,
+      "icon": null,
+      "id": "ee290ccbf4563ac8482364bb8304b4a3",
+      "labels": [],
+      "modified_at": 1792068081.284294,
+      "name": null,
+      "options": {
+        "conversation": {
+          "should_expose": false
+        }
+      },
+      "original_name": "Hallway Lamp Power On Behavior",
+      "platform": "template",
+      "translation_key": null,
+      "unique_id": "fixwright_hallway_lamp_power_on_behavior",
+      "aliases": [
+        null
+      ],
+      "capabilities": {
+        "options": [
+          "off",
+          "on",
+          "toggle",
+          "previous"
+        ]
+      },
+      "device_class": null,
+      "original_device_class": null,
+      "original_icon": null
+    },
+    "light.bridge_lamp": {
+      "area_id": null,
+      "categories": {},
+      "config_entry_id": "01M4ZS9KT1SFHGGTXMVR0SEGCQ",
+      "config_subentry_id": null,
+      "created_at": 1792068079.461977,
+      "device_id": "f7830d61f2592ca34773b3e4e74a48a9",
+      "disabled_by": null,
+      "entity_category": null,
+      "entity_id": "light.bridge_lamp",
+      "has_entity_name": true,
+      "hidden_by": null,
+      "icon": null,
+      "id": "95fe647fe7bee1901712ce54a93aae2e",
+      "labels": [],
+      "modified_at": 1792068079.53078,
+      "name": null,
+      "options": {
+        "conversation": {
+          "should_expose": true
+        }
+      },
+      "original_name": null,
+      "platform": "fixwright_bridge",
+      "translation_key": null,
+      "unique_id": "fixwright_bridge_lamp",
+      "aliases": [
+        null
+      ],
+      "capabilities": {
+        "supported_color_modes": [
+          "onoff"
+        ]
+      },
+      "device_class": null,
+      "original_device_class": null,
+      "original_icon": null
+    },
+    "light.bridge_spot": {
+      "area_id": null,
+      "categories": {},
+      "config_entry_id": "01M4ZS9KT1SFHGGTXMVR0SEGCQ",
+      "config_subentry_id": null,
+      "created_at": 1792068079.462229,
+      "device_id": "a19d3d9a5f42f55580314fb7e70019b1",
+      "disabled_by": null,
+      "entity_category": null,
+      "entity_id": "light.bridge_spot",
+      "has_entity_name": true,
+      "hidden_by": null,
+      "icon": null,
+      "id": "303b2a25f0baedf04b5befb4dded1052",
+      "labels": [],
+      "modified_at": 1792068079.530802,
+      "name": null,
+      "options": {
+        "conversation": {
+          "should_expose": true
+        }
+      },
+      "original_name": null,
+      "platform": "fixwright_bridge",
+      "translation_key": null,
+      "unique_id": "fixwright_bridge_spot",
+      "aliases": [
+        null
+      ],
+      "capabilities": {
+        "supported_color_modes": [
+          "onoff"
+        ]
+      },
+      "device_class": null,
+      "original_device_class": null,
+      "original_icon": null
+    },
+    "sensor.hallway_bridge_signal": {
+      "area_id": null,
+      "categories": {},
+      "config_entry_id": "01M4ZS9KT1SFHGGTXMVR0SEGCQ",
+      "config_subentry_id": null,
+      "created_at": 1792068079.462473,
+      "device_id": "0cc90b38b1c0f0f66d5a8f1fb01dc592",
+      "disabled_by": null,
+      "entity_category": "diagnostic",
+      "entity_id": "sensor.hallway_bridge_signal",
+      "has_entity_name": false,
+      "hidden_by": null,
+      "icon": null,
+      "id": "9d4c8766ebd028b93eb37a5fd915aa51",
+      "labels": [],
+      "modified_at": 1792068079.530821,
+      "name": null,
+      "options": {
+        "conversation": {
+          "should_expose": false
+        }
+      },
+      "original_name": "Signal",
+      "platform": "fixwright_bridge",
+      "translation_key": null,
+      "unique_id": "fixwright_bridge_signal",
+      "aliases": [
+        null
+      ],
+      "capabilities": null,
+      "device_class": null,
+      "original_device_class": null,
+      "original_icon": null
+    },
+    "sensor.hallway_bridge_firmware_version": {
+      "area_id": null,
+      "categories": {},
+      "config_entry_id": "01M4ZS9KT1SFHGGTXMVR0SEGCQ",
+      "config_subentry_id": null,
+      "created_at": 1792068079.462644,
+      "device_id": "0cc90b38b1c0f0f66d5a8f1fb01dc592",
+      "disabled_by": null,
+      "entity_category": "diagnostic",
+      "entity_id": "sensor.hallway_bridge_firmware_version",
+      "has_entity_name": false,
+      "hidden_by": null,
+      "icon": null,
+      "id": "b7a147952950cee3cc4340eeec7ace46",
+      "labels": [],
+      "modified_at": 1792068079.530837,
+      "name": null,
+      "options": {
+        "conversation": {
+          "should_expose": false
+        }
+      },
+      "original_name": "Firmware version",
+      "platform": "fixwright_bridge",
+      "translation_key": null,
+      "unique_id": "fixwright_bridge_firmware",
+      "aliases": [
+        null
+      ],
+      "capabilities": null,
+      "device_class": null,
+      "original_device_class": null,
+      "original_icon": null
+    }
+  },
+  "devices": [
+    {
+      "area_id": null,
+      "configuration_url": null,
+      "config_entries": [
+        "01M4ZS9KT1SFHGGTXMVR0SEGCQ"
+      ],
+      "config_entries_subentries": {
+        "01M4ZS9KT1SFHGGTXMVR0SEGCQ": [
+          null
+        ]
+      },
+      "config_entry_id": "01M4ZS9KT1SFHGGTXMVR0SEGCQ",
+      "config_subentry_id": null,
+      "connections": [],
+      "created_at": 1792068079.425456,
+      "disabled_by": null,
+      "entry_type": null,
+      "hw_version": null,
+      "id": "0cc90b38b1c0f0f66d5a8f1fb01dc592",
+      "identifiers": [
+        [
+          "fixwright_bridge",
+          "bridge"
+        ]
+      ],
+      "labels": [],
+      "manufacturer": "Fixwright Lab (simulated)",
+      "model": "Simulated Zigbee bridge",
+      "model_id": null,
+      "modified_at": 1792068079.425493,
+      "name_by_user": null,
+      "name": "Hallway Bridge",
+      "parent_device_id": null,
+      "primary_config_entry": "01M4ZS9KT1SFHGGTXMVR0SEGCQ",
+      "serial_number": null,
+      "sw_version": null,
+      "via_device_id": null
+    },
+    {
+      "area_id": null,
+      "configuration_url": null,
+      "config_entries": [
+        "01M4ZS9KT1SFHGGTXMVR0SEGCQ"
+      ],
+      "config_entries_subentries": {
+        "01M4ZS9KT1SFHGGTXMVR0SEGCQ": [
+          null
+        ]
+      },
+      "config_entry_id": "01M4ZS9KT1SFHGGTXMVR0SEGCQ",
+      "config_subentry_id": null,
+      "connections": [
+        [
+          "zigbee",
+          "00:17:88:01:0b:00:00:01"
+        ]
+      ],
+      "created_at": 1792068079.461853,
+      "disabled_by": null,
+      "entry_type": null,
+      "hw_version": null,
+      "id": "f7830d61f2592ca34773b3e4e74a48a9",
+      "identifiers": [
+        [
+          "fixwright_bridge",
+          "bridge_lamp"
+        ]
+      ],
+      "labels": [],
+      "manufacturer": "Fixwright Lab (simulated)",
+      "model": "Simulated bridge bulb",
+      "model_id": null,
+      "modified_at": 1792068079.46189,
+      "name_by_user": null,
+      "name": "Bridge Lamp",
+      "parent_device_id": null,
+      "primary_config_entry": "01M4ZS9KT1SFHGGTXMVR0SEGCQ",
+      "serial_number": null,
+      "sw_version": null,
+      "via_device_id": "0cc90b38b1c0f0f66d5a8f1fb01dc592"
+    },
+    {
+      "area_id": null,
+      "configuration_url": null,
+      "config_entries": [
+        "01M4ZS9KT1SFHGGTXMVR0SEGCQ"
+      ],
+      "config_entries_subentries": {
+        "01M4ZS9KT1SFHGGTXMVR0SEGCQ": [
+          null
+        ]
+      },
+      "config_entry_id": "01M4ZS9KT1SFHGGTXMVR0SEGCQ",
+      "config_subentry_id": null,
+      "connections": [
+        [
+          "zigbee",
+          "00:17:88:01:0b:00:00:02"
+        ]
+      ],
+      "created_at": 1792068079.462165,
+      "disabled_by": null,
+      "entry_type": null,
+      "hw_version": null,
+      "id": "a19d3d9a5f42f55580314fb7e70019b1",
+      "identifiers": [
+        [
+          "fixwright_bridge",
+          "bridge_spot"
+        ]
+      ],
+      "labels": [],
+      "manufacturer": "Fixwright Lab (simulated)",
+      "model": "Simulated bridge bulb",
+      "model_id": null,
+      "modified_at": 1792068079.462184,
+      "name_by_user": null,
+      "name": "Bridge Spot",
+      "parent_device_id": null,
+      "primary_config_entry": "01M4ZS9KT1SFHGGTXMVR0SEGCQ",
+      "serial_number": null,
+      "sw_version": null,
+      "via_device_id": "0cc90b38b1c0f0f66d5a8f1fb01dc592"
+    },
+    {
+      "area_id": null,
+      "configuration_url": null,
+      "config_entries": [
+        "01M4ZS9KTK0KSHR2BHBKYFKPQA"
+      ],
+      "config_entries_subentries": {
+        "01M4ZS9KTK0KSHR2BHBKYFKPQA": [
+          null
+        ]
+      },
+      "config_entry_id": "01M4ZS9KTK0KSHR2BHBKYFKPQA",
+      "config_subentry_id": null,
+      "connections": [],
+      "created_at": 1792068079.49807,
+      "disabled_by": null,
+      "entry_type": null,
+      "hw_version": null,
+      "id": "71b8c2d443c76e8b189d7e0de22b91cb",
+      "identifiers": [
+        [
+          "demo",
+          "light_1"
+        ]
+      ],
+      "labels": [],
+      "manufacturer": null,
+      "model": null,
+      "model_id": null,
+      "modified_at": 1792068079.498088,
+      "name_by_user": null,
+      "name": "Bed Light",
+      "parent_device_id": null,
+      "primary_config_entry": "01M4ZS9KTK0KSHR2BHBKYFKPQA",
+      "serial_number": null,
+      "sw_version": null,
+      "via_device_id": null
+    }
+  ],
+  "areas": [
+    {
+      "aliases": [],
+      "area_id": "living_room",
+      "floor_id": null,
+      "humidity_entity_id": null,
+      "icon": "mdi:sofa",
+      "labels": [],
+      "name": "Living Room",
+      "picture": null,
+      "temperature_entity_id": null,
+      "created_at": 1792068078.890488,
+      "modified_at": 1792068078.890489
+    },
+    {
+      "aliases": [],
+      "area_id": "kitchen",
+      "floor_id": null,
+      "humidity_entity_id": null,
+      "icon": "mdi:stove",
+      "labels": [],
+      "name": "Kitchen",
+      "picture": null,
+      "temperature_entity_id": null,
+      "created_at": 1792068078.890545,
+      "modified_at": 1792068078.890546
+    },
+    {
+      "aliases": [],
+      "area_id": "bedroom",
+      "floor_id": null,
+      "humidity_entity_id": null,
+      "icon": "mdi:bed",
+      "labels": [],
+      "name": "Bedroom",
+      "picture": null,
+      "temperature_entity_id": null,
+      "created_at": 1792068078.890574,
+      "modified_at": 1792068078.890574
+    },
+    {
+      "aliases": [],
+      "area_id": "hallway",
+      "floor_id": null,
+      "humidity_entity_id": null,
+      "icon": null,
+      "labels": [],
+      "name": "Hallway",
+      "picture": null,
+      "temperature_entity_id": null,
+      "created_at": 1792068081.277512,
+      "modified_at": 1792068081.277514
+    }
+  ]
+}

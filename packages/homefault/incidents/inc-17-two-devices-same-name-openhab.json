@@ -1,0 +1,294 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-17-two-devices-same-name-openhab",
+  "title": "Two devices with the same name, neither can be renamed",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/alexa/comments/1k57d38/",
+    "date": "2025-04-22",
+    "publisher": "Reddit r/alexa",
+    "quote": "I have two smarthomedevices in my smarthome device list and can't rename, delete or deaktivate any of them."
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "Both devices come through openHAB. We model two different lights that openHAB exposes with the same label \"Lamp\".",
+    "Time zone Central Europe is assumed."
+  ],
+  "tz": "Europe/Berlin",
+  "now": "2025-04-22T14:05:00.000Z",
+  "symptom": {
+    "text": "Two devices have the same name and I cannot rename either of them. Voice turns on the wrong one.",
+    "device": "Lamp"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "light.lamp",
+        "name": "Lamp",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_oh_item_livingroom_lamp",
+        "integration": "openhab",
+        "transport": "cloud",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Lamp"
+        },
+        "lastChanged": "2025-04-22T13:58:00.040Z",
+        "lastUpdated": "2025-04-22T13:58:00.040Z",
+        "area": "living_room",
+        "vendor": "openHAB"
+      },
+      {
+        "entityId": "light.lamp_2",
+        "name": "Lamp",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_oh_item_bedroom_lamp",
+        "integration": "openhab",
+        "transport": "cloud",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Lamp"
+        },
+        "lastChanged": "2025-04-21T20:30:00.040Z",
+        "lastUpdated": "2025-04-21T20:30:00.040Z",
+        "area": "bedroom",
+        "vendor": "openHAB"
+      },
+      {
+        "entityId": "switch.coffee",
+        "name": "Coffee",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_coffee",
+        "integration": "openhab",
+        "transport": "cloud",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Coffee"
+        },
+        "lastChanged": "2025-04-22T05:15:00.040Z",
+        "lastUpdated": "2025-04-22T05:15:00.040Z",
+        "area": "kitchen",
+        "vendor": "openHAB"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "openhab",
+        "state": "loaded",
+        "entryId": "entry_openhab"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [],
+    "signals": {
+      "light.lamp": {
+        "lastSeen": "2025-04-22T14:05:00.000Z"
+      },
+      "light.lamp_2": {
+        "lastSeen": "2025-04-22T14:05:00.000Z"
+      },
+      "switch.coffee": {
+        "lastSeen": "2025-04-22T14:05:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "call_service",
+      "when": "2025-04-21T17:00:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.lamp"
+      ],
+      "context": {
+        "id": "ctx_i17_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-04-21T17:00:00.040Z",
+      "entity_id": "light.lamp",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i17_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2025-04-21T17:00:40.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.lamp"
+      ],
+      "context": {
+        "id": "ctx_i17_2",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-04-21T17:00:40.040Z",
+      "entity_id": "light.lamp",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i17_2",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2025-04-21T17:01:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.lamp_2"
+      ],
+      "context": {
+        "id": "ctx_i17_3",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-04-21T17:01:00.040Z",
+      "entity_id": "light.lamp_2",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i17_3",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2025-04-21T20:30:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.lamp_2"
+      ],
+      "context": {
+        "id": "ctx_i17_4",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-04-21T20:30:00.040Z",
+      "entity_id": "light.lamp_2",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i17_4",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2025-04-22T04:45:00.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.coffee"
+      ],
+      "context": {
+        "id": "ctx_i17_5",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-04-22T04:45:00.040Z",
+      "entity_id": "switch.coffee",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i17_5",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2025-04-22T05:15:00.000Z",
+      "domain": "switch",
+      "service": "turn_off",
+      "entity_ids": [
+        "switch.coffee"
+      ],
+      "context": {
+        "id": "ctx_i17_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-04-22T05:15:00.040Z",
+      "entity_id": "switch.coffee",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i17_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2025-04-22T13:58:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.lamp"
+      ],
+      "context": {
+        "id": "ctx_i17_7",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2025-04-22T13:58:00.040Z",
+      "entity_id": "light.lamp",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i17_7",
+        "user_id": "user_voice_assistant"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "name_collision",
+    "entity_ids": [
+      "light.lamp",
+      "light.lamp_2"
+    ],
+    "explanation": "Two different lights share the label Lamp."
+  },
+  "human_truth": {
+    "power_switch_check": "yes"
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "name_collision"
+  ]
+}

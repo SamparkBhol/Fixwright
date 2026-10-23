@@ -1,0 +1,14 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  // The MCP Apps sandbox proxy: serves /sandbox.html only, on its own origin.
+  "name": "fixwright-sandbox",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-09-29",
+  "workers_dev": true,
+  "observability": { "enabled": false },
+  // Exact origins of the host simulator allowed to embed the sandbox. Local dev values here; on deploy
+  // pass the real host origin: wrangler deploy --var HOST_ORIGINS:https://fixwright.<subdomain>.workers.dev
+  "vars": {
+    "HOST_ORIGINS": "http://localhost:8711,http://127.0.0.1:8711"
+  }
+}

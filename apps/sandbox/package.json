@@ -1,0 +1,24 @@
+{
+  "name": "@fixwright/sandbox",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Sandbox proxy Worker for MCP Apps views on a second origin.",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/worker.ts"
+  },
+  "scripts": {
+    "build": "node scripts/build.ts",
+    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.proxy.json && tsc -p tsconfig.test.json",
+    "test": "vitest run",
+    "check": "node scripts/build.ts && tsc -p tsconfig.json && tsc -p tsconfig.proxy.json && tsc -p tsconfig.test.json && vitest run",
+    "dev": "node scripts/build.ts && wrangler dev --local --ip 127.0.0.1 --port 8714 --inspector-ip 127.0.0.1 --inspector-port 8719 --show-interactive-dev-session=false",
+    "test:wrangler": "node scripts/wrangler-smoke.ts",
+    "deploy:dry": "node scripts/build.ts && wrangler deploy --dry-run --outdir dist"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20260929.1",
+    "wrangler": "4.144.0"
+  }
+}

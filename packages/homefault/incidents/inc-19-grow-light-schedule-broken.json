@@ -1,0 +1,336 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-19-grow-light-schedule-broken",
+  "title": "Five year old grow light schedule stopped working",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/alexa/comments/1sw9b83/",
+    "date": "2026-04-26",
+    "publisher": "Reddit r/alexa",
+    "quote": "I'm literally going to buy an old school mechanical light timer to do this job now"
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "The post reports two problems: the schedule, and \"Lights off\" also reaching the grow plug. This scenario reconstructs only the schedule.",
+    "We assume the plug was added again as a new device named Grow Plug on 20 April while the schedule still targets the old one. Time zone US Eastern is assumed."
+  ],
+  "tz": "America/New_York",
+  "now": "2026-04-26T14:30:00.000Z",
+  "symptom": {
+    "text": "My grow light schedule stopped working after five years."
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "automation.grow_light_schedule",
+        "name": "Grow light schedule",
+        "aliases": [],
+        "domain": "automation",
+        "integration": "automation",
+        "transport": "virtual",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Grow light schedule",
+          "references": [
+            "switch.grow_lights"
+          ]
+        },
+        "lastChanged": "2026-03-27T14:30:00.000Z",
+        "lastUpdated": "2026-03-27T14:30:00.000Z"
+      },
+      {
+        "entityId": "light.basement_lights",
+        "name": "Basement Lights",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_basement_lights",
+        "integration": "hue",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Basement Lights"
+        },
+        "lastChanged": "2026-04-26T01:00:00.040Z",
+        "lastUpdated": "2026-04-26T01:00:00.040Z",
+        "area": "basement",
+        "vendor": "Signify"
+      },
+      {
+        "entityId": "switch.grow_plug",
+        "name": "Grow Plug",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_grow_plug",
+        "integration": "kasa",
+        "transport": "wifi",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Grow Plug"
+        },
+        "lastChanged": "2026-04-26T01:02:00.040Z",
+        "lastUpdated": "2026-04-26T01:02:00.040Z",
+        "area": "grow_room",
+        "vendor": "TP-Link"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "automation",
+        "state": "loaded",
+        "entryId": "entry_automation"
+      },
+      {
+        "integration": "hue",
+        "state": "loaded",
+        "entryId": "entry_hue"
+      },
+      {
+        "integration": "kasa",
+        "state": "loaded",
+        "entryId": "entry_kasa"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [],
+    "signals": {
+      "switch.grow_plug": {
+        "rssi": -64,
+        "lastSeen": "2026-04-26T14:30:00.000Z"
+      },
+      "light.basement_lights": {
+        "lastSeen": "2026-04-26T14:30:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "registry",
+      "when": "2026-04-20T22:01:00.000Z",
+      "action": "remove",
+      "entity_id": "switch.grow_lights"
+    },
+    {
+      "type": "registry",
+      "when": "2026-04-20T22:05:00.000Z",
+      "action": "create",
+      "entity_id": "switch.grow_plug",
+      "changes": {
+        "name": "Grow Plug"
+      }
+    },
+    {
+      "type": "automation_triggered",
+      "when": "2026-04-25T00:00:00.000Z",
+      "entity_id": "automation.grow_light_schedule",
+      "name": "Grow light schedule",
+      "source": "time pattern",
+      "context": {
+        "id": "ctx_i19_1"
+      },
+      "error": "Entity switch.grow_lights not found"
+    },
+    {
+      "type": "call_service",
+      "when": "2026-04-25T00:00:00.020Z",
+      "domain": "switch",
+      "service": "turn_off",
+      "entity_ids": [
+        "switch.grow_lights"
+      ],
+      "context": {
+        "id": "ctx_i19_1"
+      }
+    },
+    {
+      "type": "automation_triggered",
+      "when": "2026-04-25T10:00:00.000Z",
+      "entity_id": "automation.grow_light_schedule",
+      "name": "Grow light schedule",
+      "source": "time pattern",
+      "context": {
+        "id": "ctx_i19_2"
+      },
+      "error": "Entity switch.grow_lights not found"
+    },
+    {
+      "type": "call_service",
+      "when": "2026-04-25T10:00:00.020Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.grow_lights"
+      ],
+      "context": {
+        "id": "ctx_i19_2"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-04-25T13:10:00.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.grow_plug"
+      ],
+      "context": {
+        "id": "ctx_i19_3",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-04-25T13:10:00.040Z",
+      "entity_id": "switch.grow_plug",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i19_3",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-04-25T23:30:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.basement_lights"
+      ],
+      "context": {
+        "id": "ctx_i19_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-04-25T23:30:00.040Z",
+      "entity_id": "light.basement_lights",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i19_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "automation_triggered",
+      "when": "2026-04-26T00:00:00.000Z",
+      "entity_id": "automation.grow_light_schedule",
+      "name": "Grow light schedule",
+      "source": "time pattern",
+      "context": {
+        "id": "ctx_i19_5"
+      },
+      "error": "Entity switch.grow_lights not found"
+    },
+    {
+      "type": "call_service",
+      "when": "2026-04-26T00:00:00.020Z",
+      "domain": "switch",
+      "service": "turn_off",
+      "entity_ids": [
+        "switch.grow_lights"
+      ],
+      "context": {
+        "id": "ctx_i19_5"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-04-26T01:00:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.basement_lights"
+      ],
+      "context": {
+        "id": "ctx_i19_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-04-26T01:00:00.040Z",
+      "entity_id": "light.basement_lights",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i19_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-04-26T01:02:00.000Z",
+      "domain": "switch",
+      "service": "turn_off",
+      "entity_ids": [
+        "switch.grow_plug"
+      ],
+      "context": {
+        "id": "ctx_i19_7",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-04-26T01:02:00.040Z",
+      "entity_id": "switch.grow_plug",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i19_7",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "automation_triggered",
+      "when": "2026-04-26T10:00:00.000Z",
+      "entity_id": "automation.grow_light_schedule",
+      "name": "Grow light schedule",
+      "source": "time pattern",
+      "context": {
+        "id": "ctx_i19_8"
+      },
+      "error": "Entity switch.grow_lights not found"
+    },
+    {
+      "type": "call_service",
+      "when": "2026-04-26T10:00:00.020Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.grow_lights"
+      ],
+      "context": {
+        "id": "ctx_i19_8"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "dead_trigger",
+    "entity_ids": [
+      "automation.grow_light_schedule",
+      "switch.grow_lights"
+    ],
+    "explanation": "The schedule still switches the old, removed plug."
+  },
+  "human_truth": {
+    "notes": "The grow lights stay off in the morning."
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "dead_trigger"
+  ]
+}

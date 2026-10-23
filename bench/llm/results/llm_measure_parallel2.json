@@ -1,0 +1,127 @@
+{
+  "generated_at": "2026-10-15T12:57:36.677Z",
+  "server": {
+    "pid": 3854561,
+    "build_info": "b11146-7fe450e19",
+    "n_ctx": 16384,
+    "argv": [
+      "--model",
+      "$LLM_HOME/models/gpt-oss-20b-MXFP4.gguf",
+      "--alias",
+      "gpt-oss-20b",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8771",
+      "--ctx-size",
+      "32768",
+      "--parallel",
+      "2",
+      "--threads",
+      "8",
+      "--threads-batch",
+      "10",
+      "--flash-attn",
+      "on",
+      "--load-mode",
+      "none",
+      "--jinja",
+      "--reasoning-format",
+      "auto",
+      "--reasoning-effort",
+      "low",
+      "--cache-ram",
+      "2048",
+      "--metrics",
+      "--no-webui",
+      "--cors-origins",
+      "localhost",
+      "--api-key-file",
+      "$LLM_HOME/run/llama-server-8771.key"
+    ],
+    "cpu_backend": "haswell",
+    "ggml_libraries": [
+      "libggml-base.so.0.25.1",
+      "libggml-cpu-haswell.so",
+      "libggml-rpc.so",
+      "libggml.so.0.25.1"
+    ]
+  },
+  "host": {
+    "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
+    "logical_cpus": 16,
+    "loadavg_1m_start": 9.7,
+    "loadavg_1m_end": 18.4
+  },
+  "method": "3 runs of 2 concurrent /completion request(s) with an exact 1500-token prompt, 300 forced tokens (ignore_eos), cache_prompt false, after one warm-up; medians reported. Per-request speeds are per slot.",
+  "concurrency": 2,
+  "throughput": {
+    "prompt_tokens_per_second": 30.7,
+    "generation_tokens_per_second": 7.6,
+    "requests": [
+      {
+        "prompt_per_second": 27.5,
+        "predicted_per_second": 8.5,
+        "prompt_ms": 54470,
+        "predicted_ms": 35321
+      },
+      {
+        "prompt_per_second": 27.5,
+        "predicted_per_second": 8.5,
+        "prompt_ms": 54469,
+        "predicted_ms": 35322
+      },
+      {
+        "prompt_per_second": 33.8,
+        "predicted_per_second": 7.6,
+        "prompt_ms": 44320,
+        "predicted_ms": 39237
+      },
+      {
+        "prompt_per_second": 33.8,
+        "predicted_per_second": 7.6,
+        "prompt_ms": 44319,
+        "predicted_ms": 39237
+      },
+      {
+        "prompt_per_second": 26.8,
+        "predicted_per_second": 6.8,
+        "prompt_ms": 55911,
+        "predicted_ms": 43991
+      },
+      {
+        "prompt_per_second": 40.8,
+        "predicted_per_second": 6.8,
+        "prompt_ms": 36730,
+        "predicted_ms": 43788
+      }
+    ],
+    "round_wall_ms": [
+      89801,
+      83596,
+      100006
+    ]
+  },
+  "memory": {
+    "peak_rss_mib": 12640.7,
+    "rss_mib": 12640.7,
+    "rss_anon_mib": 12625.2,
+    "rss_file_mib": 15.5
+  },
+  "diagnosis_calls": {
+    "median_wall_ms": null,
+    "calls": []
+  },
+  "estimate_300_calls": {
+    "synthetic_1500_in_300_out": null,
+    "measured_rounds_1500_in_300_out": {
+      "calls": 300,
+      "concurrency": 2,
+      "rounds": 150,
+      "medianRoundMs": 89801,
+      "totalMinutes": 224.5
+    },
+    "measured_diagnosis_call": null,
+    "note": "synthetic = 300 x (1500/pp + 300/tg) from server timings; measured_rounds = ceil(300/concurrency) x median wall time of a round, HTTP included; measured_diagnosis_call = 300 x median cold call on the small smoke log."
+  }
+}

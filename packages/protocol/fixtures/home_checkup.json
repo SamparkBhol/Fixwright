@@ -1,0 +1,52 @@
+{
+  "speech": "I found three things. Two lights answer to Living Room Light. The hall motion sensor battery is at 6%. And the kitchen plug dropped off Wi-Fi 9 times today.",
+  "status": "ok",
+  "view": "carousel",
+  "ids": {
+    "checkup_id": "chk_01m52gb9003bd0kmwn"
+  },
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "checkup_id": "chk_01m52gb9003bd0kmwn",
+  "findings": [
+    {
+      "issue_id": "iss_01m52gb900j5778msk",
+      "kind": "duplicate_name",
+      "severity": "high",
+      "title": "Two lights answer to Living Room Light",
+      "detail": "A Hue group and a Zigbee bulb are both called Living Room Light, so a command can reach the wrong one.",
+      "entity_ids": [
+        "light.living_room_light",
+        "light.living_room_light_2"
+      ],
+      "fixable": true,
+      "action_label": "Rename one"
+    },
+    {
+      "issue_id": "iss_01m52gb9004c6v99nn",
+      "kind": "low_battery",
+      "severity": "high",
+      "title": "Hall motion sensor battery at 6%",
+      "detail": "At 6% it may stop reporting motion soon.",
+      "entity_ids": [
+        "binary_sensor.hall_motion",
+        "sensor.hall_motion_battery"
+      ],
+      "fixable": false
+    },
+    {
+      "issue_id": "iss_01m52gb900zmxytm7w",
+      "kind": "flapping",
+      "severity": "medium",
+      "title": "Kitchen plug dropped off Wi-Fi 9 times today",
+      "detail": "Its Wi-Fi signal is weak, at -82 dBm. Moving the plug or the router closer usually helps.",
+      "entity_ids": [
+        "switch.kitchen_plug"
+      ],
+      "fixable": false,
+      "action_label": "Show me how"
+    }
+  ]
+}

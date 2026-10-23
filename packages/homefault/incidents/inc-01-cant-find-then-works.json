@@ -1,0 +1,457 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-01-cant-find-then-works",
+  "title": "Living room lights: \"can't find the device\", then it works five seconds later",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/alexa/comments/1wbmeqx/",
+    "date": "2026-09-09",
+    "publisher": "Reddit r/alexa",
+    "quote": "she’ll tell me she can’t find the device. I say the exact same thing again five seconds later and suddenly it works."
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "The post does not name a cause. We model the one that explains every detail: two copies of the same light, an old one left behind when the light was paired again on 21 August, and the assistant reaching one copy or the other.",
+    "Time zone US Eastern, inferred from nothing in the post; the home has four rooms with Hue and Kasa devices."
+  ],
+  "tz": "America/New_York",
+  "now": "2026-09-09T13:55:00.000Z",
+  "symptom": {
+    "text": "When I say turn off the living room lights she says she can't find the device, then it works five seconds later.",
+    "device": "Living Room Lights"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "light.bedroom_lamp",
+        "name": "Bedroom Lamp",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_bedroom_lamp",
+        "integration": "hue",
+        "transport": "zigbee",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Bedroom Lamp"
+        },
+        "lastChanged": "2026-09-09T10:52:10.040Z",
+        "lastUpdated": "2026-09-09T10:52:10.040Z",
+        "area": "bedroom",
+        "vendor": "Signify"
+      },
+      {
+        "entityId": "light.kitchen_light",
+        "name": "Kitchen Light",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_kitchen_light",
+        "integration": "hue",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Kitchen Light"
+        },
+        "lastChanged": "2026-09-09T02:50:44.040Z",
+        "lastUpdated": "2026-09-09T02:50:44.040Z",
+        "area": "kitchen",
+        "vendor": "Signify"
+      },
+      {
+        "entityId": "light.living_room_lights",
+        "name": "Living Room Lights",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_lr_lights_old",
+        "integration": "hue",
+        "transport": "zigbee",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Living Room Lights",
+          "restored": true
+        },
+        "lastChanged": "2026-08-21T23:02:00.000Z",
+        "lastUpdated": "2026-08-21T23:02:00.000Z",
+        "area": "living_room",
+        "vendor": "Signify",
+        "restored": true
+      },
+      {
+        "entityId": "light.living_room_lights_2",
+        "name": "Living Room Lights",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_living_room_lights_2",
+        "integration": "hue",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Living Room Lights"
+        },
+        "lastChanged": "2026-09-09T02:48:08.040Z",
+        "lastUpdated": "2026-09-09T02:48:08.040Z",
+        "area": "living_room",
+        "vendor": "Signify",
+        "model": "Hue White A19"
+      },
+      {
+        "entityId": "switch.coffee_maker",
+        "name": "Coffee Maker",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_coffee_maker",
+        "integration": "kasa",
+        "transport": "wifi",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Coffee Maker"
+        },
+        "lastChanged": "2026-09-08T11:30:00.040Z",
+        "lastUpdated": "2026-09-08T11:30:00.040Z",
+        "area": "kitchen",
+        "vendor": "TP-Link"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "hue",
+        "state": "loaded",
+        "entryId": "entry_hue"
+      },
+      {
+        "integration": "kasa",
+        "state": "loaded",
+        "entryId": "entry_kasa"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [],
+    "signals": {
+      "light.living_room_lights": {
+        "lastSeen": "2026-08-21T23:02:00.000Z"
+      },
+      "light.living_room_lights_2": {
+        "lastSeen": "2026-09-09T13:55:00.000Z"
+      },
+      "light.kitchen_light": {
+        "lastSeen": "2026-09-09T13:55:00.000Z"
+      },
+      "light.bedroom_lamp": {
+        "lastSeen": "2026-09-09T13:55:00.000Z"
+      },
+      "switch.coffee_maker": {
+        "rssi": -55,
+        "lastSeen": "2026-09-09T13:55:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "call_service",
+      "when": "2026-09-07T23:12:04.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.living_room_lights"
+      ],
+      "context": {
+        "id": "ctx_i01_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-07T23:12:09.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.living_room_lights_2"
+      ],
+      "context": {
+        "id": "ctx_i01_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-07T23:12:09.040Z",
+      "entity_id": "light.living_room_lights_2",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i01_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-08T03:01:40.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.living_room_lights_2"
+      ],
+      "context": {
+        "id": "ctx_i01_3",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-08T03:01:40.040Z",
+      "entity_id": "light.living_room_lights_2",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i01_3",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-08T10:45:00.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.coffee_maker"
+      ],
+      "context": {
+        "id": "ctx_i01_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-08T10:45:00.040Z",
+      "entity_id": "switch.coffee_maker",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i01_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-08T11:30:00.000Z",
+      "domain": "switch",
+      "service": "turn_off",
+      "entity_ids": [
+        "switch.coffee_maker"
+      ],
+      "context": {
+        "id": "ctx_i01_5",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-08T11:30:00.040Z",
+      "entity_id": "switch.coffee_maker",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i01_5",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-08T22:40:31.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.kitchen_light"
+      ],
+      "context": {
+        "id": "ctx_i01_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-08T22:40:31.040Z",
+      "entity_id": "light.kitchen_light",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i01_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-08T23:05:12.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.living_room_lights"
+      ],
+      "context": {
+        "id": "ctx_i01_7",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-08T23:05:17.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.living_room_lights_2"
+      ],
+      "context": {
+        "id": "ctx_i01_8",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-08T23:05:17.040Z",
+      "entity_id": "light.living_room_lights_2",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i01_8",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-09T02:48:03.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.living_room_lights"
+      ],
+      "context": {
+        "id": "ctx_i01_9",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-09T02:48:08.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.living_room_lights_2"
+      ],
+      "context": {
+        "id": "ctx_i01_a",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-09T02:48:08.040Z",
+      "entity_id": "light.living_room_lights_2",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i01_a",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-09T02:50:44.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.kitchen_light"
+      ],
+      "context": {
+        "id": "ctx_i01_b",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-09T02:50:44.040Z",
+      "entity_id": "light.kitchen_light",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i01_b",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-09T10:52:10.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.bedroom_lamp"
+      ],
+      "context": {
+        "id": "ctx_i01_c",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-09T10:52:10.040Z",
+      "entity_id": "light.bedroom_lamp",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i01_c",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-09T13:41:22.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.living_room_lights"
+      ],
+      "context": {
+        "id": "ctx_i01_d",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-09T13:41:27.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.living_room_lights_2"
+      ],
+      "context": {
+        "id": "ctx_i01_e",
+        "user_id": "user_voice_assistant"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "stale_duplicate",
+    "entity_ids": [
+      "light.living_room_lights",
+      "light.living_room_lights_2"
+    ],
+    "explanation": "An old copy of the living room lights, offline since 21 August, still answers to the same name."
+  },
+  "human_truth": {
+    "confirm_flash": "yes",
+    "power_switch_check": "yes"
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "stale_duplicate"
+  ]
+}

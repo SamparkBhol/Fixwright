@@ -1,0 +1,111 @@
+HomeTruth benchmark: smoke-heldout-b1b2-n6
+Date: 2026-10-17T12:31:26.540Z to 2026-10-17T12:45:21.018Z (UTC), 13 min 54 s
+Machine: AMD Ryzen 9 5950X 16-Core Processor, 16 vCPUs, 48 GiB, Node v22.22.1; load average 2.02 at start, 11.33 at end
+Command: node src/run.ts --agents fixwright,b1,b2 --set heldout --n 6 --stratified --seed 1 --human-reliability 0.9 --human-seed 1 --out smoke-heldout-b1b2-n6
+
+Scenarios
+  Set: heldout, a stratified sample of 6 out of 200 (seed 1)
+  By subset: heldout 6
+  By cause: dead_trigger 1, hub_down 1, radio_link_weak 1, stale_duplicate 1, vendor_cloud_outage 1, wifi_network_changed 1
+  Ids: gen-heldout-10009, gen-heldout-10034, gen-heldout-10066, gen-heldout-10110, gen-heldout-10139, gen-heldout-10140
+  Simulated person: truthful with probability 0.9 (seed 1); "not sure" when the scenario does not say.
+
+Agents
+  fixwright: @fixwright/engine on scenarioHome(view). The assistant router (@fixwright/router) picks the tool as the live product does: explain_event for questions about something the home did, else the diagnose loop (startDiagnosis, then answerDiagnosis for each question). The simulated person answers its questions; permission questions are granted.
+  b1: LLM only: the rendered logs and the symptom, one call through the Strands Agents SDK; the fetch client only if Strands gets no answer.
+  b2: LLM only: the same as B1 plus the answers the person gave Fixwright in the same scenario (questions as Fixwright asked them).
+
+Model and settings (B1 and B2)
+  Model: gpt-oss-20b (gpt-oss-20b-MXFP4.gguf, MXFP4 MoE, 20.9 B parameters), served by llama.cpp b11146-7fe450e19 at http://127.0.0.1:8771/v1
+  Server: 1 slot(s), context 16384 tokens, CPU backend haswell, peak RSS 12061.5 MiB
+  Server command line: llama-server --model $LLM_HOME/models/gpt-oss-20b-MXFP4.gguf --alias gpt-oss-20b --host 127.0.0.1 --port 8771 --ctx-size 16384 --parallel 1 --threads 8 --threads-batch 10 --flash-attn on --load-mode none --jinja --reasoning-format auto --reasoning-effort low --cache-ram 2048 --metrics --no-webui --cors-origins localhost
+  Generation: temperature 0, seed 42, max tokens 1024 (reasoning included), reasoning effort low, cache_prompt false, timeout 180000 ms, one call at a time
+  Client: Strands Agents SDK 1.19.0 (json_schema mode, OpenAI chat provider, openai 6.49.0); fetch fallback only when Strands gets no answer
+  Output: JSON {cause_id, confidence, explanation}; cause_id is one of the 10 causes or unknown. Confirmed when confidence >= 0.9, likely below, unknown is can't tell; an invalid answer is can't tell and counted as invalid.
+
+Results
+fixwright (n 6)
+  top1                 1.000 (6 of 6), 95% CI 0.610 to 1.000
+  false confirmations  0, rate 0.000 (0 of 6), 95% CI 0.000 to 0.390
+  abstention           0.000 (0 of 6), 95% CI 0.000 to 0.390
+  confirmed precision  1.000 (5 of 5), 95% CI 0.566 to 1.000
+  top1 when answering  1.000 (6 of 6), 95% CI 0.610 to 1.000
+  probes               mean 6.33 (total 38); disruptive mean 0.17 (total 1)
+  questions to person  mean 0.5 (total 3, of which 0 permission questions)
+  tool used            diagnose 6
+  engine errors        0
+  latency per case     p50 3.732 ms, p95 23.294 ms, max 23.294 ms
+  per cause (n, correct, confirmed, false confirmations, abstained):
+    dead_trigger           n   1  correct   1  confirmed   1  false  0  abstained   0
+    hub_down               n   1  correct   1  confirmed   1  false  0  abstained   0
+    radio_link_weak        n   1  correct   1  confirmed   1  false  0  abstained   0
+    stale_duplicate        n   1  correct   1  confirmed   1  false  0  abstained   0
+    vendor_cloud_outage    n   1  correct   1  confirmed   1  false  0  abstained   0
+    wifi_network_changed   n   1  correct   1  confirmed   0  false  0  abstained   0
+
+b1 (n 6)
+  top1                 0.500 (3 of 6), 95% CI 0.188 to 0.812
+  false confirmations  2, rate 0.333 (2 of 6), 95% CI 0.097 to 0.700
+  abstention           0.000 (0 of 6), 95% CI 0.000 to 0.390
+  confirmed precision  0.600 (3 of 5), 95% CI 0.231 to 0.882
+  top1 when answering  0.500 (3 of 6), 95% CI 0.188 to 0.812
+  invalid outputs      0, rate 0.000 (0 of 6), 95% CI 0.000 to 0.390
+  infra failures       0 (no answer from the server after fallback and retry; counted as abstentions)
+  latency per case     p50 87.8 s, p95 135.3 s, max 135.3 s
+  per cause (n, correct, confirmed, false confirmations, abstained):
+    dead_trigger           n   1  correct   1  confirmed   1  false  0  abstained   0
+    hub_down               n   1  correct   1  confirmed   1  false  0  abstained   0
+    radio_link_weak        n   1  correct   0  confirmed   0  false  0  abstained   0
+    stale_duplicate        n   1  correct   0  confirmed   1  false  1  abstained   0
+    vendor_cloud_outage    n   1  correct   1  confirmed   1  false  0  abstained   0
+    wifi_network_changed   n   1  correct   0  confirmed   1  false  1  abstained   0
+
+b2 (n 6)
+  top1                 0.833 (5 of 6), 95% CI 0.436 to 0.970
+  false confirmations  0, rate 0.000 (0 of 6), 95% CI 0.000 to 0.390
+  abstention           0.000 (0 of 6), 95% CI 0.000 to 0.390
+  confirmed precision  1.000 (5 of 5), 95% CI 0.566 to 1.000
+  top1 when answering  0.833 (5 of 6), 95% CI 0.436 to 0.970
+  invalid outputs      0, rate 0.000 (0 of 6), 95% CI 0.000 to 0.390
+  infra failures       0 (no answer from the server after fallback and retry; counted as abstentions)
+  latency per case     p50 91.1 s, p95 135.3 s, max 135.3 s (includes 4 reused cases, each carrying the wall time of the B1 call it reused)
+  per cause (n, correct, confirmed, false confirmations, abstained):
+    dead_trigger           n   1  correct   1  confirmed   1  false  0  abstained   0
+    hub_down               n   1  correct   1  confirmed   1  false  0  abstained   0
+    radio_link_weak        n   1  correct   0  confirmed   0  false  0  abstained   0
+    stale_duplicate        n   1  correct   1  confirmed   1  false  0  abstained   0
+    vendor_cloud_outage    n   1  correct   1  confirmed   1  false  0  abstained   0
+    wifi_network_changed   n   1  correct   1  confirmed   1  false  0  abstained   0
+
+Kill switch (spec 10)
+  Rule: A baseline matches Fixwright on a metric when its 95% Wilson interval overlaps Fixwright's on the same scenarios, or when it is at least as good. The kill switch fires if B1 or B2 matches on both top1 and the false_confirmed rate.
+  B1 vs Fixwright on the same 6 scenarios (too few to conclude):
+    top1             Fixwright 1.000 [95% CI 0.610 to 1.000], B1 0.500 [95% CI 0.188 to 0.812]; matches: yes
+                     paired: Fixwright right and B1 wrong 3, the reverse 0, exact McNemar p 0.25
+    false confirmed  Fixwright 0.000 [95% CI 0.000 to 0.390], B1 0.333 [95% CI 0.097 to 0.700]; matches: yes
+                     paired: only Fixwright falsely confirmed 0, only B1 2, exact McNemar p 0.5
+    B1 matches Fixwright on both: yes
+  B2 vs Fixwright on the same 6 scenarios (too few to conclude):
+    top1             Fixwright 1.000 [95% CI 0.610 to 1.000], B2 0.833 [95% CI 0.436 to 0.970]; matches: yes
+                     paired: Fixwright right and B2 wrong 1, the reverse 0, exact McNemar p 1
+    false confirmed  Fixwright 0.000 [95% CI 0.000 to 0.390], B2 0.000 [95% CI 0.000 to 0.390]; matches: yes
+                     paired: only Fixwright falsely confirmed 0, only B2 0, exact McNemar p 1
+    B2 matches Fixwright on both: yes
+  Result: Not conclusive: only 6 paired scenarios (at least 30 needed), so the intervals are too wide to tell the agents apart. This run checks the pipeline, not the headline.
+
+Timings (for sizing a longer run)
+  fixwright: 0.05 s wall for this run
+  b1: 10 min 14 s wall for this run
+  b2: 3 min 40 s wall for this run
+  B1: 6 calls made (Strands 6, fetch fallback 0, failed 0), 0 reused from an identical request; 0 with answers from the person
+    per call: mean 102.3 s, p50 87.7 s, p95 135.3 s, max 135.3 s
+    prompt tokens: mean 6033, max 8054
+    completion tokens (reasoning included): mean 133, max 215
+    server counters: 36199 prompt tokens at 69.28 tok/s, 800 generated at 8.83 tok/s, 0 prompt tokens from cache
+  B2: 2 calls made (Strands 2, fetch fallback 0, failed 0), 4 reused from an identical request; 2 with answers from the person
+    per call: mean 110.1 s, p50 92.6 s, p95 127.6 s, max 127.6 s
+    prompt tokens: mean 6700, max 8096
+    completion tokens (reasoning included): mean 165, max 217
+    server counters: 13400 prompt tokens at 72.72 tok/s, 329 generated at 9.23 tok/s, 0 prompt tokens from cache
+
+Every number above comes from this run; the cases and settings are in the JSON file next to this one.

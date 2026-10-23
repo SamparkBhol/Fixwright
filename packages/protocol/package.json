@@ -1,0 +1,28 @@
+{
+  "name": "@fixwright/protocol",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared contract: core model, zod schemas for every tool input and output, tool definitions, ids, labels and speech helpers.",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts",
+    "./fixtures/*": "./fixtures/*"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.src.json && tsc -p tsconfig.json",
+    "test": "vitest run",
+    "check": "tsc -p tsconfig.src.json && tsc -p tsconfig.json && vitest run",
+    "fixtures": "node scripts/write-fixtures.ts",
+    "smoke:browser": "node scripts/browser-smoke.ts"
+  },
+  "dependencies": {
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "2.2.0",
+    "@modelcontextprotocol/core": "2.2.0",
+    "@modelcontextprotocol/ext-apps": "2.0.3",
+    "@modelcontextprotocol/server": "2.2.0"
+  }
+}

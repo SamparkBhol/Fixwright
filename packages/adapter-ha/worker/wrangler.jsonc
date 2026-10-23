@@ -1,0 +1,8 @@
+{
+  // Local smoke test only (wrangler dev on 127.0.0.1:8742): proves HaAdapter runs inside workerd.
+  // Never deployed; the real Worker lives in apps/server.
+  "name": "fixwright-adapter-ha-smoke",
+  "main": "smoke.ts",
+  "compatibility_date": "2026-09-15",
+  "workers_dev": false
+}

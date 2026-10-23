@@ -1,0 +1,16 @@
+# The hallway lamp's dead old pairing, left behind after the bulb was re-paired (F1 shape).
+# It still answers to "Hallway Lamp", so two entities share the spoken name and one never responds.
+# fixtures/home-assistant/inject.ts turns it into a restored ghost by moving this file aside and
+# reloading templates: the registry entry stays and Home Assistant marks the state restored=true.
+- light:
+    - name: Hallway Lamp
+      unique_id: homefault_hallway_lamp_old_pairing
+      default_entity_id: light.hallway_lamp_old_pairing
+      state: "{{ false }}"
+      availability: "{{ false }}"
+      attributes:
+        linkquality: "{{ 0 }}"
+      turn_on:
+        - delay: 0
+      turn_off:
+        - delay: 0

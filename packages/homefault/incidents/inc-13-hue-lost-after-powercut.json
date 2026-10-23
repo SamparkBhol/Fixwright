@@ -1,0 +1,376 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-13-hue-lost-after-powercut",
+  "title": "After a power cut, nothing behind the Hue bridge answers",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/alexa/comments/1qcuymd/",
+    "date": "2026-01-14",
+    "publisher": "Reddit r/alexa",
+    "quote": "I recently had a powercut and when the power came back on my Alexa devices could not control any of my hue devices including lights and smart plugs."
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "The power cut is modelled at 21:14 on 13 January. When everything restarted, the Hue bridge came back on a new network address and the hub kept retrying the old one, so every Hue device stayed unavailable.",
+    "The Hue app reaches the bridge directly, which is why it still works. Time zone UK is assumed."
+  ],
+  "tz": "Europe/London",
+  "now": "2026-01-14T18:15:00.000Z",
+  "symptom": {
+    "text": "Since the power cut Alexa cannot control any of my Hue lights or plugs. The Hue app works.",
+    "device": "Sofa Lamp"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "binary_sensor.back_door",
+        "name": "Back Door",
+        "aliases": [],
+        "domain": "binary_sensor",
+        "deviceId": "dev_back_door",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Back Door"
+        },
+        "lastChanged": "2026-01-14T07:30:40.000Z",
+        "lastUpdated": "2026-01-14T07:30:40.000Z",
+        "area": "kitchen",
+        "vendor": "Aqara"
+      },
+      {
+        "entityId": "light.kitchen_strip",
+        "name": "Kitchen Strip",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_kitchen_strip",
+        "integration": "hue",
+        "transport": "zigbee",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Kitchen Strip"
+        },
+        "lastChanged": "2026-01-13T21:14:05.000Z",
+        "lastUpdated": "2026-01-13T21:14:05.000Z",
+        "area": "kitchen",
+        "vendor": "Signify"
+      },
+      {
+        "entityId": "light.sofa_lamp",
+        "name": "Sofa Lamp",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_sofa_lamp",
+        "integration": "hue",
+        "transport": "zigbee",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Sofa Lamp"
+        },
+        "lastChanged": "2026-01-13T21:14:05.000Z",
+        "lastUpdated": "2026-01-13T21:14:05.000Z",
+        "area": "living_room",
+        "vendor": "Signify"
+      },
+      {
+        "entityId": "switch.hue_smart_plug",
+        "name": "Hue Smart Plug",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_hue_smart_plug",
+        "integration": "hue",
+        "transport": "zigbee",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Hue Smart Plug"
+        },
+        "lastChanged": "2026-01-13T21:14:05.000Z",
+        "lastUpdated": "2026-01-13T21:14:05.000Z",
+        "area": "bedroom",
+        "vendor": "Signify"
+      },
+      {
+        "entityId": "switch.kettle",
+        "name": "Kettle",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_kettle",
+        "integration": "kasa",
+        "transport": "wifi",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Kettle"
+        },
+        "lastChanged": "2026-01-14T07:39:00.040Z",
+        "lastUpdated": "2026-01-14T07:39:00.040Z",
+        "area": "kitchen",
+        "vendor": "TP-Link"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "hue",
+        "state": "setup_retry",
+        "entryId": "entry_hue",
+        "reason": "Cannot reach the Hue bridge at its last known address"
+      },
+      {
+        "integration": "kasa",
+        "state": "loaded",
+        "entryId": "entry_kasa"
+      },
+      {
+        "integration": "zigbee2mqtt",
+        "state": "loaded",
+        "entryId": "entry_zigbee2mqtt"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [],
+    "signals": {
+      "light.sofa_lamp": {
+        "lastSeen": "2026-01-13T21:14:05.000Z"
+      },
+      "light.kitchen_strip": {
+        "lastSeen": "2026-01-13T21:14:05.000Z"
+      },
+      "switch.hue_smart_plug": {
+        "lastSeen": "2026-01-13T21:14:05.000Z"
+      },
+      "switch.kettle": {
+        "rssi": -49,
+        "lastSeen": "2026-01-14T18:15:00.000Z"
+      },
+      "binary_sensor.back_door": {
+        "linkQuality": 150,
+        "batteryPct": 88,
+        "lastSeen": "2026-01-14T18:15:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "call_service",
+      "when": "2026-01-13T18:30:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.sofa_lamp"
+      ],
+      "context": {
+        "id": "ctx_i13_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-01-13T18:30:00.040Z",
+      "entity_id": "light.sofa_lamp",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i13_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-01-13T19:10:00.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.kettle"
+      ],
+      "context": {
+        "id": "ctx_i13_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-01-13T19:10:00.040Z",
+      "entity_id": "switch.kettle",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i13_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-01-13T19:14:00.000Z",
+      "domain": "switch",
+      "service": "turn_off",
+      "entity_ids": [
+        "switch.kettle"
+      ],
+      "context": {
+        "id": "ctx_i13_3",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-01-13T19:14:00.040Z",
+      "entity_id": "switch.kettle",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i13_3",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-01-13T21:14:05.000Z",
+      "entity_id": "light.sofa_lamp",
+      "state": "unavailable",
+      "old_state": "on"
+    },
+    {
+      "type": "state",
+      "when": "2026-01-13T21:14:05.000Z",
+      "entity_id": "light.kitchen_strip",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-01-13T21:14:05.000Z",
+      "entity_id": "switch.hue_smart_plug",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "integration",
+      "when": "2026-01-13T21:16:40.000Z",
+      "integration": "hue",
+      "state": "setup_retry",
+      "old_state": "loaded",
+      "reason": "Cannot reach the Hue bridge at its last known address"
+    },
+    {
+      "type": "state",
+      "when": "2026-01-14T07:30:00.000Z",
+      "entity_id": "binary_sensor.back_door",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i13_4"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-01-14T07:30:40.000Z",
+      "entity_id": "binary_sensor.back_door",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i13_5"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-01-14T07:35:00.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.kettle"
+      ],
+      "context": {
+        "id": "ctx_i13_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-01-14T07:35:00.040Z",
+      "entity_id": "switch.kettle",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i13_6",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-01-14T07:39:00.000Z",
+      "domain": "switch",
+      "service": "turn_off",
+      "entity_ids": [
+        "switch.kettle"
+      ],
+      "context": {
+        "id": "ctx_i13_7",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-01-14T07:39:00.040Z",
+      "entity_id": "switch.kettle",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i13_7",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-01-14T17:50:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.sofa_lamp"
+      ],
+      "context": {
+        "id": "ctx_i13_8",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-01-14T17:51:00.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.hue_smart_plug"
+      ],
+      "context": {
+        "id": "ctx_i13_9",
+        "user_id": "user_voice_assistant"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "hub_down",
+    "entity_ids": [
+      "light.sofa_lamp"
+    ],
+    "explanation": "The hub lost the Hue bridge after the power cut; reloading the Hue integration finds it again."
+  },
+  "human_truth": {
+    "power_switch_check": "yes",
+    "confirm_flash": "no",
+    "router_changed": "no"
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "hub_down"
+  ]
+}

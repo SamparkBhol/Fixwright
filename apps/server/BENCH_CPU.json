@@ -1,0 +1,333 @@
+{
+  "measured_at": "2026-10-17T12:54:11.270Z",
+  "method": "Node process.cpuUsage() around handle(Request) plus body read, esbuild bundle with workerd conditions; household on node:sqlite in process; worker = total minus time inside household calls",
+  "node": "v22.22.1",
+  "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
+  "loadavg_at_start": [
+    1.83,
+    3.42,
+    5.19
+  ],
+  "iterations": 200,
+  "warmup_cycles": 20,
+  "warm_ms": {
+    "initialize": {
+      "n": 200,
+      "worker": {
+        "p50": 0.342,
+        "p95": 0.744,
+        "max": 2.088
+      },
+      "do": {
+        "p50": 0,
+        "p95": 0,
+        "max": 0
+      },
+      "total": {
+        "p50": 0.342,
+        "p95": 0.744,
+        "max": 2.088
+      }
+    },
+    "tools/list": {
+      "n": 200,
+      "worker": {
+        "p50": 0.423,
+        "p95": 0.735,
+        "max": 2.899
+      },
+      "do": {
+        "p50": 0,
+        "p95": 0,
+        "max": 0
+      },
+      "total": {
+        "p50": 0.423,
+        "p95": 0.735,
+        "max": 2.899
+      }
+    },
+    "resources/read stepper": {
+      "n": 200,
+      "worker": {
+        "p50": 2.227,
+        "p95": 4.288,
+        "max": 10.228
+      },
+      "do": {
+        "p50": 0,
+        "p95": 0,
+        "max": 0
+      },
+      "total": {
+        "p50": 2.227,
+        "p95": 4.288,
+        "max": 10.228
+      }
+    },
+    "diagnose": {
+      "n": 200,
+      "worker": {
+        "p50": 0.433,
+        "p95": 0.648,
+        "max": 1.563
+      },
+      "do": {
+        "p50": 2.312,
+        "p95": 4.028,
+        "max": 8.566
+      },
+      "total": {
+        "p50": 2.755,
+        "p95": 4.73,
+        "max": 9.103
+      }
+    },
+    "diagnose_answer": {
+      "n": 200,
+      "worker": {
+        "p50": 0.403,
+        "p95": 0.557,
+        "max": 2.413
+      },
+      "do": {
+        "p50": 1.501,
+        "p95": 2.831,
+        "max": 4.455
+      },
+      "total": {
+        "p50": 1.925,
+        "p95": 3.467,
+        "max": 4.967
+      }
+    },
+    "repair_plan": {
+      "n": 200,
+      "worker": {
+        "p50": 0.389,
+        "p95": 0.646,
+        "max": 1.609
+      },
+      "do": {
+        "p50": 3.051,
+        "p95": 4.01,
+        "max": 19.57
+      },
+      "total": {
+        "p50": 3.441,
+        "p95": 4.747,
+        "max": 20.137
+      }
+    },
+    "repair_apply": {
+      "n": 200,
+      "worker": {
+        "p50": 0.356,
+        "p95": 0.518,
+        "max": 6.807
+      },
+      "do": {
+        "p50": 1.503,
+        "p95": 3.482,
+        "max": 7.299
+      },
+      "total": {
+        "p50": 1.875,
+        "p95": 3.957,
+        "max": 13.202
+      }
+    },
+    "repair_status": {
+      "n": 200,
+      "worker": {
+        "p50": 0.335,
+        "p95": 0.48,
+        "max": 1.404
+      },
+      "do": {
+        "p50": 0.144,
+        "p95": 0.221,
+        "max": 1.388
+      },
+      "total": {
+        "p50": 0.482,
+        "p95": 1.104,
+        "max": 1.789
+      }
+    },
+    "explain_event": {
+      "n": 200,
+      "worker": {
+        "p50": 0.372,
+        "p95": 1.194,
+        "max": 4.542
+      },
+      "do": {
+        "p50": 1.154,
+        "p95": 2.538,
+        "max": 5.402
+      },
+      "total": {
+        "p50": 1.533,
+        "p95": 3.611,
+        "max": 9.866
+      }
+    },
+    "home_checkup": {
+      "n": 200,
+      "worker": {
+        "p50": 0.357,
+        "p95": 1.09,
+        "max": 4.469
+      },
+      "do": {
+        "p50": 1.482,
+        "p95": 3.225,
+        "max": 10.132
+      },
+      "total": {
+        "p50": 1.855,
+        "p95": 3.965,
+        "max": 14.601
+      }
+    },
+    "switch_device (refused)": {
+      "n": 200,
+      "worker": {
+        "p50": 0.335,
+        "p95": 0.847,
+        "max": 1.863
+      },
+      "do": {
+        "p50": 1.108,
+        "p95": 3.001,
+        "max": 6.835
+      },
+      "total": {
+        "p50": 1.455,
+        "p95": 3.48,
+        "max": 7.375
+      }
+    },
+    "refresh_view": {
+      "n": 200,
+      "worker": {
+        "p50": 0.315,
+        "p95": 0.461,
+        "max": 4.332
+      },
+      "do": {
+        "p50": 0.142,
+        "p95": 0.172,
+        "max": 2.18
+      },
+      "total": {
+        "p50": 0.46,
+        "p95": 1.072,
+        "max": 4.647
+      }
+    },
+    "/assistant/route": {
+      "n": 200,
+      "worker": {
+        "p50": 0.116,
+        "p95": 0.188,
+        "max": 1.194
+      },
+      "do": {
+        "p50": 0,
+        "p95": 0,
+        "max": 0
+      },
+      "total": {
+        "p50": 0.116,
+        "p95": 0.188,
+        "max": 1.194
+      }
+    },
+    "/demo/state": {
+      "n": 200,
+      "worker": {
+        "p50": 0.095,
+        "p95": 0.145,
+        "max": 2.099
+      },
+      "do": {
+        "p50": 0.322,
+        "p95": 0.702,
+        "max": 3.527
+      },
+      "total": {
+        "p50": 0.421,
+        "p95": 1.27,
+        "max": 3.637
+      }
+    },
+    "/demo/clock next_morning": {
+      "n": 200,
+      "worker": {
+        "p50": 0.107,
+        "p95": 0.175,
+        "max": 1.108
+      },
+      "do": {
+        "p50": 3.54,
+        "p95": 7.386,
+        "max": 24.718
+      },
+      "total": {
+        "p50": 3.664,
+        "p95": 7.641,
+        "max": 24.898
+      }
+    }
+  },
+  "household_reset_ms": {
+    "p50": 4.415,
+    "p95": 8.35,
+    "max": 16.178
+  },
+  "cold_ms": {
+    "diagnose": {
+      "processes": 5,
+      "module_import_ms": 84.476,
+      "startup_prime_and_warmup_ms": 42.663,
+      "household_first_use_ms": 21.896,
+      "first_initialize_total_ms": 32.853,
+      "first_request_worker_ms": 6.737,
+      "first_request_do_ms": 7.066
+    },
+    "tools/list": {
+      "processes": 5,
+      "module_import_ms": 92.989,
+      "startup_prime_and_warmup_ms": 41.643,
+      "household_first_use_ms": 22.296,
+      "first_initialize_total_ms": 13.853,
+      "first_request_worker_ms": 1.983,
+      "first_request_do_ms": 0
+    },
+    "explain_event": {
+      "processes": 5,
+      "module_import_ms": 86.556,
+      "startup_prime_and_warmup_ms": 41.332,
+      "household_first_use_ms": 21.961,
+      "first_initialize_total_ms": 13.508,
+      "first_request_worker_ms": 2.812,
+      "first_request_do_ms": 4.134
+    },
+    "home_checkup": {
+      "processes": 5,
+      "module_import_ms": 86.135,
+      "startup_prime_and_warmup_ms": 42.51,
+      "household_first_use_ms": 21.866,
+      "first_initialize_total_ms": 34.553,
+      "first_request_worker_ms": 2.541,
+      "first_request_do_ms": 7.033
+    }
+  },
+  "loadavg_at_end": [
+    2.1,
+    3.43,
+    5.18
+  ]
+}

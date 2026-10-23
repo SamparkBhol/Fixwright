@@ -1,0 +1,247 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-20-switched-off-at-the-wall",
+  "title": "Nightstand lamp switched off at the wall",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/alexa/comments/1wk2zxo/comment/pawyp4a/",
+    "date": "2026-09-20",
+    "publisher": "Reddit r/alexa",
+    "quote": "it just bloops or argues if someone turned off at the switch."
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "The comment names the nightstand and the dining room. We model the nightstand smart bulb losing power when someone flipped its wall switch at 23:41.",
+    "Time zone US Eastern is assumed; the comment was written at 03:00 Eastern."
+  ],
+  "tz": "America/New_York",
+  "now": "2026-09-20T06:58:00.000Z",
+  "symptom": {
+    "text": "The nightstand light is not responding.",
+    "device": "Nightstand"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "light.dining_room",
+        "name": "Dining Room",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_dining_room",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Dining Room"
+        },
+        "lastChanged": "2026-09-20T01:05:00.040Z",
+        "lastUpdated": "2026-09-20T01:05:00.040Z",
+        "area": "dining_room",
+        "vendor": "IKEA"
+      },
+      {
+        "entityId": "light.hall",
+        "name": "Hall",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_hall",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Hall"
+        },
+        "lastChanged": "2026-09-20T06:51:00.040Z",
+        "lastUpdated": "2026-09-20T06:51:00.040Z",
+        "area": "hallway",
+        "vendor": "IKEA"
+      },
+      {
+        "entityId": "light.nightstand",
+        "name": "Nightstand",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_nightstand",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Nightstand"
+        },
+        "lastChanged": "2026-09-20T03:41:12.000Z",
+        "lastUpdated": "2026-09-20T03:41:12.000Z",
+        "area": "bedroom",
+        "vendor": "IKEA"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "zigbee2mqtt",
+        "state": "loaded",
+        "entryId": "entry_zigbee2mqtt"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [],
+    "signals": {
+      "light.nightstand": {
+        "linkQuality": 172,
+        "lastSeen": "2026-09-20T03:41:12.000Z"
+      },
+      "light.dining_room": {
+        "linkQuality": 193,
+        "lastSeen": "2026-09-20T06:58:00.000Z"
+      },
+      "light.hall": {
+        "linkQuality": 160,
+        "lastSeen": "2026-09-20T06:58:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "call_service",
+      "when": "2026-09-19T22:20:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.dining_room"
+      ],
+      "context": {
+        "id": "ctx_i20_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-19T22:20:00.040Z",
+      "entity_id": "light.dining_room",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i20_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-20T01:05:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.dining_room"
+      ],
+      "context": {
+        "id": "ctx_i20_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-20T01:05:00.040Z",
+      "entity_id": "light.dining_room",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i20_2",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-20T02:15:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.nightstand"
+      ],
+      "context": {
+        "id": "ctx_i20_3",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-20T02:15:00.040Z",
+      "entity_id": "light.nightstand",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i20_3",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-20T03:41:12.000Z",
+      "entity_id": "light.nightstand",
+      "state": "unavailable",
+      "old_state": "on"
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-20T06:51:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.hall"
+      ],
+      "context": {
+        "id": "ctx_i20_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-20T06:51:00.040Z",
+      "entity_id": "light.hall",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i20_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-20T06:52:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.nightstand"
+      ],
+      "context": {
+        "id": "ctx_i20_5",
+        "user_id": "user_voice_assistant"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "device_power_lost",
+    "entity_ids": [
+      "light.nightstand"
+    ],
+    "explanation": "Someone switched the nightstand lamp off at the wall switch."
+  },
+  "human_truth": {
+    "power_switch_check": "no",
+    "confirm_flash": "no",
+    "router_changed": "no",
+    "notes": "The wall switch is off."
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "device_power_lost"
+  ]
+}

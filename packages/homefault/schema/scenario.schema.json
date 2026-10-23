@@ -1,0 +1,276 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:homefault:schema:scenario:1",
+  "title": "homefault scenario",
+  "description": "One broken smart home, frozen at the moment a person asks for help: the home as an agent can query it, its raw Home Assistant shaped logs, what the person said, the ground truth cause, and what the person would see if asked to look.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "id", "title", "kind", "source", "reconstructed", "assumptions", "tz", "now", "symptom", "home", "events", "ground_truth", "human_truth", "noise"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "format": { "const": "homefault.scenario/1" },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,79}$" },
+    "title": { "type": "string", "minLength": 1, "maxLength": 120, "pattern": "\\S" },
+    "kind": { "enum": ["incident", "generated", "twin"], "description": "incident: reconstructed from a public report. generated: from the event-level generator. twin: exported from SimHome." },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "date"],
+      "properties": {
+        "url": { "type": "string", "pattern": "^(https://|homefault://)\\S+$" },
+        "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "Publication date of the report (UTC)." },
+        "quote": { "type": "string", "minLength": 1, "maxLength": 400, "pattern": "\\S", "description": "Short verbatim quote from the report. Never paraphrased." },
+        "publisher": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    },
+    "reconstructed": { "type": "boolean" },
+    "assumptions": { "type": "array", "items": { "type": "string" } },
+    "tz": { "type": "string", "minLength": 1, "description": "IANA time zone of the household." },
+    "now": { "$ref": "#/$defs/isoUtc" },
+    "symptom": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1, "maxLength": 300, "pattern": "\\S" },
+        "device": { "type": "string", "minLength": 1, "pattern": "\\S" }
+      }
+    },
+    "home": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entities", "integrations", "hub", "cloud", "signals"],
+      "properties": {
+        "entities": { "type": "array", "items": { "$ref": "#/$defs/entity" } },
+        "integrations": { "type": "array", "items": { "$ref": "#/$defs/integrationStatus" } },
+        "hub": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["reachable"],
+          "properties": {
+            "reachable": { "type": "boolean" },
+            "latencyMs": { "type": "number", "minimum": 0 },
+            "version": { "type": "string" }
+          }
+        },
+        "cloud": { "type": "array", "items": { "$ref": "#/$defs/cloudStatus" } },
+        "signals": { "type": "object", "additionalProperties": { "$ref": "#/$defs/signals" } }
+      }
+    },
+    "events": { "type": "array", "items": { "$ref": "#/$defs/logRow" } },
+    "ground_truth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cause_id", "entity_ids"],
+      "properties": {
+        "cause_id": { "$ref": "#/$defs/causeId" },
+        "entity_ids": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/entityId" } },
+        "explanation": { "type": "string" }
+      }
+    },
+    "human_truth": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "What the person in the room would answer if asked. Unset means they would not know.",
+      "properties": {
+        "confirm_flash": { "$ref": "#/$defs/yesNo", "description": "I'll flash it twice. Did it blink?" },
+        "power_switch_check": { "$ref": "#/$defs/yesNo", "description": "Is its wall switch on and is it plugged in?" },
+        "router_changed": { "$ref": "#/$defs/yesNo", "description": "Did your Wi-Fi router or its name change recently?" },
+        "notes": { "type": "string" }
+      }
+    },
+    "noise": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["jitter_ms", "drop_rate"],
+      "properties": {
+        "jitter_ms": { "type": "number", "minimum": 0 },
+        "drop_rate": { "type": "number", "minimum": 0, "maximum": 0.15 }
+      }
+    },
+    "tags": { "type": "array", "items": { "type": "string" } }
+  },
+  "if": { "properties": { "reconstructed": { "const": true } } },
+  "then": { "properties": { "assumptions": { "type": "array", "minItems": 1 } } },
+  "$defs": {
+    "isoUtc": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,3})?Z$" },
+    "entityId": { "type": "string", "pattern": "^[a-z_]+\\.[a-z0-9_]+$" },
+    "yesNo": { "enum": ["yes", "no"] },
+    "causeId": {
+      "enum": ["stale_duplicate", "device_power_lost", "radio_link_weak", "hub_down", "vendor_cloud_outage", "account_link_expired", "power_on_default_on", "name_collision", "dead_trigger", "wifi_network_changed"]
+    },
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entityId", "name", "aliases", "domain", "integration", "transport", "state", "attributes", "lastChanged", "lastUpdated"],
+      "properties": {
+        "entityId": { "$ref": "#/$defs/entityId" },
+        "name": { "type": "string" },
+        "aliases": { "type": "array", "items": { "type": "string" } },
+        "domain": { "type": "string", "minLength": 1, "pattern": "\\S" },
+        "area": { "type": "string" },
+        "deviceId": { "type": "string" },
+        "integration": { "type": "string", "minLength": 1, "pattern": "\\S" },
+        "transport": { "enum": ["zigbee", "wifi", "thread", "cloud", "virtual"] },
+        "vendor": { "type": "string" },
+        "model": { "type": "string" },
+        "state": { "type": "string" },
+        "attributes": { "type": "object" },
+        "lastChanged": { "$ref": "#/$defs/isoUtc" },
+        "lastUpdated": { "$ref": "#/$defs/isoUtc" },
+        "restored": { "type": "boolean" },
+        "disabled": { "type": "boolean" },
+        "registryOnly": { "type": "boolean" }
+      }
+    },
+    "integrationStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["integration", "state"],
+      "properties": {
+        "integration": { "type": "string", "minLength": 1, "pattern": "\\S" },
+        "state": { "$ref": "#/$defs/integrationState" },
+        "reason": { "type": "string" },
+        "entryId": { "type": "string" }
+      }
+    },
+    "integrationState": { "enum": ["loaded", "setup_error", "not_loaded", "setup_retry"] },
+    "cloudStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vendor", "status", "source", "checkedAt"],
+      "properties": {
+        "vendor": { "type": "string", "minLength": 1, "pattern": "\\S" },
+        "status": { "enum": ["ok", "degraded", "outage", "unknown"] },
+        "source": { "type": "string" },
+        "checkedAt": { "$ref": "#/$defs/isoUtc" }
+      }
+    },
+    "signals": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "linkQuality": { "type": "number", "minimum": 0, "maximum": 255 },
+        "rssi": { "type": "number", "minimum": -120, "maximum": 0 },
+        "lastSeen": { "$ref": "#/$defs/isoUtc" },
+        "batteryPct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "uptimeS": { "type": "number", "minimum": 0 },
+        "powerOnBehavior": { "enum": ["previous", "on", "off", "toggle"] },
+        "flaps24h": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "pattern": "\\S" },
+        "parent_id": { "type": "string" },
+        "user_id": { "type": "string" }
+      }
+    },
+    "logRow": {
+      "type": "object",
+      "required": ["type", "when"],
+      "properties": {
+        "type": { "enum": ["state", "call_service", "automation_triggered", "integration", "registry", "device_event"] },
+        "when": { "$ref": "#/$defs/isoUtc" }
+      },
+      "oneOf": [
+        { "$ref": "#/$defs/stateRow" },
+        { "$ref": "#/$defs/callServiceRow" },
+        { "$ref": "#/$defs/automationRow" },
+        { "$ref": "#/$defs/integrationRow" },
+        { "$ref": "#/$defs/registryRow" },
+        { "$ref": "#/$defs/deviceEventRow" }
+      ]
+    },
+    "stateRow": {
+      "description": "An entity changed state (history row). 'unavailable' on either side is an availability change.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "when", "entity_id", "state"],
+      "properties": {
+        "type": { "const": "state" },
+        "when": { "$ref": "#/$defs/isoUtc" },
+        "entity_id": { "$ref": "#/$defs/entityId" },
+        "state": { "type": "string" },
+        "old_state": { "type": "string" },
+        "attributes": { "type": "object" },
+        "context": { "$ref": "#/$defs/context" }
+      }
+    },
+    "callServiceRow": {
+      "description": "A service was called (event bus row). Fired even when the target cannot act on it.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "when", "domain", "service", "entity_ids"],
+      "properties": {
+        "type": { "const": "call_service" },
+        "when": { "$ref": "#/$defs/isoUtc" },
+        "domain": { "type": "string", "minLength": 1, "pattern": "\\S" },
+        "service": { "type": "string", "minLength": 1, "pattern": "\\S" },
+        "entity_ids": { "type": "array", "items": { "$ref": "#/$defs/entityId" } },
+        "service_data": { "type": "object" },
+        "context": { "$ref": "#/$defs/context" }
+      }
+    },
+    "automationRow": {
+      "description": "An automation ran (logbook row). error mirrors the automation trace when an action failed.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "when", "entity_id"],
+      "properties": {
+        "type": { "const": "automation_triggered" },
+        "when": { "$ref": "#/$defs/isoUtc" },
+        "entity_id": { "$ref": "#/$defs/entityId" },
+        "name": { "type": "string" },
+        "source": { "type": "string" },
+        "error": { "type": "string" },
+        "context": { "$ref": "#/$defs/context" }
+      }
+    },
+    "integrationRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "when", "integration", "state"],
+      "properties": {
+        "type": { "const": "integration" },
+        "when": { "$ref": "#/$defs/isoUtc" },
+        "integration": { "type": "string", "minLength": 1, "pattern": "\\S" },
+        "state": { "$ref": "#/$defs/integrationState" },
+        "old_state": { "type": "string" },
+        "reason": { "type": "string" },
+        "context": { "$ref": "#/$defs/context" }
+      }
+    },
+    "registryRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "when", "action", "entity_id"],
+      "properties": {
+        "type": { "const": "registry" },
+        "when": { "$ref": "#/$defs/isoUtc" },
+        "action": { "enum": ["create", "update", "remove"] },
+        "entity_id": { "$ref": "#/$defs/entityId" },
+        "changes": { "type": "object" },
+        "context": { "$ref": "#/$defs/context" }
+      }
+    },
+    "deviceEventRow": {
+      "description": "A device reported a power related event: Matter BootReason, a UPS or a power meter.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "when", "event"],
+      "properties": {
+        "type": { "const": "device_event" },
+        "when": { "$ref": "#/$defs/isoUtc" },
+        "entity_id": { "$ref": "#/$defs/entityId" },
+        "event": { "type": "string", "minLength": 1, "pattern": "\\S" },
+        "data": { "type": "object" },
+        "context": { "$ref": "#/$defs/context" }
+      }
+    }
+  }
+}

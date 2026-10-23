@@ -1,0 +1,494 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-04-all-plugs-turned-on",
+  "title": "Every plug and light was on in the morning, and the activity log was empty",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/alexa/comments/1wo3p68/",
+    "date": "2026-09-23",
+    "publisher": "Reddit r/alexa",
+    "quote": "Got up this morning and noticed all my devices attached to plugs were turned on. This included all lights and switches. When I checked the activity there wasn’t any."
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "Replies to the post suggested a power cut. We model a three second outage at 02:47 and plugs and lights whose power-on behavior is on.",
+    "Time zone US Eastern is assumed; the post was written at 07:45 Eastern."
+  ],
+  "tz": "America/New_York",
+  "now": "2026-09-23T11:40:00.000Z",
+  "symptom": {
+    "text": "Why did all my plugs and lights turn on overnight?"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "light.kitchen_light",
+        "name": "Kitchen Light",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_kitchen_light",
+        "integration": "matter",
+        "transport": "thread",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Kitchen Light"
+        },
+        "lastChanged": "2026-09-23T06:47:17.000Z",
+        "lastUpdated": "2026-09-23T06:47:17.000Z",
+        "area": "kitchen",
+        "vendor": "Nanoleaf"
+      },
+      {
+        "entityId": "light.porch_light",
+        "name": "Porch Light",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_porch_light",
+        "integration": "matter",
+        "transport": "thread",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Porch Light"
+        },
+        "lastChanged": "2026-09-23T06:47:18.000Z",
+        "lastUpdated": "2026-09-23T06:47:18.000Z",
+        "area": "porch",
+        "vendor": "Nanoleaf"
+      },
+      {
+        "entityId": "switch.aquarium_plug",
+        "name": "Aquarium Plug",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_aquarium_plug",
+        "integration": "kasa",
+        "transport": "wifi",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Aquarium Plug"
+        },
+        "lastChanged": "2026-09-20T11:40:00.000Z",
+        "lastUpdated": "2026-09-20T11:40:00.000Z",
+        "area": "living_room",
+        "vendor": "TP-Link"
+      },
+      {
+        "entityId": "switch.fan_plug",
+        "name": "Fan Plug",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_fan_plug",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Fan Plug"
+        },
+        "lastChanged": "2026-09-23T06:47:19.000Z",
+        "lastUpdated": "2026-09-23T06:47:19.000Z",
+        "area": "bedroom",
+        "vendor": "Sonoff"
+      },
+      {
+        "entityId": "switch.hall_switch",
+        "name": "Hall Switch",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_hall_switch",
+        "integration": "matter",
+        "transport": "thread",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Hall Switch"
+        },
+        "lastChanged": "2026-09-23T06:47:19.000Z",
+        "lastUpdated": "2026-09-23T06:47:19.000Z",
+        "area": "hallway",
+        "vendor": "Eve"
+      },
+      {
+        "entityId": "switch.heater_plug",
+        "name": "Heater Plug",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_heater_plug",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Heater Plug"
+        },
+        "lastChanged": "2026-09-23T06:47:18.000Z",
+        "lastUpdated": "2026-09-23T06:47:18.000Z",
+        "area": "office",
+        "vendor": "Sonoff"
+      },
+      {
+        "entityId": "switch.living_room_lamp_plug",
+        "name": "Living Room Lamp Plug",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_living_room_lamp_plug",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Living Room Lamp Plug"
+        },
+        "lastChanged": "2026-09-23T06:47:17.000Z",
+        "lastUpdated": "2026-09-23T06:47:17.000Z",
+        "area": "living_room",
+        "vendor": "Sonoff"
+      },
+      {
+        "entityId": "switch.tv_plug",
+        "name": "TV Plug",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_tv_plug",
+        "integration": "zigbee2mqtt",
+        "transport": "zigbee",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "TV Plug"
+        },
+        "lastChanged": "2026-09-23T06:47:18.000Z",
+        "lastUpdated": "2026-09-23T06:47:18.000Z",
+        "area": "living_room",
+        "vendor": "Sonoff"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "kasa",
+        "state": "loaded",
+        "entryId": "entry_kasa"
+      },
+      {
+        "integration": "matter",
+        "state": "loaded",
+        "entryId": "entry_matter"
+      },
+      {
+        "integration": "zigbee2mqtt",
+        "state": "loaded",
+        "entryId": "entry_zigbee2mqtt"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [],
+    "signals": {
+      "switch.living_room_lamp_plug": {
+        "linkQuality": 178,
+        "powerOnBehavior": "on",
+        "lastSeen": "2026-09-23T11:40:00.000Z"
+      },
+      "switch.tv_plug": {
+        "linkQuality": 151,
+        "powerOnBehavior": "on",
+        "lastSeen": "2026-09-23T11:40:00.000Z"
+      },
+      "switch.fan_plug": {
+        "linkQuality": 122,
+        "powerOnBehavior": "on",
+        "lastSeen": "2026-09-23T11:40:00.000Z"
+      },
+      "light.kitchen_light": {
+        "powerOnBehavior": "on",
+        "lastSeen": "2026-09-23T11:40:00.000Z"
+      },
+      "light.porch_light": {
+        "powerOnBehavior": "on",
+        "lastSeen": "2026-09-23T11:40:00.000Z"
+      },
+      "switch.hall_switch": {
+        "powerOnBehavior": "on",
+        "lastSeen": "2026-09-23T11:40:00.000Z"
+      },
+      "switch.heater_plug": {
+        "linkQuality": 140,
+        "powerOnBehavior": "previous",
+        "lastSeen": "2026-09-23T11:40:00.000Z"
+      },
+      "switch.aquarium_plug": {
+        "rssi": -58,
+        "lastSeen": "2026-09-23T11:40:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "call_service",
+      "when": "2026-09-22T23:10:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.kitchen_light"
+      ],
+      "context": {
+        "id": "ctx_i04_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-22T23:10:00.040Z",
+      "entity_id": "light.kitchen_light",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i04_1",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-23T00:00:00.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.tv_plug"
+      ],
+      "context": {
+        "id": "ctx_i04_2",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T00:00:00.040Z",
+      "entity_id": "switch.tv_plug",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i04_2",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-23T02:30:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.kitchen_light"
+      ],
+      "context": {
+        "id": "ctx_i04_3",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T02:30:00.040Z",
+      "entity_id": "light.kitchen_light",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i04_3",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-09-23T03:15:00.000Z",
+      "domain": "switch",
+      "service": "turn_off",
+      "entity_ids": [
+        "switch.tv_plug"
+      ],
+      "context": {
+        "id": "ctx_i04_4",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T03:15:00.040Z",
+      "entity_id": "switch.tv_plug",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i04_4",
+        "user_id": "user_resident"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T06:47:13.000Z",
+      "entity_id": "switch.living_room_lamp_plug",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T06:47:13.000Z",
+      "entity_id": "switch.tv_plug",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T06:47:13.000Z",
+      "entity_id": "light.kitchen_light",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T06:47:13.000Z",
+      "entity_id": "light.porch_light",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T06:47:14.000Z",
+      "entity_id": "switch.fan_plug",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T06:47:14.000Z",
+      "entity_id": "switch.hall_switch",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T06:47:14.000Z",
+      "entity_id": "switch.heater_plug",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T06:47:17.000Z",
+      "entity_id": "switch.living_room_lamp_plug",
+      "state": "on",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i04_5"
+      }
+    },
+    {
+      "type": "device_event",
+      "when": "2026-09-23T06:47:17.000Z",
+      "entity_id": "light.kitchen_light",
+      "event": "boot_reason",
+      "data": {
+        "reason": "PowerOnReboot"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T06:47:17.000Z",
+      "entity_id": "light.kitchen_light",
+      "state": "on",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i04_6"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T06:47:18.000Z",
+      "entity_id": "switch.tv_plug",
+      "state": "on",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i04_7"
+      }
+    },
+    {
+      "type": "device_event",
+      "when": "2026-09-23T06:47:18.000Z",
+      "entity_id": "light.porch_light",
+      "event": "boot_reason",
+      "data": {
+        "reason": "PowerOnReboot"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T06:47:18.000Z",
+      "entity_id": "light.porch_light",
+      "state": "on",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i04_8"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T06:47:18.000Z",
+      "entity_id": "switch.heater_plug",
+      "state": "off",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i04_9"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T06:47:19.000Z",
+      "entity_id": "switch.fan_plug",
+      "state": "on",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i04_a"
+      }
+    },
+    {
+      "type": "device_event",
+      "when": "2026-09-23T06:47:19.000Z",
+      "entity_id": "switch.hall_switch",
+      "event": "boot_reason",
+      "data": {
+        "reason": "PowerOnReboot"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-09-23T06:47:19.000Z",
+      "entity_id": "switch.hall_switch",
+      "state": "on",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i04_b"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "power_on_default_on",
+    "entity_ids": [
+      "light.kitchen_light",
+      "light.porch_light",
+      "switch.fan_plug",
+      "switch.hall_switch",
+      "switch.living_room_lamp_plug",
+      "switch.tv_plug"
+    ],
+    "explanation": "Power dropped for three seconds at 02:47; devices set to start on switched themselves on."
+  },
+  "human_truth": {
+    "power_switch_check": "yes",
+    "notes": "Everything was on when they woke up. Nobody switched it on."
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "power_on_default_on"
+  ]
+}

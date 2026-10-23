@@ -1,0 +1,12 @@
+{
+  "domain": "fixwright_bridge",
+  "name": "Fixwright simulated bridge (test fixture)",
+  "codeowners": [],
+  "config_flow": true,
+  "dependencies": ["input_boolean"],
+  "integration_type": "hub",
+  "iot_class": "local_push",
+  "requirements": [],
+  "single_config_entry": true,
+  "version": "0.1.0"
+}

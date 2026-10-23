@@ -1,0 +1,32 @@
+{
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "speech": "Done. Living Room Light now means the Hue group, and the bulb is Living Room Bulb.",
+  "status": "ok",
+  "view": "repair_card",
+  "ids": {
+    "issue_id": "iss_01m52gb900j5778msk",
+    "plan_id": "pln_01m52gc69gv271bs8v",
+    "repair_id": "rep_01m52gcg2075xt500c"
+  },
+  "repair_id": "rep_01m52gcg2075xt500c",
+  "plan_id": "pln_01m52gc69gv271bs8v",
+  "state": "applied",
+  "steps": [
+    {
+      "step": 1,
+      "label": "Rename the Zigbee bulb to Living Room Bulb",
+      "status": "done",
+      "read_back": "Name reads Living Room Bulb"
+    },
+    {
+      "step": 2,
+      "label": "Check that each name reaches one device",
+      "status": "done",
+      "read_back": "Each name now points at one device"
+    }
+  ],
+  "undo_available": true
+}

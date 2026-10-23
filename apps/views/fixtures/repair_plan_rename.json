@@ -1,0 +1,41 @@
+{
+  "source": {
+    "adapter": "simhome",
+    "simulated": true
+  },
+  "speech": "Here's the fix. The Zigbee bulb will be called Living Room Bulb, so Living Room Light means the Hue group only. Shall I go ahead?",
+  "status": "needs_confirmation",
+  "view": "stepper",
+  "ids": {
+    "issue_id": "iss_01m52gb900j5778msk",
+    "plan_id": "pln_01m52gc69gv271bs8v"
+  },
+  "plan_id": "pln_01m52gc69gv271bs8v",
+  "confirm_token": "sjvkhsvpbsj9vm8vvy8842wzpz1xqy4h",
+  "expires_at": "2026-10-16T14:08:10.000Z",
+  "diff": [
+    {
+      "entity_id": "light.living_room_light_2",
+      "field": "name",
+      "from": "Living Room Light",
+      "to": "Living Room Bulb"
+    }
+  ],
+  "diff_lines": [
+    "The Zigbee bulb will be called Living Room Bulb.",
+    "Living Room Light will mean the Hue group only."
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "label": "Rename the Zigbee bulb to Living Room Bulb",
+      "status": "pending"
+    },
+    {
+      "step": 2,
+      "label": "Check that each name reaches one device",
+      "status": "pending"
+    }
+  ],
+  "protected_conflicts": []
+}

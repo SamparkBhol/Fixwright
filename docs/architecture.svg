@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img" aria-labelledby="t d">
+  <title id="t">Fixwright architecture</title>
+  <desc id="d">An Alexa+ style host or any MCP client calls the Fixwright Cloudflare Worker over MCP 2025-11-25 Streamable HTTP. The Worker checks host, origin, rate and household token, then routes each tool call to that household's Durable Object, which runs the diagnosis engine and the repair executor against a SimHome twin or a linked Home Assistant, keeps an append-only event ledger, and sends the next-morning push through ntfy. Views render in a sandbox on a second origin. The HomeTruth benchmark runs offline against homefault scenarios.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#3b4a5e"/>
+    </marker>
+    <style>
+      .bg { fill: #ffffff; }
+      .box { fill: #f5f7fa; stroke: #3b4a5e; stroke-width: 1.5; }
+      .sim { fill: #fff7e6; stroke: #b7791f; stroke-width: 1.5; stroke-dasharray: 6 4; }
+      .real { fill: #eef6ff; stroke: #2b6cb0; stroke-width: 1.5; }
+      .do { fill: #edf7ef; stroke: #2f855a; stroke-width: 1.5; }
+      .inner { fill: #ffffff; stroke: #9aa7b6; stroke-width: 1; }
+      .off { fill: #f3effa; stroke: #6b46c1; stroke-width: 1.5; }
+      .h { font: 600 15px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #1a202c; }
+      .s { font: 12.5px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #2d3748; }
+      .m { font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #2d3748; }
+      .lab { font: italic 12px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #3b4a5e; }
+      .tag { font: 600 11px system-ui, -apple-system, "Segoe UI", sans-serif; fill: #b7791f; }
+      .line { stroke: #3b4a5e; stroke-width: 1.5; fill: none; }
+      .dash { stroke: #3b4a5e; stroke-width: 1.5; fill: none; stroke-dasharray: 5 4; }
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1200" height="800"/>
+
+  <!-- Clients -->
+  <rect class="sim" x="30" y="24" width="320" height="118" rx="10"/>
+  <text class="h" x="46" y="50">Alexa+ style host</text>
+  <text class="tag" x="240" y="50">SIMULATED</text>
+  <text class="s" x="46" y="72">apps/host: a real MCP client (SDK 2.2.0)</text>
+  <text class="s" x="46" y="91">large, small, phone and voice-only devices</text>
+  <text class="s" x="46" y="110">ext-apps AppBridge, approval before changes</text>
+  <text class="s" x="46" y="129">Visual Trace, Latency, Break my house</text>
+
+  <rect class="real" x="390" y="24" width="250" height="118" rx="10"/>
+  <text class="h" x="406" y="50">Sandbox Worker</text>
+  <text class="s" x="406" y="72">fixwright-sandbox, second origin</text>
+  <text class="s" x="406" y="91">3 MCP Apps views in a double iframe:</text>
+  <text class="s" x="406" y="110">stepper, carousel, repair card</text>
+  <text class="s" x="406" y="129">talking to the host over postMessage</text>
+  <path class="dash" d="M352 83 L388 83" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+
+  <rect class="box" x="670" y="24" width="250" height="118" rx="10"/>
+  <text class="h" x="686" y="50">Any MCP client</text>
+  <text class="s" x="686" y="72">Alexa+ add-on runtime, desktop apps,</text>
+  <text class="s" x="686" y="91">a terminal client, an agent</text>
+  <text class="s" x="686" y="110">using the Agent Skill</text>
+  <text class="m" x="686" y="129">skills/fixwright-home-triage</text>
+
+  <rect class="box" x="950" y="24" width="220" height="118" rx="10"/>
+  <text class="h" x="966" y="50">Phone</text>
+  <text class="s" x="966" y="72">ntfy app, household topic</text>
+  <text class="s" x="966" y="91">"Hallway lamp answered all 9</text>
+  <text class="s" x="966" y="110">commands overnight. Repair</text>
+  <text class="s" x="966" y="129">confirmed."</text>
+
+  <!-- MCP arrows -->
+  <path class="line" d="M190 142 L190 212" marker-end="url(#arrow)"/>
+  <path class="line" d="M795 142 L795 212" marker-end="url(#arrow)"/>
+  <text class="lab" x="250" y="178">MCP 2025-11-25, Streamable HTTP: POST /mcp, JSON-RPC in, SSE out</text>
+  <text class="lab" x="250" y="196">(also 2025-06-18 and 2025-03-26), Authorization: Bearer hh_...</text>
+
+  <!-- Worker -->
+  <rect class="real" x="30" y="214" width="890" height="170" rx="12"/>
+  <text class="h" x="46" y="240">Cloudflare Worker "fixwright" (apps/server)</text>
+  <rect class="inner" x="46" y="254" width="200" height="52" rx="6"/>
+  <text class="s" x="56" y="275">host name check, exact-origin</text>
+  <text class="s" x="56" y="293">CORS, origin validation</text>
+  <rect class="inner" x="262" y="254" width="180" height="52" rx="6"/>
+  <text class="s" x="272" y="275">per IP token bucket</text>
+  <text class="m" x="272" y="293">RateLimitDO</text>
+  <rect class="inner" x="458" y="254" width="200" height="52" rx="6"/>
+  <text class="s" x="468" y="275">64 KB body cap, household</text>
+  <text class="s" x="468" y="293">token checked by HMAC</text>
+  <rect class="inner" x="674" y="254" width="230" height="52" rx="6"/>
+  <text class="m" x="684" y="275">createMcpHandler</text>
+  <text class="s" x="684" y="293">11 tools, 3 ui:// resources</text>
+  <path class="line" d="M246 280 L262 280" marker-end="url(#arrow)"/>
+  <path class="line" d="M442 280 L458 280" marker-end="url(#arrow)"/>
+  <path class="line" d="M658 280 L674 280" marker-end="url(#arrow)"/>
+  <rect class="inner" x="46" y="318" width="858" height="52" rx="6"/>
+  <text class="m" x="56" y="340">GET /health   POST /demo/household, /demo/fault, /demo/clock, /demo/reset   GET /demo/state</text>
+  <text class="m" x="56" y="360">POST /assistant/route (deterministic router, no model)   static files: the host simulator at /</text>
+
+  <!-- Worker -> DO -->
+  <path class="line" d="M475 384 L475 432" marker-end="url(#arrow)"/>
+  <text class="lab" x="490" y="413">RPC: tool(household, name, input), one object per hh_ token</text>
+
+  <!-- Durable Object -->
+  <rect class="do" x="30" y="434" width="890" height="196" rx="12"/>
+  <text class="h" x="46" y="460">HouseholdDO (SQLite Durable Object, one per household)</text>
+  <rect class="inner" x="46" y="474" width="270" height="140" rx="6"/>
+  <text class="h" x="58" y="496">@fixwright/engine (pure)</text>
+  <text class="s" x="58" y="518">diagnose: probes by information gain</text>
+  <text class="s" x="58" y="536">per unit of disruption, the person as</text>
+  <text class="s" x="58" y="554">a noisy sensor, stop at 0.9</text>
+  <text class="s" x="58" y="572">explain_event, checkup, repair planner</text>
+  <text class="s" x="58" y="590">claim checker: every sentence cites</text>
+  <text class="s" x="58" y="608">ledger events or is dropped</text>
+  <rect class="inner" x="330" y="474" width="290" height="140" rx="6"/>
+  <text class="h" x="342" y="496">Repair executor</text>
+  <text class="s" x="342" y="518">confirm token: HMAC over plan and expiry,</text>
+  <text class="s" x="342" y="536">single use</text>
+  <text class="s" x="342" y="554">each step claimed once (plan_id:step),</text>
+  <text class="s" x="342" y="572">read back, rolled back on mismatch</text>
+  <text class="s" x="342" y="590">undo with read-back</text>
+  <text class="s" x="342" y="608">protected loads never switched off</text>
+  <rect class="inner" x="634" y="474" width="270" height="140" rx="6"/>
+  <text class="h" x="646" y="496">State and time</text>
+  <text class="m" x="646" y="518">events</text><text class="s" x="700" y="518">append-only ledger</text>
+  <text class="m" x="646" y="536">sessions plans repairs</text>
+  <text class="m" x="646" y="554">step_claims protected due</text>
+  <text class="m" x="646" y="572">settings sim pushes</text>
+  <text class="s" x="646" y="590">one alarm: due queue, CAS + epoch</text>
+  <text class="s" x="646" y="608">morning check at 07:00 house time</text>
+
+  <!-- DO -> phone (push) -->
+  <path class="line" d="M920 560 L1060 560 L1060 142" marker-end="url(#arrow)"/>
+  <text class="lab" x="935" y="552">POST ntfy.sh/&lt;topic&gt;</text>
+  <text class="lab" x="935" y="580">next-morning result</text>
+
+  <!-- Adapters -->
+  <path class="line" d="M250 630 L250 676" marker-end="url(#arrow)"/>
+  <path class="line" d="M700 630 L700 676" marker-end="url(#arrow)"/>
+  <text class="lab" x="265" y="658">HomeAdapter</text>
+  <text class="lab" x="715" y="658">HomeAdapter (linked hub)</text>
+
+  <rect class="sim" x="30" y="678" width="440" height="100" rx="10"/>
+  <text class="h" x="46" y="704">SimHome twin (homefault, MIT)</text>
+  <text class="tag" x="380" y="704">SIMULATED</text>
+  <text class="s" x="46" y="726">47 entities, 6 areas, power circuits, radio links,</text>
+  <text class="s" x="46" y="744">10 faults from dated public reports, virtual time,</text>
+  <text class="s" x="46" y="762">snapshot stored in the household's sim table</text>
+
+  <rect class="real" x="490" y="678" width="430" height="100" rx="10"/>
+  <text class="h" x="506" y="704">Home Assistant 2026.9.4 (@fixwright/adapter-ha)</text>
+  <text class="s" x="506" y="726">REST + WebSocket only: states, registry, logbook,</text>
+  <text class="s" x="506" y="744">history, services, config entries, read-back</text>
+  <text class="s" x="506" y="762">e2e and CI against the official container</text>
+
+  <!-- Bench -->
+  <rect class="off" x="950" y="610" width="220" height="168" rx="10"/>
+  <text class="h" x="966" y="636">HomeTruth (offline)</text>
+  <text class="s" x="966" y="658">bench/: homefault scenarios,</text>
+  <text class="s" x="966" y="676">dev, held-out, 20 incidents</text>
+  <text class="s" x="966" y="698">Fixwright engine against</text>
+  <text class="s" x="966" y="716">gpt-oss-20b on llama.cpp</text>
+  <text class="s" x="966" y="734">via Strands Agents SDK,</text>
+  <text class="s" x="966" y="752">same logs, same answers</text>
+  <text class="s" x="966" y="770">from the person</text>
+</svg>

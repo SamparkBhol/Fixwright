@@ -1,0 +1,15 @@
+ha-local: hass launched (pid 3900125, port 8741)
+{"onboard":"ok","url":"http://127.0.0.1:8741","first_http_status":401,"first_http_ms_since_launch":1667,"onboarding_ms":1439,"llat_ms":98,"http_config":{"was":"pending","promoted":true,"now":"stable"},"running_ms_since_launch":4439,"ha_version":"2026.9.4","removed_onboarding_entries":["google_translate"],"secrets":"<repo>/packages/adapter-ha/.secrets/ha.json"}
+{"inject":"setup","area":"hallway","devices_off":6}
+ha-local: ready at http://127.0.0.1:8741 in 6822 ms
+
+ RUN  v5.0.2 <repo>/packages/adapter-ha
+
+
+ Test Files  2 passed | 7 skipped (9)
+      Tests  19 passed | 135 skipped (154)
+   Start at  13:19:43
+   Duration  19.14s (tests 90%, transform 6%, import 4%)
+
+integration: vitest exit 0 in 20582 ms; results in <repo>/packages/adapter-ha/results/2026-10-15-round2-run2
+ha-local: stopped in 176 ms

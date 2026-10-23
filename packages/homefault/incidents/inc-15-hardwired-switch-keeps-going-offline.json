@@ -1,0 +1,357 @@
+{
+  "$schema": "../schema/scenario.schema.json",
+  "format": "homefault.scenario/1",
+  "id": "inc-15-hardwired-switch-keeps-going-offline",
+  "title": "Hardwired dimmer keeps going offline",
+  "kind": "incident",
+  "source": {
+    "url": "https://www.reddit.com/r/homeautomation/comments/1ve32yb/",
+    "date": "2026-08-03",
+    "publisher": "Reddit r/homeautomation",
+    "quote": "It says the device is unresponsive and that I should check to make sure it’s on, but it’s hardwired into the electrical system, so I don’t think that’s the issue."
+  },
+  "reconstructed": true,
+  "assumptions": [
+    "The home is reconstructed as Home Assistant shaped logs in the homefault format; the person in the report used the Alexa app and vendor apps, not Home Assistant.",
+    "Entity ids, device brands the report does not name, other rooms, and every time the report does not give are invented to make a complete home.",
+    "The same problem with two units in the same box points away from the switch itself. We model a weak Wi-Fi link at that wall (RSSI -84 dBm) with seven drops in a day.",
+    "Time zone US Pacific is assumed; the post was written at 21:19 Pacific on 2 August."
+  ],
+  "tz": "America/Los_Angeles",
+  "now": "2026-08-03T04:10:00.000Z",
+  "symptom": {
+    "text": "Alexa says the dimmer is unresponsive and to check that it is on, but it is hardwired.",
+    "device": "Dining Dimmer"
+  },
+  "home": {
+    "entities": [
+      {
+        "entityId": "light.dining_dimmer",
+        "name": "Dining Dimmer",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_dining_dimmer",
+        "integration": "amazon_basics",
+        "transport": "wifi",
+        "state": "unavailable",
+        "attributes": {
+          "friendly_name": "Dining Dimmer"
+        },
+        "lastChanged": "2026-08-03T03:05:00.000Z",
+        "lastUpdated": "2026-08-03T03:05:00.000Z",
+        "area": "dining_room",
+        "vendor": "Amazon Basics"
+      },
+      {
+        "entityId": "light.porch_light",
+        "name": "Porch Light",
+        "aliases": [],
+        "domain": "light",
+        "deviceId": "dev_porch_light",
+        "integration": "matter",
+        "transport": "thread",
+        "state": "on",
+        "attributes": {
+          "friendly_name": "Porch Light"
+        },
+        "lastChanged": "2026-08-03T02:45:00.040Z",
+        "lastUpdated": "2026-08-03T02:45:00.040Z",
+        "area": "porch",
+        "vendor": "Nanoleaf"
+      },
+      {
+        "entityId": "switch.kitchen_plug",
+        "name": "Kitchen Plug",
+        "aliases": [],
+        "domain": "switch",
+        "deviceId": "dev_kitchen_plug",
+        "integration": "amazon_smart_plug",
+        "transport": "wifi",
+        "state": "off",
+        "attributes": {
+          "friendly_name": "Kitchen Plug"
+        },
+        "lastChanged": "2026-08-02T14:30:00.040Z",
+        "lastUpdated": "2026-08-02T14:30:00.040Z",
+        "area": "kitchen",
+        "vendor": "Amazon"
+      }
+    ],
+    "integrations": [
+      {
+        "integration": "amazon_basics",
+        "state": "loaded",
+        "entryId": "entry_amazon_basics"
+      },
+      {
+        "integration": "amazon_smart_plug",
+        "state": "loaded",
+        "entryId": "entry_amazon_smart_plug"
+      },
+      {
+        "integration": "matter",
+        "state": "loaded",
+        "entryId": "entry_matter"
+      }
+    ],
+    "hub": {
+      "reachable": true,
+      "latencyMs": 21,
+      "version": "2026.9.4"
+    },
+    "cloud": [],
+    "signals": {
+      "light.dining_dimmer": {
+        "rssi": -84,
+        "lastSeen": "2026-08-03T03:05:00.000Z"
+      },
+      "switch.kitchen_plug": {
+        "rssi": -55,
+        "lastSeen": "2026-08-03T04:10:00.000Z"
+      },
+      "light.porch_light": {
+        "lastSeen": "2026-08-03T04:10:00.000Z"
+      }
+    }
+  },
+  "events": [
+    {
+      "type": "state",
+      "when": "2026-08-02T05:40:00.000Z",
+      "entity_id": "light.dining_dimmer",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-08-02T05:44:00.000Z",
+      "entity_id": "light.dining_dimmer",
+      "state": "off",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i15_1"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-08-02T09:10:00.000Z",
+      "entity_id": "light.dining_dimmer",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-08-02T09:13:30.000Z",
+      "entity_id": "light.dining_dimmer",
+      "state": "off",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i15_2"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-08-02T13:05:00.000Z",
+      "entity_id": "light.dining_dimmer",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-08-02T13:11:00.000Z",
+      "entity_id": "light.dining_dimmer",
+      "state": "off",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i15_3"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-08-02T14:00:00.000Z",
+      "domain": "switch",
+      "service": "turn_on",
+      "entity_ids": [
+        "switch.kitchen_plug"
+      ],
+      "context": {
+        "id": "ctx_i15_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-08-02T14:00:00.040Z",
+      "entity_id": "switch.kitchen_plug",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i15_4",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-08-02T14:30:00.000Z",
+      "domain": "switch",
+      "service": "turn_off",
+      "entity_ids": [
+        "switch.kitchen_plug"
+      ],
+      "context": {
+        "id": "ctx_i15_5",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-08-02T14:30:00.040Z",
+      "entity_id": "switch.kitchen_plug",
+      "state": "off",
+      "old_state": "on",
+      "context": {
+        "id": "ctx_i15_5",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-08-02T17:22:00.000Z",
+      "entity_id": "light.dining_dimmer",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-08-02T17:24:30.000Z",
+      "entity_id": "light.dining_dimmer",
+      "state": "off",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i15_6"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-08-02T21:48:00.000Z",
+      "entity_id": "light.dining_dimmer",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-08-02T21:55:00.000Z",
+      "entity_id": "light.dining_dimmer",
+      "state": "off",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i15_7"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-08-03T00:30:00.000Z",
+      "entity_id": "light.dining_dimmer",
+      "state": "unavailable",
+      "old_state": "off"
+    },
+    {
+      "type": "state",
+      "when": "2026-08-03T00:33:10.000Z",
+      "entity_id": "light.dining_dimmer",
+      "state": "off",
+      "old_state": "unavailable",
+      "context": {
+        "id": "ctx_i15_8"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-08-03T01:30:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.dining_dimmer"
+      ],
+      "context": {
+        "id": "ctx_i15_9",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-08-03T01:30:00.040Z",
+      "entity_id": "light.dining_dimmer",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i15_9",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "call_service",
+      "when": "2026-08-03T02:45:00.000Z",
+      "domain": "light",
+      "service": "turn_on",
+      "entity_ids": [
+        "light.porch_light"
+      ],
+      "context": {
+        "id": "ctx_i15_a",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-08-03T02:45:00.040Z",
+      "entity_id": "light.porch_light",
+      "state": "on",
+      "old_state": "off",
+      "context": {
+        "id": "ctx_i15_a",
+        "user_id": "user_voice_assistant"
+      }
+    },
+    {
+      "type": "state",
+      "when": "2026-08-03T03:05:00.000Z",
+      "entity_id": "light.dining_dimmer",
+      "state": "unavailable",
+      "old_state": "on"
+    },
+    {
+      "type": "call_service",
+      "when": "2026-08-03T04:02:00.000Z",
+      "domain": "light",
+      "service": "turn_off",
+      "entity_ids": [
+        "light.dining_dimmer"
+      ],
+      "context": {
+        "id": "ctx_i15_b",
+        "user_id": "user_voice_assistant"
+      }
+    }
+  ],
+  "ground_truth": {
+    "cause_id": "radio_link_weak",
+    "entity_ids": [
+      "light.dining_dimmer"
+    ],
+    "explanation": "The dimmer has power; its Wi-Fi link at that wall is too weak."
+  },
+  "human_truth": {
+    "power_switch_check": "yes",
+    "confirm_flash": "no",
+    "router_changed": "no"
+  },
+  "noise": {
+    "jitter_ms": 0,
+    "drop_rate": 0
+  },
+  "tags": [
+    "incident",
+    "radio_link_weak"
+  ]
+}
