@@ -34,6 +34,7 @@ export type DemoOp =
   | { op: 'fault'; fault_id: string }
   | { op: 'clock'; to: unknown }
   | { op: 'reset' }
+  | { op: 'rename'; entity_id: string; name: string }
   | { op: 'state' }
   | { op: 'link_ha'; base_url: string; token: string };
 
@@ -254,6 +255,17 @@ export function createHousehold(db: Db, householdId: string, cfg: HouseholdConfi
     switch (op.op) {
       case 'init':
         return { status: 200, body: { ok: true, ntfy_topic: house.info().ntfy_topic } };
+      case 'rename': {
+        const adapter = await house.adapter();
+        const name = op.name.trim().slice(0, 64);
+        if (!name) return { status: 400, body: { ok: false, error: 'Give the device a name.' } };
+        try {
+          const e = await adapter.registryUpdate(op.entity_id, { name });
+          return { status: 200, body: { ok: true, entity_id: e.entityId, name: e.name, now: new Date(house.nowMs()).toISOString() } };
+        } catch (err) {
+          return { status: 404, body: { ok: false, error: err instanceof Error ? err.message : 'No such device.' } };
+        }
+      }
       case 'state':
         return { status: 200, body: await state() };
       case 'fault': {

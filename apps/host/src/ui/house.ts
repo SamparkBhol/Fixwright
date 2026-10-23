@@ -106,7 +106,7 @@ export function mountHouse(root: HTMLElement, stage: HTMLElement, app: HostApp, 
   const closeMenu = (): void => { menu.hidden = true; menu.replaceChildren(); };
   document.addEventListener('click', (ev) => { if (!menu.contains(ev.target as Node)) closeMenu(); });
   document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') closeMenu(); });
-  function menuTarget(el: HTMLElement, choices: () => Array<[string, string]>, name: string): void {
+  function menuTarget(el: HTMLElement, choices: () => Array<[string, string]>, name: string, entityId: string): void {
     const open = (ev: Event): void => {
       ev.stopPropagation();
       if (app.store.get().busy) return;
@@ -114,6 +114,11 @@ export function mountHouse(root: HTMLElement, stage: HTMLElement, app: HostApp, 
       menu.replaceChildren(
         h('div', { class: 'dot-menu-name', text: name }),
         ...choices().map(([label, utterance]) => h('button', { type: 'button', role: 'menuitem', text: label, onclick: () => { closeMenu(); void app.say(utterance, 'tap'); } })),
+        h('button', { type: 'button', role: 'menuitem', text: 'Rename', onclick: () => {
+          closeMenu();
+          const next = window.prompt(`New name for ${name}`, name);
+          if (next && next.trim() && next.trim() !== name) void app.renameDevice(entityId, next.trim());
+        } }),
       );
       menu.dataset['for'] = name;
       const r = el.getBoundingClientRect();
@@ -151,7 +156,7 @@ export function mountHouse(root: HTMLElement, stage: HTMLElement, app: HostApp, 
                   ['Why is it not responding?', `Why is the ${name} not responding?`],
                   ['Protect it', `Protect the ${name}`],
                 ];
-              }, d.name);
+              }, d.name, d.entityId);
               dots.set(d.entityId, { el, room, live: d.state, name: d.name });
               return el;
             }),

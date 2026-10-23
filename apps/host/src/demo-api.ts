@@ -64,6 +64,7 @@ export interface DemoResponse {
 export interface DemoApi {
   createHousehold(): Promise<Household | null>;
   fault(faultId: string): Promise<DemoResponse>;
+  rename(entityId: string, name: string): Promise<DemoResponse>;
   reset(): Promise<DemoResponse>;
   clock(to: 'next_morning' | number): Promise<DemoResponse>;
   state(): Promise<DemoResponse>;
@@ -113,6 +114,7 @@ export function createDemoApi(
       return { token: b.token, ntfyTopic: typeof b.ntfy_topic === 'string' ? b.ntfy_topic : null };
     },
     fault: (faultId) => send('POST', '/demo/fault', { fault_id: faultId }),
+    rename: (entityId, name) => send('POST', '/demo/rename', { entity_id: entityId, name }),
     reset: () => send('POST', '/demo/reset', {}),
     clock: (to) => send('POST', '/demo/clock', { to }),
     state: () => send('GET', '/demo/state'),

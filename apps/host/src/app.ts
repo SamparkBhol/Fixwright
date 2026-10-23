@@ -74,6 +74,8 @@ export interface HostApp {
   openPush(push: PushNote): Promise<void>;
   answerApproval(allow: boolean): void;
   injectFault(id: string): Promise<DemoResponse>;
+  /** Rename a device in the house registry; the new name is what voice commands and the plan use from then on. */
+  renameDevice(entityId: string, name: string): Promise<DemoResponse>;
   resetHouse(): Promise<DemoResponse>;
   jumpClock(to: 'next_morning' | number): Promise<DemoResponse>;
   newHousehold(): Promise<void>;
@@ -801,6 +803,12 @@ export function createHostApp(config: HostConfig): HostApp {
     openPush,
     answerApproval(allow) {
       approvalResolve?.(allow, 'tap');
+    },
+    async renameDevice(entityId, name) {
+      const r = await demo.rename(entityId, name);
+      logDemo(`Rename ${entityId} to ${name}`, r);
+      await syncHouse(r);
+      return r;
     },
     async injectFault(id) {
       const r = await demo.fault(id);

@@ -142,6 +142,10 @@ export function createApp(platform: Platform, cfgOf: () => Config): (request: Re
       case '/demo/clock':
         op = { op: 'clock', to: fields['to'] };
         break;
+      case '/demo/rename':
+        if (typeof fields['entity_id'] !== 'string' || typeof fields['name'] !== 'string') return done(json({ ok: false, error: 'Send entity_id and name.' }, 400));
+        op = { op: 'rename', entity_id: fields['entity_id'], name: fields['name'] };
+        break;
       case '/demo/reset':
         op = { op: 'reset' };
         break;
