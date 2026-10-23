@@ -413,7 +413,6 @@ npm run ha:onboard  # onboard a fresh Home Assistant started from fixtures/home-
 npm run ha:inject -- power-cut   # inject a fault into it (see fixtures/home-assistant/README.md)
 ```
 
-`VERIFY.md` lists what the tests prove.
 
 Versions: TypeScript 6.0.3, vitest 5.0.2 (with its peer vite 8.3.1), esbuild 0.28.2 (bundle test),
 @types/node 22.20.4, Node 22.18 or later, all pinned exactly. `.npmrc` sets `legacy-peer-deps=true`

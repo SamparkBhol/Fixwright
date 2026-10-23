@@ -164,7 +164,6 @@ npm run check -w @fixwright/protocol      # tsc on src alone (no Node or DOM typ
 npm run smoke:browser -w @fixwright/protocol   # optional: runs the bundle in headless Chromium
 ```
 
-What the tests prove is listed in `VERIFY.md`.
 
 ## Versions
 

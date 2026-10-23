@@ -1,4 +1,4 @@
-// Prints the measured facts the README and VERIFY.md quote. Run: npm run stats
+// Prints the measured facts the README quotes. Run: npm run stats
 
 import { CAUSE_IDS, SimHome, checkEvidence, generateScenario, generateSet, seedsOf, type Scenario } from '../src/index.ts';
 import { loadIncidents } from '../src/incidents.ts';

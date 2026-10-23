@@ -113,7 +113,6 @@ npm run check -w @fixwright/router    # tsc on src alone (no Node types), tsc on
 `test/route.test.ts` holds 144 table cases built on states folded from the real protocol fixtures,
 `test/state.test.ts` covers the state machine and the golden path as one conversation,
 `test/named-status.test.ts` covers the repair memory, status questions that name a device and
-`repairForText`, and `test/purity.test.ts` guards the pure package rule (190 tests in all). See `VERIFY.md`.
 
 ## Versions
 

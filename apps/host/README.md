@@ -97,7 +97,6 @@ generic system voice.
   back) and S2 "The fixed lamp loses power overnight" (its wall switch is off from 2:00 to 2:20 on the next
   jump to the morning, so the 7:00 check fails and the card offers "Diagnose"). Both go to `/demo/fault`
   and fire once (apps/server `src/household/safety.ts`). The push topic is shown shortened, like the token.
-- **The stage (notes in `DESIGN_NOTES.md`).** A hallway wall that follows the
   house clock from `/demo/state` (day #CBD5D3 from 07:00 to 21:59, night #1B2433 otherwise), the device on a
   shelf, four device silhouettes as the switcher, and the house plan under the shelf: six rooms, one dot per
   light, switch or fan, read from `/demo/state` after each tool call that can change the house (no polling).

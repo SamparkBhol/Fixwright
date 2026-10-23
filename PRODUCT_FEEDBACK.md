@@ -86,12 +86,12 @@ adapter. zod schemas become `inputSchema` and `outputSchema`. The client runs in
 tool call measured 7.2 to 18.3 ms at p50 in the browser.
 
 **What needs work.** The 2025 era leg answers only with SSE and returns 406 unless `Accept` lists both media
-types. Schemas are converted to JSON Schema on every request (p95 6.04 to 7.31 ms with the spike's 12 tools in
+types. Schemas are converted to JSON Schema on every request (p95 6.04 to 7.31 ms with the prototype's 12 tools in
 Node), a real risk on a 10 ms CPU budget until I cached them per isolate. The client opens a standalone GET
 that a stateless server must refuse with 405, which Chromium logs as an error on every connect. "Legacy" for
 the version Alexa+ documents is a naming trap.
 
-**Onboarding.** Fast. On day one, spike A had a server on `wrangler dev` answering `initialize` at
+**Onboarding.** Fast. On day one, the first server prototype had a server on `wrangler dev` answering `initialize` at
 2025-11-25 and `tools/list` with 12 tools, and the Node client calling them, all checked by a gate script
 that reruns in about 40 s.
 
@@ -114,7 +114,7 @@ tool's visibility, so a model only tool was callable from a view. zod triggers o
 load under the default CSP until jitless mode is set before zod loads. Each view is about 400 to 410 KB,
 almost all of it one inlined script, and Alexa+ view size limits are not documented.
 
-**Onboarding.** Good. Spike C rendered a view inside the nested sandbox on a third origin from
+**Onboarding.** Good. The MCP Apps prototype rendered a view inside the nested sandbox on a third origin from
 `structuredContent`, and a "Fix it" tap in the view made a tool call round trip in 8.3 ms, on day one
 (22 of 22 checks).
 
@@ -139,7 +139,7 @@ Global scope forbids the synthetic request I wanted for SDK warm up. `wrangler d
 and a Local Explorer that about doubled local CPU per request until I turned it off
 (`X_LOCAL_OBSERVABILITY=false`, `X_LOCAL_EXPLORER=false`).
 
-**Onboarding.** Smooth, because local dev needs no account. Spike A had a Durable Object writing rows and
+**Onboarding.** Smooth, because local dev needs no account. The first server prototype had a Durable Object writing rows and
 firing an alarm 2 to 4 ms late on day one. Deploying still waits on an account, so Cloudflare's own CPU
 accounting is not measured yet; locally, workerd used 9.091 ms of CPU per HTTP request on average over 50
 golden runs under a load average of 10.8 to 12.4.
@@ -167,7 +167,7 @@ are lower cased (a guard that compares ids as given can be bypassed), integratio
 regardless of the entity named, and template entities can carry a stale logbook context.
 
 **Onboarding.** Good once the path was found: installed without Docker through uv on CPython 3.14.7, the first
-HTTP answer came about 1 s after launch, and spike E's whole gate (boot, onboard, test, stop) runs in 20 to
+HTTP answer came about 1 s after launch, and the Home Assistant prototype's whole gate (boot, onboard, test, stop) runs in 20 to
 23 s. Two dependencies had no wheels for Python 3.14 and compiled from source.
 
 **Build with it again: Yes**, because it is the one open hub whose APIs expose enough to diagnose a fault and
@@ -246,7 +246,7 @@ next to the MCP server they describe.
 validating the LLM's answers in the benchmark.
 
 **What worked well.** One schema gives the TypeScript type, the runtime check and the JSON Schema. Converting
-24 schemas with `z.toJSONSchema` took 0.605 ms at p50 in spike A.
+24 schemas with `z.toJSONSchema` took 0.605 ms at p50 in the first server prototype.
 
 **What needs work.** zod probes `new Function` when a schema is created, which raises a CSP violation in a
 view unless jitless is set before zod is first touched. Its classic entry re-exports every locale, about
@@ -279,7 +279,6 @@ template itself, with its own escapes for `</script` and `<!--`.
 
 ## vitest 5.0.2
 
-**Used for.** All 2,057 tests across the workspaces (`docs/integration/CHECK.txt`), the views' 247 visual
 tests in a second config, and tags that make the live Home Assistant tests opt in.
 
 **What worked well.** Tags made the integration tests opt in, and the same runner handles unit, browser
@@ -335,13 +334,13 @@ so a test has to wait for a host side marker before it checks the result.
 
 **Used for.** The demo video's voices, generated rather than recorded, with voices that do not imitate Alexa.
 
-**What worked well.** Good quality speech on CPU with no account or key. In spike D two voices were clearly
+**What worked well.** Good quality speech on CPU with no account or key. In the video prototype two voices were clearly
 different and generated at about a fifth of real time.
 
 **What needs work.** Input over 512 tokens is truncated silently. There is no thread option, and ONNX Runtime
 prints affinity errors in containers. The q8 model is about 4 times slower than fp32 on x86.
 
-**Onboarding.** One npm package and a model download from Hugging Face; the first clip worked in the spike.
+**Onboarding.** One npm package and a model download from Hugging Face; the first clip worked in the prototype.
 
 **Build with it again: Yes**, because it gives a free, local narrator, as long as the text goes in one
 sentence at a time.
@@ -352,7 +351,7 @@ sentence at a time.
 
 **Used for.** Composing the demo video: frames, narration and burned in captions.
 
-**What worked well.** A full ffmpeg from npm with no system install, which is how the video spike composed
+**What worked well.** A full ffmpeg from npm with no system install, which is how the video prototype composed
 its clip on a machine where I could not install system packages. libass subtitles work for burned in
 captions.
 

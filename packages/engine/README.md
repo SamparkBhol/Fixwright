@@ -297,7 +297,6 @@ entity, transition and context), and appends `probe`, `human_answer` and `repair
 ## Adapter data the engine reads
 
 Both `homefault` (SimHome) and `@fixwright/adapter-ha` already produce these; the engine was run against
-SimHome seed 1 unchanged (see VERIFY.md).
 
 - Availability: rows with `from: 'unavailable'` or `to: 'unavailable'` (kind `availability` or `state`). A
   device that comes back already on is one row, `unavailable` to `on`.
@@ -317,7 +316,6 @@ SimHome seed 1 unchanged (see VERIFY.md).
 ## Integration notes for homefault, the server and the demo
 
 `npm run sweep:simhome -w @fixwright/engine` runs the golden path on SimHome seeds 1 to 200 (last run 17 Oct
-2026; numbers in VERIFY.md): every seed speaks every golden path line word for word and passes its morning
 check, both in the sweep's order and in the real order (step 5 after the 07:00 jump), and none of the past
 failures the sweep replays come back. The engine run on SimHome seed 1 (`npm run smoke:simhome`, same day)
 speaks every golden path line word for word: "Your hub is reachable, the signal is good and the Hue cloud
@@ -421,7 +419,6 @@ must meet, used by the golden house sweep, the property test and the SimHome swe
 Lights, F4 the kitchen plug's 9 drops at -82 dBm, F5 the motion sensor at 6%, and the living room strip with
 a reading lamp on outlet 1 and the aquarium filter on outlet 2. `test/simhome-morning.test.ts` runs the golden
 path in its real order on homefault's SimHome (seeds 1 to 3), importing homefault by path like the sweep, so the
-engine keeps no package dependency on it. What the tests prove is in `VERIFY.md`.
 
 ## Versions
 

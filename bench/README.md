@@ -202,7 +202,6 @@ buildReport(input), summaryText(report), writeReport(path, report)
 ## Tests
 
 `npm run check` in `bench/`: typecheck plus vitest (the bench tests with a mocked model, and the
-bench/llm tests). `VERIFY.md` lists what each test proves. Live LLM tests in bench/llm run only with
 `FIXWRIGHT_LLM_LIVE=1`.
 
 ## Pinned extras

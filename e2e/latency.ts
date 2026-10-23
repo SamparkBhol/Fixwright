@@ -5,7 +5,7 @@
 //
 //   npm run e2e:latency                 50 runs; starts the stack with raised rate limits and stops it
 //   RUNS=10 npm run e2e:latency
-// Writes docs/integration/LATENCY.json.
+// Writes docs/LATENCY.json.
 
 import { execFileSync } from 'node:child_process';
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -17,7 +17,7 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const RUN_DIR = execFileSync('bash', ['-c', `source '${ROOT}scripts/env.sh' && printf %s "$FIXWRIGHT_RUN"`], { encoding: 'utf8' });
 const SERVER = 'http://127.0.0.1:8701';
 const RUNS = Number(process.env['RUNS'] ?? 50);
-const OUT = `${ROOT}docs/integration/LATENCY.json`;
+const OUT = `${ROOT}docs/LATENCY.json`;
 const CLK_TCK = Number(execFileSync('getconf', ['CLK_TCK']).toString().trim()) || 100;
 
 interface Row {

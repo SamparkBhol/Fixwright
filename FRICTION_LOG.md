@@ -189,7 +189,7 @@ with no screen, and the README marks requirement 9 as Partly.
 
 **Steps taken:**
 1. Read the Alexa+ docs, which list elicitation as supported.
-2. Checked it against stateless Streamable HTTP in spike A (Workers plus MCP). Server pushed elicitation
+2. Checked it against stateless Streamable HTTP in the first server prototype (Workers plus MCP). Server pushed elicitation
    and MCP Tasks need a stream the stateless lane does not keep, and the stateful Cloudflare option
    (McpAgent) is deprecated.
 
@@ -207,7 +207,7 @@ its own turn, and the reply comes back through a second tool, `diagnose_answer`,
 **Actionable suggestion:** Document the pattern Alexa+ expects for a question in the middle of a flow on
 stateless servers.
 
-**Timestamp:** 2026-10-14, spike A.
+**Timestamp:** 2026-10-14, the first server prototype.
 
 ### 1.6 Add-ons have no device health signal
 
@@ -368,7 +368,7 @@ as "start here" for every track.
 **Severity:** Low
 
 **Workaround used:** I render the demo video from the product itself with Playwright, Kokoro TTS and
-ffmpeg-static. Spike D built a 10 second 1080p clip with two voices and burned in captions in 22.6 s of
+ffmpeg-static. The video prototype built a 10 second 1080p clip with two voices and burned in captions in 22.6 s of
 work on this VM.
 
 **Actionable suggestion:** Keep the resources page in step with service lifecycles.
@@ -423,7 +423,7 @@ GitHub, the app stores and USPTO instead.
 **Actionable suggestion:** An explicit empty skills result, or a name availability lookup in the developer
 console.
 
-**Timestamp:** 2026-10-14, spike F (name check).
+**Timestamp:** 2026-10-14, the name check.
 
 ### 2.1 MCP TypeScript SDK v2: 2025-11-25 is the "legacy" era
 
@@ -431,10 +431,10 @@ console.
 browser host.
 
 **Steps taken:**
-1. Served `createMcpHandler` on `wrangler dev` (spike A).
+1. Served `createMcpHandler` on `wrangler dev` (the first server prototype).
 2. Connected the SDK client from Node with its default settings, with `supportedProtocolVersions`
    `['2025-06-18']` and with `versionNegotiation: 'auto'`.
-3. Connected the same client from headless Chromium (spike B).
+3. Connected the same client from headless Chromium (the browser client prototype).
 
 **Expected:** An SDK that serves 2025-11-25, the version Alexa+ documents, as its main path.
 
@@ -450,7 +450,7 @@ negotiation, so it starts with `initialize` and never sends the discovery probe.
 
 **Actionable suggestion:** Name the eras by spec date in the README, and surface why `auto` fell back.
 
-**Timestamp:** 2026-10-14, spikes A and B.
+**Timestamp:** 2026-10-14, prototypes A and B.
 
 ### 2.2 MCP TypeScript SDK v2: the legacy leg answers only with SSE
 
@@ -459,7 +459,7 @@ probe.
 
 **Steps taken:**
 1. Sent `initialize` to `createMcpHandler` with `Accept` set to `application/json`, to
-   `text/event-stream`, to `*/*` and to both media types (spike A).
+   `text/event-stream`, to `*/*` and to both media types (the first server prototype).
 2. Looked for a JSON response option on the legacy leg.
 
 **Expected:** A JSON response option on 2025-11-25, and lenient `Accept` handling.
@@ -475,16 +475,16 @@ the built in legacy leg. `Accept` must list both `application/json` and `text/ev
 **Actionable suggestion:** An `enableJsonResponse` option on the legacy leg, and a 406 body that names the
 missing media type.
 
-**Timestamp:** 2026-10-14, spike A.
+**Timestamp:** 2026-10-14, the first server prototype.
 
 ### 2.3 MCP TypeScript SDK v2: schemas converted on every request
 
 **Task attempted:** Keep each MCP request inside the Workers Free CPU budget of 10 ms.
 
 **Steps taken:**
-1. Wrote the spike's 12 zod tools the plain way, with schemas inside the per request server factory.
+1. Wrote the prototype's 12 zod tools the plain way, with schemas inside the per request server factory.
 2. Measured CPU per request in Node with the same handler code: 50 warm up and 300 measured requests per
-   request type (spike A).
+   request type (the first server prototype).
 3. Profiled where the time went.
 
 **Expected:** A cheap per request server factory.
@@ -496,11 +496,11 @@ risk.
 **Severity:** High (on Workers Free)
 
 **Workaround used:** I cache the converted schemas per isolate (`cachedJson`) and prime them at module scope.
-With the cache, warm p95 stayed under 2 ms for every MCP request type in the spike.
+With the cache, warm p95 stayed under 2 ms for every MCP request type in the prototype.
 
 **Actionable suggestion:** Memoize the conversion in the SDK, keyed by schema object.
 
-**Timestamp:** 2026-10-14, spike A.
+**Timestamp:** 2026-10-14, the first server prototype.
 
 ### 2.4 MCP TypeScript SDK v2 client in the browser
 
@@ -508,7 +508,7 @@ With the cache, warm p95 stayed under 2 ms for every MCP request type in the spi
 browser project.
 
 **Steps taken:**
-1. Connected from headless Chromium to a stateless server, 30 runs with the SDK defaults (spike B).
+1. Connected from headless Chromium to a stateless server, 30 runs with the SDK defaults (the browser client prototype).
 2. Counted console errors and failed requests per run.
 3. Typechecked a browser project with TypeScript 6.0.3 and `types: []`.
 
@@ -530,7 +530,7 @@ skipped with `skipLibCheck`, and the server has its own CORS layer.
 **Actionable suggestion:** An option to skip the standalone GET (or skip it when no `mcp-session-id` came
 back), a quiet close, `Uint8Array` in the typings, and a `withCors` helper.
 
-**Timestamp:** 2026-10-14, spike B.
+**Timestamp:** 2026-10-14, the browser client prototype.
 
 ### 2.5 ext-apps 2.0.3: the AppBridge forwards view tool calls without the visibility check
 
@@ -538,7 +538,7 @@ back), a quiet close, `Uint8Array` in the typings, and a `withCors` helper.
 of their reach.
 
 **Steps taken:**
-1. Built an `AppBridge` with an MCP client (spike C).
+1. Built an `AppBridge` with an MCP client (the MCP Apps prototype).
 2. Registered a test tool, `hub_factory_reset`, with `_meta.ui.visibility` `["model"]`.
 3. Called it from the view.
 
@@ -554,7 +554,7 @@ visibility and show an approval sheet before any tool that changes something.
 
 **Actionable suggestion:** Enforce visibility in the bridge, or document the gap loudly in the README.
 
-**Timestamp:** 2026-10-14, spike C.
+**Timestamp:** 2026-10-14, the MCP Apps prototype.
 
 ### 2.6 ext-apps and zod under the default CSP, and view size
 
@@ -562,7 +562,7 @@ visibility and show an approval sheet before any tool that changes something.
 
 **Steps taken:**
 1. Loaded a view three times with plain zod, and three times with a jitless preset imported first, and
-   counted `securitypolicyviolation` events (spike C).
+   counted `securitypolicyviolation` events (the MCP Apps prototype).
 2. Measured the built views from the views build manifest (18 October 2026).
 
 **Expected:** Views load without CSP violations, and a small bundle.
@@ -580,7 +580,7 @@ from 599,473 to 338,285 bytes.
 **Actionable suggestion:** Set jitless before zod is first touched inside ext-apps, and document view size
 limits.
 
-**Timestamp:** 2026-10-14, spike C; sizes 2026-10-18.
+**Timestamp:** 2026-10-14, the MCP Apps prototype; sizes 2026-10-18.
 
 ### 2.7 ext-apps docs: small mismatches
 
@@ -599,11 +599,11 @@ works without them on Workers. The spec gives `ui/resource-teardown` params `{re
 **Severity:** Low
 
 **Workaround used:** I used `createMcpHandler().fetch` directly with no Node adapter, and send teardown with
-`{}` as the SDK type says. All 20 teardowns in the spike were answered before the iframe was removed.
+`{}` as the SDK type says. All 20 teardowns in the prototype were answered before the iframe was removed.
 
 **Actionable suggestion:** Align the README and the type with the spec.
 
-**Timestamp:** 2026-10-14, spike C.
+**Timestamp:** 2026-10-14, the MCP Apps prototype.
 
 ### 2.8 Cloudflare workerd: no warm up in global scope
 
@@ -612,7 +612,7 @@ works without them on Workers. The spec gives `ui/resource-teardown` params `{re
 **Steps taken:**
 1. Built a synthetic MCP request with `new Request(url, {body})` in global scope.
 2. Tried the same with a parsed body and top level await.
-3. Measured the first request on a fresh isolate in Node, with and without priming (spike A).
+3. Measured the first request on a fresh isolate in Node, with and without priming (the first server prototype).
 
 **Expected:** Top level await could run one synthetic MCP request to warm the SDK.
 
@@ -623,12 +623,12 @@ pays the cold cost (10.5 to 14 ms CPU in Node).
 **Severity:** Medium
 
 **Workaround used:** `primeSchemas()` builds and caches every tool schema at module scope, which needs no
-request. It roughly halved the first request in the spike. The rest is checked after deploy in Workers
+request. It roughly halved the first request in the prototype. The rest is checked after deploy in Workers
 Logs.
 
 **Actionable suggestion:** Document a supported warm up pattern for SDK heavy Workers.
 
-**Timestamp:** 2026-10-14, spike A.
+**Timestamp:** 2026-10-14, the first server prototype.
 
 ### 2.9 Cloudflare docs: the Durable Object CPU limit on Free
 
@@ -653,7 +653,7 @@ small, and plan to read Cloudflare's own CPU accounting in Workers Logs after th
 **Actionable suggestion:** One table of Free plan limits per invocation type (Worker request, Durable Object
 RPC, alarm).
 
-**Timestamp:** 2026-10-14, spike A; golden runs 2026-10-17.
+**Timestamp:** 2026-10-14, the first server prototype; golden runs 2026-10-17.
 
 ### 2.10 wrangler 4.144.0 dev extras inflate local CPU
 
@@ -676,7 +676,7 @@ Local Explorer with trace and log capture that raised local workerd CPU to 1.6 t
 
 **Actionable suggestion:** Document both variables for performance work.
 
-**Timestamp:** 2026-10-14, spike A.
+**Timestamp:** 2026-10-14, the first server prototype.
 
 ### 2.11 Home Assistant onboarding is not hermetic
 
@@ -706,7 +706,7 @@ an instance then ran 354 s past launch with no revert.
 **Actionable suggestion:** An onboarding flag to skip default integrations, and a note on promoting
 `http/config` for headless installs.
 
-**Timestamp:** 2026-10-14, spike E; 2026-10-15, adapter-ha.
+**Timestamp:** 2026-10-14, the Home Assistant prototype; 2026-10-15, adapter-ha.
 
 ### 2.12 Home Assistant: safety guards need care
 
@@ -760,7 +760,7 @@ read back, and the Home Assistant test waits 1.6 s for the recorder before askin
 
 **Actionable suggestion:** Document context propagation through templates, and the recorder commit delay.
 
-**Timestamp:** 2026-10-14, spike E; 2026-10-17, integration.
+**Timestamp:** 2026-10-14, the Home Assistant prototype; 2026-10-17, integration.
 
 ### 2.14 llama.cpp and Strands: reproducible baselines take work
 
@@ -800,7 +800,7 @@ partial result option in Strands.
 **Steps taken:**
 1. Generated narration with kokoro-js 1.2.1, in q8 and fp32.
 2. Burned captions with ffmpeg-static 5.3.0.
-3. Captured the host with Playwright `recordVideo`, and then frame by frame (spike D).
+3. Captured the host with Playwright `recordVideo`, and then frame by frame (the video prototype).
 
 **Expected:** Long narration, text overlays and a high quality capture.
 
@@ -816,7 +816,7 @@ frames captured through CDP with animations seeked by the Web Animations API.
 
 **Actionable suggestion:** An error on overlong Kokoro input; quality and fps options for `recordVideo`.
 
-**Timestamp:** 2026-10-14, spike D.
+**Timestamp:** 2026-10-14, the video prototype.
 
 ### 2.16 npm and vitest
 
@@ -902,7 +902,7 @@ shows the product, not the friction.
 - A real Home Assistant 2026.9.4 repaired and read back over its REST API, then undone.
 - An LLM only baseline on a local open weights model through Strands, reproducible run to run, and a full
   benchmark run with it (`bench/results/HOMETRUTH.txt`).
-- An Agent Skill that passes the reference validator, and an open source package with its own CI.
+- An Agent Skill that passes the reference validator, and an open source package with its own tests.
 
 ## What failed
 
@@ -916,19 +916,15 @@ shows the product, not the friction.
 
 | Entries | Evidence |
 | :--- | :--- |
-| 1.1 to 1.13 | Research notes behind the build decision (14 October 2026), saved copies of the Alexa+ docs and the hackathon pages |
+| 1.1 to 1.13 | The Alexa+ docs and the hackathon pages as read on 14 October 2026 |
 | 1.4 | `packages/engine/src/phrase.ts` (`ck_more`), Alexa+ design guide "Layout and Rendering" |
-| 1.14 | Spike report F (name check) |
-| 2.1 to 2.10 | Spike reports A, B and C (Workers plus MCP, browser client, MCP Apps), `apps/server/README.md`, `apps/views/dist/manifest.json`, `docs/integration/LATENCY.json` |
-| 2.11 to 2.13 | Spike report E, `packages/adapter-ha/README.md`, `apps/server/evidence/home-assistant.txt` |
+| 2.11 to 2.13 | `packages/adapter-ha/README.md`, `apps/server/evidence/home-assistant.txt` |
 | 2.14 | `bench/llm/README.md`, `bench/llm/results/repro_check*.json`, `bench/llm/results/strands_smoke.json` |
-| 2.15 | Spike report D |
+| 2.15 | `video/README.md` |
 | 2.16 | `docs/DEPENDENCIES.md`, `.npmrc` |
 
 ### Scratch pad
 
 Written with the full template from [friction-log-guide](https://github.com/chris-trag/friction-log-guide)
 (`templates/friction-log-template.md`), with the three fields the hackathon rules add to it (task attempted,
-steps taken, workaround used). Severity labels are the template's words without the symbols. Raw session
-notes were not kept apart from the spike reports named above. The research notes and spike reports are my
-own build notes and are not part of this repository.
+steps taken, workaround used). Severity labels are the template's words without the symbols.

@@ -215,7 +215,6 @@ FIXWRIGHT_TEST_PORT=8707 npm run test -w @fixwright/server   # integration on 87
   power restore, the power on behaviour repair is applied with read back and undone, both checked on the hub
   directly. Writes `evidence/home-assistant.txt`.
 
-What the tests prove is listed in `VERIFY.md`.
 
 ## Measured
 
@@ -286,7 +285,6 @@ workerd itself (`WORKERD_CPU.json`, 17 Oct 2026 12:51 UTC): utime + stime of the
 300 golden requests in sequence (20 cycles including a house reset and a next morning jump each): 5.467 ms per
 request (6.2 ms for the whole wrangler process group), at a load average of 1.2. An upper bound: it includes the
 DO work, workerd's HTTP handling and wrangler's local proxy. The root README and the Devpost text quote the
-browser run instead (`docs/integration/LATENCY.json`, 17 Oct 2026 13:24 UTC): 9.091 ms per HTTP request over 50
 full golden runs, with static files and a new household each run, under a load average of 10.8 to 12.4.
 
 Bundle (`wrangler deploy --dry-run --metafile`, minify on, 17 Oct 2026, `evidence/bundle-size.txt`): before
