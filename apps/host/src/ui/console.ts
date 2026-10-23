@@ -319,6 +319,19 @@ export function mountConsole(root: HTMLElement, app: HostApp): void {
       ].map((t) => h('li', { text: t })),
     ),
     h('p', { class: 'muted', text: 'The strip under the screen is your house, built from the house data. Amber means on, an empty circle means off, red means offline. Tap a device to switch it, or to diagnose it when it is offline. Tap a room name for a checkup of that room. Open the dashboard from the top bar for the whole house at a glance.' }),
+    h('h3', { class: 'section', text: 'Make it your own' }),
+    h(
+      'ul',
+      { class: 'ticks' },
+      ...[
+        'Tap any device on the plan to rename it. The new name is stored in the house and voice commands use it from then on.',
+        'Tap a device to switch it, diagnose it or protect it, and tap a room name for a checkup of that room.',
+        'Break my house injects any of ten real world faults, resets the house, or jumps the clock to the next morning, so you can set up your own test and watch the diagnosis change.',
+        'Dashboard shows the whole house at a glance, including the devices you renamed and protected.',
+      ].map((t) => h('li', { text: t })),
+    ),
+    h('h3', { class: 'section', text: 'Run the code and change it' }),
+    h('p', { class: 'muted', text: 'Everything here runs from the public repository. Clone it, run npm ci and npm run dev:up, and this same page starts on your machine against your own server. npm run e2e plays the whole story in a real browser, npm run check runs every test, and npm run mcp:plain calls the server with no SDK so you can read the raw MCP messages. Edit a cause, a probe or a phrase in packages/engine and the tests tell you what changed. With a public Home Assistant address, the server can link a real hub and run the same diagnosis and repairs on it.' }),
     h('h3', { class: 'section', text: 'What is real' }),
     h(
       'ul',
